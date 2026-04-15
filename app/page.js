@@ -312,29 +312,7 @@ function PremiumRocket() {
       <circle cx="76" cy="220" r="1.5" fill="rgba(255,255,255,0.06)" />
       <circle cx="124" cy="220" r="1.5" fill="rgba(255,255,255,0.06)" />
 
-      {/* ═══ FLAME ═══ */}
-      {/* Outer glow haze */}
-      <g filter="url(#flameBlur)" opacity="0.55">
-        <path d="M100 266 C62 306 56 338 60 366 C76 356 86 348 100 346 C114 348 124 356 140 366 C144 338 138 306 100 266Z" fill="url(#flameGlow)" />
-      </g>
-
-      <g className="rocket-flame">
-        {/* Outer flame */}
-        <path d="M100 264 C58 308 52 342 58 368 C74 358 86 350 100 348 C114 350 126 358 142 368 C148 342 142 308 100 264Z" fill="url(#flameOuter)" filter="url(#softGlow)" />
-        {/* Mid flame */}
-        <path d="M100 264 C70 304 66 336 72 358 C84 350 92 344 100 343 C108 344 116 350 128 358 C134 336 130 304 100 264Z" fill="url(#flameMid)" />
-        {/* Core flame — hottest */}
-        <path d="M100 264 C84 300 82 328 86 348 C93 342 97 338 100 337 C103 338 107 342 114 348 C118 328 116 300 100 264Z" fill="url(#flameCore)" />
-        {/* Nozzle bright spot */}
-        <ellipse cx="100" cy="266" rx="18" ry="5" fill="rgba(255,255,255,0.75)" />
-        <ellipse cx="100" cy="266" rx="11" ry="3" fill="rgba(255,255,255,0.95)" />
-      </g>
-
-      {/* Ambient flame glow (activated on scroll) */}
-      <g className="rocket-flame-ambient" opacity="0">
-        <circle cx="100" cy="276" r="38" fill="rgba(251,191,36,0.10)" filter="url(#flameBlur)" />
-        <circle cx="100" cy="292" r="28" fill="rgba(249,115,22,0.07)" filter="url(#flameBlur)" />
-      </g>
+      {/* Flame is handled by CSS .rocket-flame-old div — no SVG flame needed */}
     </svg>
   )
 }
