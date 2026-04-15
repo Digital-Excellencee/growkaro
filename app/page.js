@@ -604,7 +604,7 @@ function useGSAPAnimations() {
 }
 
 export default function Home() {
-  useGSAPAnimations()
+  const containerRef = useGSAPAnimations()
 
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -633,7 +633,7 @@ export default function Home() {
   const isDark = theme === 'dark'
 
   return (
-    <div ref={useGSAPAnimations}>
+    <div ref={containerRef}>
       {/* ── NAVBAR ── */}
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         <a href="#" className="nav-brand" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
