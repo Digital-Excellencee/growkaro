@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'NEXUS | Full-Service Digital Marketing Agency',
-  description: 'India ki sabse premium digital marketing agency. Web, SEO, Social, Branding - A to Z sab kuch.',
+  title: 'Growthkaro | Full-Service Digital Marketing Agency',
+  description: 'India ki sabse powerful digital marketing agency. Website, SEO, Social Media, Branding, Ads, Video — ek agency, infinite growth.',
 }
 
 export default function RootLayout({ children }) {

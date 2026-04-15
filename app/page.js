@@ -1,650 +1,630 @@
 'use client'
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-// ─── Icons (inline SVG) ────────────────────────────────────────────────────
-const ArrowRight = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-  </svg>
-)
-const Star = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-  </svg>
-)
-const Check = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="20 6 9 17 4 12"/>
-  </svg>
-)
-const Zap = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-  </svg>
-)
-
-// ─── Services Data ─────────────────────────────────────────────────────────
-const SERVICES = [
-  { icon: '🌐', title: 'Web Design & Dev', desc: 'Premium websites jo aapki brand ko unforgettable banate hain. React, Next.js, WordPress — sab platform.', tag: 'DESIGN', color: '#6c47ff' },
-  { icon: '📈', title: 'SEO & Rankings', desc: 'Google pe #1 rank karo. Technical SEO, content strategy, aur backlinks — complete growth engine.', tag: 'GROWTH', color: '#ff3cac' },
-  { icon: '📱', title: 'Social Media', desc: 'Instagram, LinkedIn, YouTube — har platform pe viral content jo followers ko customers banaye.', tag: 'SOCIAL', color: '#00d4ff' },
-  { icon: '🎯', title: 'Paid Ads (PPC)', desc: 'Google Ads, Meta Ads, YouTube Ads — har rupee pe maximum ROI. 3x conversion guaranteed.', tag: 'ADS', color: '#f59e0b' },
-  { icon: '✍️', title: 'Content Marketing', desc: 'Blogs, videos, reels, newsletters — ek complete content ecosystem jo 24/7 leads laata rahe.', tag: 'CONTENT', color: '#10b981' },
-  { icon: '🎨', title: 'Branding & Identity', desc: 'Logo, brand guide, packaging — ek aisi identity jo log pehli nazar mein hi pehchaan lein.', tag: 'BRAND', color: '#6c47ff' },
-  { icon: '📧', title: 'Email Marketing', desc: 'Automated email funnels jo leads ko nurture karke paying customers mein convert karein.', tag: 'EMAIL', color: '#ff3cac' },
-  { icon: '📊', title: 'Analytics & CRO', desc: 'Data-driven decisions. Conversion rate optimization jo aapki existing traffic se 2x results de.', tag: 'DATA', color: '#00d4ff' },
-  { icon: '🎬', title: 'Video Production', desc: 'Brand films, product videos, reels, ads — cinematic quality jo audience ko hook karle.', tag: 'VIDEO', color: '#f59e0b' },
+const MARQUEE_ITEMS = [
+  'Facebook Ads', 'Google Ads', 'Instagram Growth', 'Website Development',
+  'SEO', 'Branding', 'Lead Generation', 'Video Editing', 'Content Marketing',
+  'Social Media', 'YouTube Promotion', 'Logo Design', 'Reel Making',
+  'Email Marketing', 'CRO', 'Analytics', 'Influencer Marketing',
 ]
 
-// ─── Stats ─────────────────────────────────────────────────────────────────
 const STATS = [
-  { value: 500, suffix: '+', label: 'Projects Delivered' },
-  { value: 5.0, suffix: '★', label: 'Avg Rating', decimal: 1 },
-  { value: 100, suffix: '%', label: 'On-Time Delivery' },
-  { value: 3, suffix: 'x', label: 'Avg Revenue Growth' },
+  { value: '500', suffix: '+', label: 'Projects Delivered', color: '' },
+  { value: '98', suffix: '%', label: 'Client Retention', color: '' },
+  { value: '3', suffix: 'x', label: 'Avg ROI Growth', color: '' },
+  { value: '24', suffix: 'hr', label: 'Support Available', color: '' },
 ]
 
-// ─── Testimonials ──────────────────────────────────────────────────────────
-const TESTIMONIALS = [
-  { name: 'Arjun Mehta', role: 'Founder, TechScale', text: 'NEXUS ne hamare conversion rate ko 340% badha diya. Sirf 3 mahine mein 50 lakh ka revenue — unbelievable!', rating: 5 },
-  { name: 'Priya Sharma', role: 'CEO, LuxeFashion', text: 'Instagram pe 0 se 200k followers in 6 months. Unka social media strategy ekdum next level hai.', rating: 5 },
-  { name: 'Rahul Gupta', role: 'MD, PropTech India', text: 'Google pe #1 rank ho gaye 4 mahine mein. Aur organic leads ka flood aa gaya. Best investment ever.', rating: 5 },
-  { name: 'Sneha Agarwal', role: 'Founder, HealthFirst', text: 'Website se lekar reels tak, sab kuch NEXUS handle karta hai. Ab main business pe focus kar sakti hun.', rating: 5 },
+const SERVICE_CATEGORIES = [
+  {
+    icon: '🎯',
+    iconBg: 'linear-gradient(135deg, rgba(108,71,255,0.2), rgba(0,212,255,0.1))',
+    title: 'Digital Marketing & Ads',
+    desc: 'Facebook, Instagram, Google, YouTube — har platform pe targeted ads jo actual customers laaye.',
+    tags: ['Facebook Ads', 'Google Ads', 'YouTube Ads', 'Lead Generation', 'Retargeting', 'Meta Ads'],
+  },
+  {
+    icon: '📱',
+    iconBg: 'linear-gradient(135deg, rgba(225,48,108,0.2), rgba(255,60,172,0.1))',
+    title: 'Social Media Management',
+    desc: 'Poora Instagram, Facebook, LinkedIn page handle karte hain. Content, reels, engagement — sab.',
+    tags: ['Page Management', 'Reels & Posts', 'Follower Growth', 'Engagement', 'Community'],
+  },
+  {
+    icon: '🎨',
+    iconBg: 'linear-gradient(135deg, rgba(249,115,22,0.2), rgba(251,191,36,0.1))',
+    title: 'Branding & Identity',
+    desc: 'Logo se lekar brand guide tak — aisi identity jo aapko market mein alag dikhaye.',
+    tags: ['Logo Design', 'Brand Identity', 'Brochure', 'Business Card', 'Brand Guide'],
+  },
+  {
+    icon: '🌐',
+    iconBg: 'linear-gradient(135deg, rgba(0,212,255,0.2), rgba(6,182,212,0.1))',
+    title: 'Website & Online Presence',
+    desc: 'Professional websites jo visitors ko customers mein convert karein. SEO ke saath.',
+    tags: ['Website Dev', 'Landing Pages', 'SEO', 'Google Business', 'Domain Setup'],
+  },
+  {
+    icon: '🎬',
+    iconBg: 'linear-gradient(135deg, rgba(34,197,94,0.2), rgba(16,185,129,0.1))',
+    title: 'Content Creation',
+    desc: 'Photo shoots, video production, ad creatives — visual content jo brand ko powerful banaye.',
+    tags: ['Photo Shoot', 'Video Production', 'Ad Creatives', 'Promo Videos', 'Thumbnails'],
+  },
+  {
+    icon: '📊',
+    iconBg: 'linear-gradient(135deg, rgba(139,92,246,0.2), rgba(108,71,255,0.1))',
+    title: 'Strategy & Consulting',
+    desc: 'Market research, competitor analysis, aur growth planning jo business ko next level le jaaye.',
+    tags: ['Market Research', 'Competitor Analysis', 'Growth Plan', 'Strategy', 'Consulting'],
+  },
 ]
 
-// ─── Process Steps ─────────────────────────────────────────────────────────
+const ALL_SERVICES = [
+  { icon: '📘', bg: 'rgba(24,119,242,0.15)', title: 'Facebook Ads', desc: 'Targeted campaigns jo leads aur sales dono laayein.' },
+  { icon: '📸', bg: 'rgba(225,48,108,0.15)', title: 'Instagram Marketing', desc: 'Reels, posts, stories — Instagram ko business growth machine banayein.' },
+  { icon: '🔍', bg: 'rgba(66,133,244,0.15)', title: 'Google Ads (PPC)', desc: 'Search pe top rank karo jahan customers dhundh rahe hain.' },
+  { icon: '▶️', bg: 'rgba(255,0,0,0.12)', title: 'YouTube Promotion', desc: 'Videos ko viral karo aur brand awareness badao.' },
+  { icon: '💰', bg: 'rgba(34,197,94,0.15)', title: 'Lead Generation', desc: 'Qualified leads jo seedha aapke sales funnel mein aayein.' },
+  { icon: '🌐', bg: 'rgba(108,71,255,0.15)', title: 'Website Development', desc: 'Business, e-commerce, portfolio, landing pages.' },
+  { icon: '📈', bg: 'rgba(0,212,255,0.15)', title: 'SEO & Ranking', desc: 'Google pe organically top rank karo — long-term results.' },
+  { icon: '🏪', bg: 'rgba(249,115,22,0.15)', title: 'Google Business', desc: 'Google Maps par appear karo jahan customers search karte hain.' },
+  { icon: '✏️', bg: 'rgba(139,92,246,0.15)', title: 'Logo Design', desc: 'Memorable logos jo brand ki pehchaan ban jaayein.' },
+  { icon: '📑', bg: 'rgba(16,185,129,0.15)', title: 'Brand Identity', desc: 'Color palette, typography, brand guide — full identity.' },
+  { icon: '🖼️', bg: 'rgba(249,115,22,0.15)', title: 'Poster & Banner', desc: 'Festival creatives, event banners, social media graphics.' },
+  { icon: '🎥', bg: 'rgba(34,197,94,0.15)', title: 'Video Editing', desc: 'YouTube, reels, ads — professional editing har platform ke liye.' },
+  { icon: '📞', bg: 'rgba(24,119,242,0.15)', title: 'WhatsApp Marketing', desc: 'Broadcast campaigns jo direct customers tak pohanchein.' },
+  { icon: '📧', bg: 'rgba(108,71,255,0.15)', title: 'Email Marketing', desc: 'Automated email sequences jo nurture aur convert karein.' },
+  { icon: '🏷️', bg: 'rgba(251,191,36,0.15)', title: 'Coupon & Offers', desc: 'Festive offers, discount codes, referral programs.' },
+  { icon: '👤', bg: 'rgba(139,92,246,0.15)', title: 'Personal Branding', desc: 'Politician, influencer, businessman — personal brand banao.' },
+]
+
 const PROCESS = [
-  { step: '01', title: 'Discovery Call', desc: 'Aapka business, goals, aur competitors ko samjhte hain. 30-minute free strategy session.' },
-  { step: '02', title: 'Custom Strategy', desc: 'Aapke liye tailor-made digital marketing roadmap jo exact results define kare.' },
-  { step: '03', title: 'Execution', desc: 'Expert team deploy ho jaati hai. Design, content, ads — sab parallel chalta hai.' },
-  { step: '04', title: 'Optimize & Scale', desc: 'Weekly reports, A/B testing, aur continuous optimization. Results improve hote rahe.' },
+  { num: '01', title: 'Discovery Call', desc: 'Aapke business, goals, competitors aur target audience ko samjhte hain. Free 30-min strategy session.' },
+  { num: '02', title: 'Custom Strategy', desc: 'Aapke liye tailor-made digital marketing roadmap with clear timelines aur expected results.' },
+  { num: '03', title: 'Execution', desc: 'Design, content, ads, website — sab parallel chal raha hai. Dedicated account manager ke saath.' },
+  { num: '04', title: 'Scale & Optimize', desc: 'Weekly reports, A/B testing, continuous optimization. Results improve hote hain every week.' },
 ]
 
-// ─── Pricing ───────────────────────────────────────────────────────────────
+const PORTFOLIO = [
+  {
+    emoji: '👗', bg: 'linear-gradient(135deg, #fce7f3, #fdf2f8)',
+    cat: 'Fashion & E-commerce',
+    title: 'LuxeFashion Store Launch',
+    desc: 'Complete e-commerce website with Instagram integration aur targeted ads campaign.',
+    stats: [{ val: '340%', lbl: 'Sales Up' }, { val: '200K', lbl: 'Reach' }, { val: '₹50L+', lbl: 'Revenue' }],
+  },
+  {
+    emoji: '🏨', bg: 'linear-gradient(135deg, #dbeafe, #eff6ff)',
+    cat: 'Hospitality & Tourism',
+    title: 'Resort Digital Presence',
+    desc: 'Google Ads, SEO, social media aur drone photography se resort ki online visibility triple.',
+    stats: [{ val: '3x', lbl: 'Bookings' }, { val: '#1', lbl: 'Google Rank' }, { val: '500+', lbl: 'Reviews' }],
+  },
+  {
+    emoji: '🎓', bg: 'linear-gradient(135deg, #ede9ff, #f5f3ff)',
+    cat: 'Education & Coaching',
+    title: 'Coaching Institute Growth',
+    desc: 'Facebook + Google ads ke saath student enrollments double kiye aur brand authority banayi.',
+    stats: [{ val: '2x', lbl: 'Enrollments' }, { val: '₹8L', lbl: 'Ad Spend ROI' }, { val: '180+', lbl: 'Leads/mo' }],
+  },
+  {
+    emoji: '🏗️', bg: 'linear-gradient(135deg, #fef3c7, #fffbeb)',
+    cat: 'Real Estate',
+    title: 'Property Lead Generation',
+    desc: 'Multi-city real estate campaigns jo high-intent property buyers seedha aapke paas laaye.',
+    stats: [{ val: '500+', lbl: 'Leads/mo' }, { val: '₹200', lbl: 'Cost/Lead' }, { val: '8%', lbl: 'Close Rate' }],
+  },
+  {
+    emoji: '💊', bg: 'linear-gradient(135deg, #dcfce7, #f0fdf4)',
+    cat: 'Healthcare',
+    title: 'Clinic Branding & Leads',
+    desc: 'Local SEO, Google Ads aur social media se clinic mein patient flow 4x badhaya.',
+    stats: [{ val: '4x', lbl: 'Patients' }, { val: '#1', lbl: 'Local Rank' }, { val: '60%', lbl: 'Less Cost' }],
+  },
+  {
+    emoji: '🎉', bg: 'linear-gradient(135deg, #fce7f3, #fff1f2)',
+    cat: 'Events & Entertainment',
+    title: 'Music Festival Promotion',
+    desc: 'Full digital campaign — Instagram reels, influencer collabs, Google ads se 5000+ tickets sold.',
+    stats: [{ val: '5000+', lbl: 'Tickets' }, { val: '20M+', lbl: 'Impressions' }, { val: '3x', lbl: 'ROAS' }],
+  },
+]
+
+const TESTIMONIALS = [
+  {
+    name: 'Arjun Mehta', role: 'Founder, TechScale India', text: 'Growthkaro ne hamare digital presence ko completely transform kar diya. Facebook ads se 340% sales growth in 4 months — beyond expectations!',
+    rating: 5, color: 'linear-gradient(135deg, var(--purple), var(--cyan))',
+  },
+  {
+    name: 'Priya Sharma', role: 'CEO, LuxeFashion', text: 'Instagram page 0 se 200K followers in 6 months. Unki content strategy aur reel game ekdum next level hai. Highly recommend!',
+    rating: 5, color: 'linear-gradient(135deg, #e1306c, #f77737)',
+  },
+  {
+    name: 'Rahul Gupta', role: 'MD, PropTech India', text: 'Google pe #1 rank ho gaye 5 months mein for competitive keywords. Organic leads ka flood aa gaya. Best investment hamare business mein.',
+    rating: 5, color: 'linear-gradient(135deg, #4285f4, #34a853)',
+  },
+  {
+    name: 'Sneha Agarwal', role: 'Founder, HealthFirst Clinic', text: 'Website se lekar social media tak, sab kuch Growthkaro handle karta hai. Ab main sirf business pe focus kar sakti hun. Freeing!',
+    rating: 5, color: 'linear-gradient(135deg, #10b981, #00d4ff)',
+  },
+]
+
 const PLANS = [
   {
     name: 'Starter',
+    tagline: 'Perfect for new businesses',
     price: '24,999',
-    period: '/month',
-    desc: 'Perfect for new businesses',
-    features: ['Website + 3 pages', 'Basic SEO', 'Social media (2 platforms)', '8 posts/month', 'Monthly report', 'WhatsApp support'],
-    cta: 'Get Started',
+    features: [
+      'Custom Website (5 pages)',
+      'Basic SEO Setup',
+      'Social Media (2 platforms)',
+      '12 posts + 4 reels/month',
+      'Basic Google Ads',
+      'Monthly analytics report',
+      'WhatsApp support',
+    ],
     featured: false,
   },
   {
     name: 'Growth',
+    tagline: 'Most popular — serious growth',
     price: '59,999',
-    period: '/month',
-    desc: 'Most popular — serious growth',
-    features: ['Custom website (unlimited pages)', 'Advanced SEO + content', 'Social media (4 platforms)', 'Google + Meta Ads', '25 posts + 8 reels/month', 'Email marketing', 'Weekly reports', 'Dedicated account manager'],
-    cta: 'Start Growing',
+    features: [
+      'Custom Website (unlimited)',
+      'Advanced SEO + Content',
+      'Social Media (4 platforms)',
+      '25 posts + 8 reels/month',
+      'Google + Meta Ads managed',
+      'Email + WhatsApp marketing',
+      'Video editing (4/month)',
+      'Weekly reports + calls',
+      'Dedicated account manager',
+    ],
     featured: true,
   },
   {
     name: 'Enterprise',
+    tagline: 'For large-scale operations',
     price: 'Custom',
-    period: '',
-    desc: 'For large-scale operations',
-    features: ['Full digital ecosystem', 'Unlimited campaigns', 'All platforms covered', 'Video production', 'Brand identity', 'CRO + Analytics', 'Daily reports', 'Priority 24/7 support'],
-    cta: 'Talk to Us',
+    features: [
+      'Full digital ecosystem',
+      'Unlimited campaigns',
+      'All platforms covered',
+      'Video production',
+      'Complete brand identity',
+      'CRO + Advanced Analytics',
+      'Daily reports',
+      '24/7 priority support',
+      'On-ground team available',
+    ],
     featured: false,
   },
 ]
 
-// ─── Marquee items ─────────────────────────────────────────────────────────
-const MARQUEE = ['Web Design', 'SEO', 'Branding', 'Social Media', 'Google Ads', 'Content', 'Email Marketing', 'Video Production', 'Meta Ads', 'Analytics', 'CRO', 'UI/UX']
+const FAQS = [
+  {
+    q: 'Growthkaro ki services shuru karne mein kitna time lagta hai?',
+    a: 'Hum aapke saath discovery call ke baad 48 hours mein kaam shuru kar dete hain. Website ke liye 7-14 din, social media management immediate start ho sakta hai, aur ads 2-3 din mein live ho jaate hain.',
+  },
+  {
+    q: 'Kya main sirf ek service le sakta hoon, poora package nahi?',
+    a: 'Haan, bilkul! Aap sirf Facebook Ads bhi le sakte hain, ya sirf website, ya sirf social media management. Poora bundle lena optional hai — flexibility aapke paas hai.',
+  },
+  {
+    q: 'Results kitne time mein dikhte hain?',
+    a: 'Social media growth 4-8 weeks mein, Google SEO 3-6 months mein, paid ads 2-4 weeks mein. Long-term compounding results ke liye hum 3-6 month minimum recommend karte hain.',
+  },
+  {
+    q: 'Kya mujhe apne existing website mein changes karne ka access milega?',
+    a: 'Haan, aapko full admin access milega. Aap khud bhi content add kar sakte ho. Hum training bhi dete hain ki website kaise manage karna hai.',
+  },
+  {
+    q: 'Kya guarantee hai ki results aayenge?',
+    a: 'Hum data-driven approach use karte hain. Pehle month mein hum A/B testing ke through optimal strategy finalize karte hain. Agar targeted results 90 din mein na aayein, hum next 30 din free continue karte hain.',
+  },
+  {
+    q: 'Kya aap offline businesses ke liye bhi kaam karte ho?',
+    a: 'Haan! Restaurents, clinics, salons, real estate, local shops — offline businesses ke liye hum Google Business optimization, local SEO, aur hyper-local targeting ads ke through excellent results dete hain.',
+  },
+]
 
-// ─── Hook: Scroll Reveal ───────────────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
-    const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') }),
-      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+      (entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            const delay = entry.target.dataset.delay || 0
+            setTimeout(() => entry.target.classList.add('visible'), Number(delay))
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     )
-    els.forEach(el => observer.observe(el))
+    document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale').forEach(el => observer.observe(el))
     return () => observer.disconnect()
   }, [])
 }
 
-// ─── Hook: Counter ─────────────────────────────────────────────────────────
-function useCounter(target, duration = 2000, decimal = 0) {
-  const [count, setCount] = useState(0)
-  const ref = useRef(null)
-  const started = useRef(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started.current) {
-        started.current = true
-        const start = Date.now()
-        const tick = () => {
-          const elapsed = Date.now() - start
-          const progress = Math.min(elapsed / duration, 1)
-          const ease = 1 - Math.pow(1 - progress, 3)
-          setCount(parseFloat((target * ease).toFixed(decimal)))
-          if (progress < 1) requestAnimationFrame(tick)
-        }
-        requestAnimationFrame(tick)
-      }
-    }, { threshold: 0.5 })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [target, duration, decimal])
-
-  return [count, ref]
-}
-
-// ─── Stat Item ─────────────────────────────────────────────────────────────
-function StatItem({ value, suffix, label, decimal }) {
-  const [count, ref] = useCounter(value, 1800, decimal || 0)
-  return (
-    <div ref={ref} className="text-center">
-      <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, lineHeight: 1 }}>
-        <span className="gradient-text">{decimal ? count.toFixed(decimal) : Math.round(count)}{suffix}</span>
-      </div>
-      <div style={{ color: 'var(--muted)', fontSize: '0.875rem', marginTop: 8, fontWeight: 500, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{label}</div>
-    </div>
-  )
-}
-
-// ─── Tilt Card ─────────────────────────────────────────────────────────────
-function TiltCard({ children, className, style }) {
-  const cardRef = useRef(null)
-  const handleMove = useCallback((e) => {
-    const card = cardRef.current
-    if (!card) return
-    const rect = card.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const cx = rect.width / 2
-    const cy = rect.height / 2
-    const rotateX = ((y - cy) / cy) * -8
-    const rotateY = ((x - cx) / cx) * 8
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`
-  }, [])
-  const handleLeave = useCallback(() => {
-    if (cardRef.current) cardRef.current.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)'
-  }, [])
-
-  return (
-    <div
-      ref={cardRef}
-      className={className}
-      style={{ ...style, transition: 'transform 0.2s ease-out', willChange: 'transform' }}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-    >
-      {children}
-    </div>
-  )
-}
-
-// ─── Main Page ─────────────────────────────────────────────────────────────
 export default function Home() {
   useScrollReveal()
 
-  // Cursor
-  const dotRef = useRef(null)
-  const ringRef = useRef(null)
-  const ringPos = useRef({ x: 0, y: 0 })
-  const mousePos = useRef({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const onMove = (e) => {
-      mousePos.current = { x: e.clientX, y: e.clientY }
-      if (dotRef.current) {
-        dotRef.current.style.left = e.clientX + 'px'
-        dotRef.current.style.top = e.clientY + 'px'
-      }
-    }
-    window.addEventListener('mousemove', onMove)
-
-    let raf
-    const animateRing = () => {
-      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.12
-      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.12
-      if (ringRef.current) {
-        ringRef.current.style.left = ringPos.current.x + 'px'
-        ringRef.current.style.top = ringPos.current.y + 'px'
-      }
-      raf = requestAnimationFrame(animateRing)
-    }
-    raf = requestAnimationFrame(animateRing)
-
-    const addHover = () => {
-      dotRef.current?.classList.add('hovered')
-      ringRef.current?.classList.add('hovered')
-    }
-    const removeHover = () => {
-      dotRef.current?.classList.remove('hovered')
-      ringRef.current?.classList.remove('hovered')
-    }
-    document.querySelectorAll('button, a, [data-hover]').forEach(el => {
-      el.addEventListener('mouseenter', addHover)
-      el.addEventListener('mouseleave', removeHover)
-    })
-
-    return () => {
-      window.removeEventListener('mousemove', onMove)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
-
-  // Nav scroll state
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [openFaq, setOpenFaq] = useState(null)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Hero text animation
-  const heroRef = useRef(null)
-  const [heroVisible, setHeroVisible] = useState(false)
   useEffect(() => {
-    const timer = setTimeout(() => setHeroVisible(true), 100)
-    return () => clearTimeout(timer)
-  }, [])
-
-  // Parallax orbs
-  const orbRef1 = useRef(null)
-  const orbRef2 = useRef(null)
-  useEffect(() => {
-    const onMove = (e) => {
-      const x = e.clientX / window.innerWidth
-      const y = e.clientY / window.innerHeight
-      if (orbRef1.current) {
-        orbRef1.current.style.transform = `translate(${x * 40}px, ${y * 30}px)`
-      }
-      if (orbRef2.current) {
-        orbRef2.current.style.transform = `translate(${-x * 30}px, ${-y * 20}px)`
-      }
+    const onResize = () => {
+      if (window.innerWidth > 768) setMenuOpen(false)
     }
-    window.addEventListener('mousemove', onMove)
-    return () => window.removeEventListener('mousemove', onMove)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  const [activeService, setActiveService] = useState(null)
+  const toggleFaq = (i) => setOpenFaq(openFaq === i ? null : i)
+
+  const navLinks = ['Services', 'Portfolio', 'Process', 'Pricing', 'FAQ']
 
   return (
     <>
-      {/* Custom Cursor */}
-      <div ref={dotRef} className="cursor-dot" />
-      <div ref={ringRef} className="cursor-ring" />
+      {/* ── NAVBAR ── */}
+      <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
+        <a href="#" className="nav-brand" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>Growth<span>karo</span></a>
 
-      {/* ── NAV ── */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
-        padding: '0 5%',
-        transition: 'all 0.4s',
-        ...(scrolled ? { background: 'rgba(5,5,8,0.9)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)' } : {})
-      }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
-          {/* Logo */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{
-              width: 38, height: 38, borderRadius: 10,
-              background: 'linear-gradient(135deg, #6c47ff, #ff3cac)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 18, fontWeight: 900,
-              boxShadow: '0 0 20px rgba(108,71,255,0.5)'
-            }}>N</div>
-            <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '1.35rem', letterSpacing: '-0.02em' }}>
-              NEXUS<span style={{ color: 'var(--accent)' }}>.</span>
-            </span>
-          </div>
+        <div className="nav-links">
+          {navLinks.map(link => (
+            <a key={link} href={`#${link.toLowerCase()}`}>{link}</a>
+          ))}
+        </div>
 
-          {/* Links */}
-          <div style={{ display: 'flex', gap: 36, alignItems: 'center' }} className="hidden md:flex">
-            {['Services', 'Process', 'Work', 'Pricing', 'Contact'].map(l => (
-              <a key={l} href={`#${l.toLowerCase()}`} style={{
-                color: 'var(--muted)', textDecoration: 'none',
-                fontSize: '0.9rem', fontWeight: 500, letterSpacing: '0.02em',
-                transition: 'color 0.3s', position: 'relative',
-              }}
-                onMouseEnter={e => e.target.style.color = 'white'}
-                onMouseLeave={e => e.target.style.color = 'var(--muted)'}
-              >{l}</a>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <button className="btn-primary" style={{ padding: '10px 24px', borderRadius: 100, fontSize: '0.875rem' }}>
-            <span>Let&apos;s Talk</span>
-            <ArrowRight />
+        <div className="nav-actions">
+          <a href="https://wa.me/919999999999" className="btn-ghost">WhatsApp us</a>
+          <a href="#pricing" className="btn-primary">Get Started →</a>
+          <button className="nav-hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+            <span style={menuOpen ? { transform: 'rotate(45deg) translate(5px,5px)' } : {}}></span>
+            <span style={menuOpen ? { opacity: 0 } : {}}></span>
+            <span style={menuOpen ? { transform: 'rotate(-45deg) translate(5px,-5px)' } : {}}></span>
           </button>
         </div>
       </nav>
 
+      {/* ── MOBILE MENU ── */}
+      <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
+        {navLinks.map(link => (
+          <a key={link} href={`#${link.toLowerCase()}`} onClick={() => setMenuOpen(false)}>{link}</a>
+        ))}
+        <a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
+        <a href="https://wa.me/919999999999" onClick={() => setMenuOpen(false)}>WhatsApp us</a>
+      </div>
+
       {/* ── HERO ── */}
-      <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', paddingTop: 72 }} className="grid-bg">
-        {/* Orbs */}
-        <div ref={orbRef1} style={{ position: 'absolute', top: '10%', right: '5%', width: 600, height: 600, transition: 'transform 0.3s ease-out' }}>
-          <div className="orb" style={{ width: '100%', height: '100%', background: 'radial-gradient(circle, rgba(108,71,255,0.25) 0%, transparent 70%)' }} />
-        </div>
-        <div ref={orbRef2} style={{ position: 'absolute', bottom: '10%', left: '0%', width: 500, height: 500, transition: 'transform 0.3s ease-out' }}>
-          <div className="orb" style={{ width: '100%', height: '100%', background: 'radial-gradient(circle, rgba(255,60,172,0.15) 0%, transparent 70%)' }} />
-        </div>
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 400, height: 400 }}>
-          <div className="orb" style={{ width: '100%', height: '100%', background: 'radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%)' }} />
+      <section className="hero">
+        <div className="hero-bg">
+          <div className="hero-orb hero-orb-1"></div>
+          <div className="hero-orb hero-orb-2"></div>
+          <div className="hero-orb hero-orb-3"></div>
+          <div className="hero-grid"></div>
         </div>
 
-        {/* Spinning rings */}
-        <div style={{ position: 'absolute', top: '50%', right: '8%', transform: 'translateY(-50%)' }}>
-          <div className="spin-slow" style={{ width: 320, height: 320, border: '1px solid rgba(108,71,255,0.15)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div className="spin-reverse" style={{ width: 240, height: 240, border: '1px solid rgba(255,60,172,0.12)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ width: 160, height: 160, border: '1px solid rgba(0,212,255,0.1)', borderRadius: '50%' }} />
-            </div>
-          </div>
-        </div>
-
-        {/* Content */}
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 5%', position: 'relative', zIndex: 1, width: '100%' }}>
-          <div style={{ maxWidth: 800 }}>
-            {/* Tag */}
-            <div style={{
-              opacity: heroVisible ? 1 : 0,
-              transform: heroVisible ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.6s cubic-bezier(0.23,1,0.32,1)',
-              marginBottom: 28,
-            }}>
-              <span className="tag">
-                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block', boxShadow: '0 0 8px #22c55e' }} />
-                Full-Service Digital Marketing Agency
-              </span>
-            </div>
-
-            {/* Main heading */}
-            {['We Make', 'Brands', 'Impossible'].map((word, i) => (
-              <div key={word} style={{
-                overflow: 'hidden',
-                opacity: heroVisible ? 1 : 0,
-                transform: heroVisible ? 'translateY(0)' : 'translateY(60px)',
-                transition: `all 0.8s cubic-bezier(0.23,1,0.32,1) ${0.1 + i * 0.12}s`,
-              }}>
-                <div style={{
-                  fontFamily: 'Syne, sans-serif',
-                  fontSize: 'clamp(3.5rem, 8vw, 7rem)',
-                  fontWeight: 800,
-                  lineHeight: 1.05,
-                  letterSpacing: '-0.03em',
-                }}>
-                  {word === 'Impossible' ? <span className="animated-gradient">{word}</span> : word}
-                  {word === 'Brands' && <span style={{ color: 'var(--accent)' }}> </span>}
-                </div>
+        <div className="container">
+          <div className="hero-inner">
+            {/* Left Content */}
+            <div>
+              <div className="hero-badge">
+                🚀 India&apos;s #1 Digital Marketing Agency
               </div>
-            ))}
-            <div style={{
-              overflow: 'hidden',
-              opacity: heroVisible ? 1 : 0,
-              transform: heroVisible ? 'translateY(0)' : 'translateY(60px)',
-              transition: 'all 0.8s cubic-bezier(0.23,1,0.32,1) 0.46s',
-            }}>
-              <div style={{
-                fontFamily: 'Syne, sans-serif',
-                fontSize: 'clamp(3.5rem, 8vw, 7rem)',
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: '-0.03em',
-                color: 'var(--muted)',
-              }}>to Ignore.</div>
-            </div>
 
-            {/* Sub */}
-            <div style={{
-              opacity: heroVisible ? 1 : 0,
-              transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
-              transition: 'all 0.8s cubic-bezier(0.23,1,0.32,1) 0.6s',
-              marginTop: 28,
-              marginBottom: 40,
-              maxWidth: 520,
-            }}>
-              <p style={{ color: 'var(--muted)', fontSize: '1.125rem', lineHeight: 1.7, fontWeight: 400 }}>
-                Web design se lekar SEO, social media, ads aur branding tak — ek hi agency, A to Z digital growth. 
-                <span style={{ color: 'white', fontWeight: 600 }}> 500+ brands</span> ka trust.
+              <h1 className="hero-title">
+                Your brand deserves to be{' '}
+                <span className="gradient-text">seen by millions.</span>
+              </h1>
+
+              <p className="hero-desc">
+                Stop guessing what&apos;s working. We build complete digital marketing systems that bring
+                real customers, generate quality leads, and scale your revenue — month after month.
               </p>
-            </div>
 
-            {/* CTAs */}
-            <div style={{
-              display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center',
-              opacity: heroVisible ? 1 : 0,
-              transform: heroVisible ? 'translateY(0)' : 'translateY(30px)',
-              transition: 'all 0.8s cubic-bezier(0.23,1,0.32,1) 0.72s',
-            }}>
-              <button className="btn-primary" style={{ padding: '16px 32px', borderRadius: 100, fontSize: '1rem' }}>
-                <span>Start Free Consultation</span>
-                <ArrowRight />
-              </button>
-              <button className="btn-ghost" style={{ padding: '16px 32px', borderRadius: 100, fontSize: '1rem' }}>
-                <span>See Our Work</span>
-              </button>
-            </div>
-
-            {/* Social proof */}
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: 16, marginTop: 48,
-              opacity: heroVisible ? 1 : 0,
-              transition: 'all 0.8s cubic-bezier(0.23,1,0.32,1) 0.85s',
-            }}>
-              <div style={{ display: 'flex' }}>
-                {['A','B','C','D','E'].map((l,i) => (
-                  <div key={l} style={{
-                    width: 36, height: 36, borderRadius: '50%', marginLeft: i === 0 ? 0 : -10,
-                    background: `hsl(${i * 60 + 240}, 70%, 50%)`,
-                    border: '2px solid var(--bg)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '0.75rem', fontWeight: 700,
-                  }}>{l}</div>
-                ))}
+              <div className="hero-cta">
+                <a href="#pricing" className="btn-primary-lg">
+                  Start Growing Today →
+                </a>
+                <a href="#process" className="btn-outline">
+                  See How It Works
+                </a>
               </div>
-              <div>
-                <div style={{ display: 'flex', gap: 2, marginBottom: 2 }}>
-                  {[1,2,3,4,5].map(s => <span key={s} style={{ color: '#f59e0b' }}><Star /></span>)}
+
+              <div className="hero-proof">
+                <span className="proof-item">No credit card</span>
+                <span className="proof-item">3x ROI guaranteed</span>
+                <span className="proof-item">Results in 30 days</span>
+              </div>
+            </div>
+
+            {/* Right - Dashboard Preview */}
+            <div className="hero-card">
+              <div className="hero-card-header">
+                <div className="hero-card-dots">
+                  <span></span><span></span><span></span>
                 </div>
-                <div style={{ color: 'var(--muted)', fontSize: '0.8rem' }}><strong style={{ color: 'white' }}>500+ clients</strong> growing with NEXUS</div>
+                <span className="hero-card-url">growthkaro.in/dashboard</span>
+                <span className="hero-card-live">Live</span>
+              </div>
+
+              <div className="hero-card-body">
+                <div className="dash-metric-row">
+                  <div className="dash-metric">
+                    <div className="dash-metric-label">Revenue</div>
+                    <div className="dash-metric-value">₹4.8L</div>
+                    <div className="dash-metric-sub">↑ 34% this month</div>
+                  </div>
+                  <div className="dash-metric">
+                    <div className="dash-metric-label">Leads</div>
+                    <div className="dash-metric-value">847</div>
+                    <div className="dash-metric-sub">↑ 2.1x vs last</div>
+                  </div>
+                  <div className="dash-metric">
+                    <div className="dash-metric-label">ROAS</div>
+                    <div className="dash-metric-value">4.2x</div>
+                    <div className="dash-metric-sub">↑ From 2.1x</div>
+                  </div>
+                </div>
+
+                <div className="dash-chart">
+                  <div className="dash-chart-title">Weekly Performance Overview</div>
+                  <div className="dash-bars">
+                    <div className="dash-bar" style={{ height: '32px' }}></div>
+                    <div className="dash-bar" style={{ height: '45px' }}></div>
+                    <div className="dash-bar" style={{ height: '28px' }}></div>
+                    <div className="dash-bar" style={{ height: '55px' }}></div>
+                    <div className="dash-bar" style={{ height: '42px' }}></div>
+                    <div className="dash-bar active" style={{ height: '60px' }}></div>
+                    <div className="dash-bar" style={{ height: '50px' }}></div>
+                  </div>
+                </div>
+
+                <div className="dash-platforms">
+                  <div className="dash-platform ig">Instagram</div>
+                  <div className="dash-platform fb">Facebook</div>
+                  <div className="dash-platform gad">Google</div>
+                  <div className="dash-platform yt">YouTube</div>
+                </div>
+
+                <div className="dash-lead-card">
+                  <div className="dash-lead-icon">🎯</div>
+                  <div>
+                    <div className="dash-lead-title">New lead from Google Ads</div>
+                    <div className="dash-lead-sub">Real Estate · Mumbai · ₹25L budget</div>
+                  </div>
+                  <span className="dash-lead-badge">Hot Lead ✓</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-          <div style={{ color: 'var(--muted)', fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Scroll</div>
-          <div style={{ width: 1, height: 40, background: 'linear-gradient(to bottom, var(--accent), transparent)' }} />
         </div>
       </section>
 
       {/* ── MARQUEE ── */}
-      <div style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent2))', padding: '14px 0', overflow: 'hidden', position: 'relative' }}>
-        <div className="marquee-track" style={{ display: 'flex', gap: 0, width: 'max-content' }}>
-          {[...MARQUEE, ...MARQUEE, ...MARQUEE, ...MARQUEE].map((item, i) => (
-            <span key={i} style={{ padding: '0 32px', whiteSpace: 'nowrap', fontWeight: 700, fontSize: '0.875rem', letterSpacing: '0.1em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 16 }}>
-              {item} <span style={{ color: 'rgba(255,255,255,0.5)' }}>✦</span>
+      <div className="marquee-section">
+        <div className="marquee-track">
+          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
+            <span key={i} className="marquee-item">
+              {item}
+              <span className="marquee-dot"></span>
             </span>
           ))}
         </div>
       </div>
 
-      {/* ── STATS ── */}
-      <section style={{ padding: '100px 5%', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: 800, height: 1, background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }} />
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 48 }} className="reveal stagger">
+      {/* ── STATS BAR ── */}
+      <div className="stats-bar">
+        <div className="container">
+          <div className="stats-bar-inner">
             {STATS.map((s, i) => (
-              <div key={i} className="reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
-                <StatItem {...s} />
+              <div key={i} className="stats-bar-item">
+                <div className="stats-bar-num">
+                  <span className="gradient-text">{s.value}{s.suffix}</span>
+                </div>
+                <div className="stats-bar-label">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* ── SERVICES ── */}
-      <section id="services" style={{ padding: '120px 5%', background: 'var(--bg2)', position: 'relative', overflow: 'hidden' }}>
-        <div className="orb" style={{ width: 400, height: 400, background: 'radial-gradient(circle, rgba(108,71,255,0.1) 0%, transparent 70%)', top: '20%', right: '-10%' }} />
-
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          {/* Header */}
-          <div style={{ marginBottom: 72, maxWidth: 600 }}>
-            <div className="reveal"><span className="tag" style={{ marginBottom: 20, display: 'inline-flex' }}>Everything Included</span></div>
-            <h2 className="reveal" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.02em', marginTop: 16 }}>
-              A–Z Digital Services.<br /><span className="gradient-text">Ek Hi Jagah.</span>
+      {/* ── SERVICES OVERVIEW ── */}
+      <section className="section" id="services">
+        <div className="container">
+          <div className="section-header">
+            <div className="section-label">What We Do</div>
+            <h2 className="section-title">
+              Everything your brand needs.{' '}
+              <span className="gradient-text">One agency.</span>
             </h2>
-            <p className="reveal" style={{ color: 'var(--muted)', fontSize: '1.1rem', lineHeight: 1.7, marginTop: 16 }}>
-              Alag alag agencies ki zarurat nahi. NEXUS mein sab kuch milta hai — strategy se execution tak.
+            <p className="section-sub">
+              From ads to websites to content — Growthkaro is your complete digital marketing partner.
+              No freelancers, no confusion. One team, infinite growth.
             </p>
           </div>
 
-          {/* Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 }} className="stagger">
-            {SERVICES.map((s, i) => (
-              <TiltCard key={s.title} className="service-card reveal" style={{ padding: 32, borderRadius: 20, cursor: 'pointer', transitionDelay: `${i * 0.07}s` }}>
-                <div style={{ fontSize: 40, marginBottom: 16 }}>{s.icon}</div>
-                <div style={{
-                  display: 'inline-block', padding: '3px 10px', borderRadius: 6, fontSize: 10,
-                  fontWeight: 700, letterSpacing: '0.1em',
-                  background: `${s.color}20`, color: s.color, marginBottom: 12,
-                  border: `1px solid ${s.color}40`,
-                }}>{s.tag}</div>
-                <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.2rem', fontWeight: 700, marginBottom: 10 }}>{s.title}</h3>
-                <p style={{ color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.65 }}>{s.desc}</p>
-                <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', gap: 8, color: s.color, fontSize: '0.875rem', fontWeight: 600 }}>
-                  Learn more <ArrowRight />
+          <div className="service-categories">
+            {SERVICE_CATEGORIES.map((cat, i) => (
+              <div
+                key={i}
+                className="service-category-card scroll-reveal"
+                data-delay={i * 80}
+              >
+                <div className="service-cat-icon" style={{ background: cat.iconBg }}>
+                  {cat.icon}
                 </div>
-              </TiltCard>
+                <div className="service-cat-title">{cat.title}</div>
+                <div className="service-cat-desc">{cat.desc}</div>
+                <div className="service-cat-items">
+                  {cat.tags.map((tag, j) => (
+                    <span key={j} className="service-cat-tag">{tag}</span>
+                  ))}
+                </div>
+                <div className="service-cat-arrow">→</div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── WHY US ── */}
-      <section style={{ padding: '120px 5%', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
-          {/* Left */}
-          <div>
-            <span className="tag reveal" style={{ marginBottom: 20, display: 'inline-flex' }}>Why NEXUS</span>
-            <h2 className="reveal" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginTop: 16, marginBottom: 24 }}>
-              Baaki agencies kya dete hain, hum kya dete hain
-            </h2>
+      <div className="section-divider"></div>
 
-            {/* Comparison */}
-            <div className="reveal" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 32 }}>
-              <div style={{ background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 16, padding: 20 }}>
-                <div style={{ fontWeight: 700, marginBottom: 12, color: '#ef4444', fontSize: '0.85rem', letterSpacing: '0.05em' }}>❌ OTHERS</div>
-                {['Ek hi service', 'Slow results', 'No transparency', 'Fixed templates', 'Fake reports', 'Ghosting after payment'].map(x => (
-                  <div key={x} style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', marginBottom: 8, paddingLeft: 8, borderLeft: '2px solid rgba(239,68,68,0.3)' }}>{x}</div>
-                ))}
-              </div>
-              <div style={{ background: 'rgba(108,71,255,0.07)', border: '1px solid rgba(108,71,255,0.25)', borderRadius: 16, padding: 20 }}>
-                <div style={{ fontWeight: 700, marginBottom: 12, color: 'var(--accent)', fontSize: '0.85rem', letterSpacing: '0.05em' }}>✅ NEXUS</div>
-                {['A–Z sabkuch', 'Results in 90 days', 'Weekly reports', 'Custom everything', 'Real data', 'Dedicated manager'].map(x => (
-                  <div key={x} style={{ color: 'var(--text)', fontSize: '0.85rem', marginBottom: 8, paddingLeft: 8, borderLeft: '2px solid var(--accent)' }}>{x}</div>
-                ))}
-              </div>
-            </div>
+      {/* ── ALL SERVICES GRID ── */}
+      <section className="section" style={{ paddingTop: '48px' }}>
+        <div className="container">
+          <div className="section-header" style={{ marginBottom: '0' }}>
+            <div className="section-label">Complete Service List</div>
+            <h2 className="section-title">
+              <span className="gradient-text">16+ Services</span> Under One Roof
+            </h2>
           </div>
 
-          {/* Right - floating card */}
-          <div style={{ position: 'relative' }}>
-            <div className="reveal-right float" style={{
-              background: 'var(--surface)',
-              border: '1px solid rgba(108,71,255,0.3)',
-              borderRadius: 24, padding: 36,
-              boxShadow: '0 40px 80px rgba(0,0,0,0.4), 0 0 60px rgba(108,71,255,0.15)',
-            }}>
-              <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ width: 48, height: 48, borderRadius: 14, background: 'linear-gradient(135deg, var(--accent), var(--accent2))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>📊</div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>Aapki Brand Ka Growth</div>
-                  <div style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>Last 6 months</div>
+          <div className="services-grid">
+            {ALL_SERVICES.map((s, i) => (
+              <div
+                key={i}
+                className="service-card scroll-reveal"
+                data-delay={i * 50}
+              >
+                <div className="service-icon" style={{ background: s.bg }}>
+                  {s.icon}
                 </div>
+                <div className="service-title">{s.title}</div>
+                <div className="service-desc">{s.desc}</div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              {/* Fake chart bars */}
-              {[['Jan', 40], ['Feb', 55], ['Mar', 48], ['Apr', 72], ['May', 88], ['Jun', 95]].map(([m, h]) => (
-                <div key={m} style={{ display: 'flex', alignItems: 'flex-end', gap: 8, marginBottom: 12 }}>
-                  <div style={{ width: 36, color: 'var(--muted)', fontSize: '0.75rem', textAlign: 'right' }}>{m}</div>
-                  <div style={{ flex: 1, height: 8, background: 'rgba(255,255,255,0.06)', borderRadius: 4, overflow: 'hidden' }}>
-                    <div style={{
-                      height: '100%', width: `${h}%`, borderRadius: 4,
-                      background: h > 80 ? 'linear-gradient(90deg, var(--accent), var(--accent2))' : 'rgba(108,71,255,0.5)',
-                      transition: 'width 1s ease'
-                    }} />
-                  </div>
-                  <div style={{ width: 36, color: h > 80 ? 'var(--accent2)' : 'var(--muted)', fontSize: '0.75rem', fontWeight: 600 }}>{h}%</div>
+      {/* ── BEFORE/AFTER ── */}
+      <section className="section" style={{ background: 'rgba(255,255,255,0.01)' }}>
+        <div className="container">
+          <div className="section-header">
+            <div className="section-label">The Problem</div>
+            <h2 className="section-title">Sound familiar?</h2>
+            <p className="section-sub">
+              Every business owner we meet has the same pain points. We fix all of them.
+            </p>
+          </div>
+
+          <div className="before-after">
+            <div className="ba-card ba-card-bad scroll-reveal-left">
+              <div className="ba-card-title">😤 Without Growthkaro</div>
+              {[
+                'Low brand visibility — customers can\'t find you online',
+                'Wasting money on random ads with no strategy',
+                'Social media posting random content with zero engagement',
+                'No proper website — just a "DM for orders" culture',
+                'Leads slipping away because no follow-up system',
+                'No idea what\'s working and what\'s not',
+                'Hiring random freelancers — inconsistent quality',
+              ].map((item, i) => (
+                <div key={i} className="ba-item ba-item-bad">
+                  <span className="ba-icon">✗</span>
+                  {item}
                 </div>
               ))}
+            </div>
 
-              <div style={{ marginTop: 20, padding: 16, background: 'rgba(108,71,255,0.1)', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontSize: 20 }}>🚀</span>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>+138% Growth</div>
-                  <div style={{ color: 'var(--muted)', fontSize: '0.78rem' }}>6 mahine mein average client growth</div>
+            <div className="ba-card ba-card-good scroll-reveal-right">
+              <div className="ba-card-title">🚀 With Growthkaro</div>
+              {[
+                'Top Google rankings — customers find you first',
+                'Data-driven ads with 3x+ ROI every month',
+                'Professional content that actually engages followers',
+                'Stunning website that converts visitors to customers',
+                'Automated lead capture with follow-up systems',
+                'Weekly reports with clear metrics and insights',
+                'One dedicated team — consistent quality, always',
+              ].map((item, i) => (
+                <div key={i} className="ba-item ba-item-good">
+                  <span className="ba-icon">✓</span>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PORTFOLIO ── */}
+      <section className="section" id="portfolio">
+        <div className="container">
+          <div className="section-header">
+            <div className="section-label">Our Work</div>
+            <h2 className="section-title">
+              Real results for{' '}
+              <span className="gradient-text">real businesses.</span>
+            </h2>
+            <p className="section-sub">
+              Every industry, every size. See how we&apos;ve transformed these businesses with digital marketing.
+            </p>
+          </div>
+
+          <div className="portfolio-grid">
+            {PORTFOLIO.map((p, i) => (
+              <div
+                key={i}
+                className="portfolio-card scroll-reveal-scale"
+                data-delay={i * 80}
+              >
+                <div className="portfolio-visual" style={{ background: p.bg }}>
+                  {p.emoji}
+                </div>
+                <div className="portfolio-info">
+                  <div className="portfolio-cat">{p.cat}</div>
+                  <div className="portfolio-title">{p.title}</div>
+                  <div className="portfolio-desc">{p.desc}</div>
+                  <div className="portfolio-stats">
+                    {p.stats.map((s, j) => (
+                      <div key={j} className="portfolio-stat">
+                        <div className="portfolio-stat-val">{s.val}</div>
+                        <div className="portfolio-stat-label">{s.lbl}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* Floating badge */}
-            <div className="float2" style={{
-              position: 'absolute', top: -20, right: -20,
-              background: 'linear-gradient(135deg, var(--accent2), #ff6b6b)',
-              borderRadius: 16, padding: '12px 20px',
-              boxShadow: '0 20px 40px rgba(255,60,172,0.3)',
-            }}>
-              <div style={{ fontWeight: 800, fontSize: '1.5rem' }}>500+</div>
-              <div style={{ fontSize: '0.75rem', opacity: 0.85 }}>Happy Clients</div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ── PROCESS ── */}
-      <section id="process" style={{ padding: '120px 5%', background: 'var(--bg2)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 80 }}>
-            <span className="tag reveal" style={{ marginBottom: 20, display: 'inline-flex' }}>Simple Process</span>
-            <h2 className="reveal" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginTop: 16 }}>
-              Idea se <span className="gradient-text">Live Results</span> tak
+      <section className="section" id="process" style={{ background: 'rgba(255,255,255,0.01)' }}>
+        <div className="container">
+          <div className="section-header">
+            <div className="section-label">How It Works</div>
+            <h2 className="section-title">
+              From zero to{' '}
+              <span className="gradient-text">scaling fast</span> in 4 steps.
             </h2>
+            <p className="section-sub">
+              No fluff, no confusion. Our proven process delivers results every single time.
+            </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 32 }}>
+          <div className="process-grid">
             {PROCESS.map((p, i) => (
-              <div key={p.step} className="reveal" style={{ transitionDelay: `${i * 0.15}s`, position: 'relative' }}>
-                {i < PROCESS.length - 1 && (
-                  <div style={{ position: 'absolute', top: 28, left: 'calc(100% - 16px)', width: 32, height: 2, background: 'linear-gradient(90deg, var(--accent), transparent)', zIndex: 1 }} />
-                )}
-                <div style={{
-                  background: 'var(--surface)', border: '1px solid var(--border)',
-                  borderRadius: 20, padding: 28, transition: 'all 0.4s',
-                  position: 'relative', overflow: 'hidden',
-                }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(108,71,255,0.4)'; e.currentTarget.style.transform = 'translateY(-6px)' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)' }}
-                >
-                  <div style={{
-                    fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '3rem',
-                    color: 'rgba(108,71,255,0.15)', lineHeight: 1, marginBottom: 20,
-                    position: 'absolute', top: 16, right: 20,
-                  }}>{p.step}</div>
-                  <div style={{
-                    width: 48, height: 48, borderRadius: 14,
-                    background: 'linear-gradient(135deg, rgba(108,71,255,0.2), rgba(255,60,172,0.1))',
-                    border: '1px solid rgba(108,71,255,0.3)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '1.4rem', marginBottom: 16,
-                  }}>
-                    {['🔍','📋','⚡','📈'][i]}
-                  </div>
-                  <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '1.15rem', marginBottom: 10 }}>{p.title}</h3>
-                  <p style={{ color: 'var(--muted)', fontSize: '0.875rem', lineHeight: 1.65 }}>{p.desc}</p>
-                </div>
+              <div
+                key={i}
+                className="process-card scroll-reveal"
+                data-delay={i * 100}
+              >
+                <div className="process-num">{p.num}</div>
+                <div className="process-title">{p.title}</div>
+                <div className="process-desc">{p.desc}</div>
               </div>
             ))}
           </div>
@@ -652,41 +632,37 @@ export default function Home() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section style={{ padding: '120px 5%', position: 'relative', overflow: 'hidden' }}>
-        <div className="orb" style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(255,60,172,0.08) 0%, transparent 70%)', bottom: '0', left: '30%' }} />
-
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 72 }}>
-            <span className="tag reveal" style={{ marginBottom: 20, display: 'inline-flex' }}>Seller Stories</span>
-            <h2 className="reveal" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginTop: 16 }}>
-              Real Clients. <span className="gradient-text">Real Results.</span>
+      <section className="section" id="testimonials">
+        <div className="container">
+          <div className="section-header">
+            <div className="section-label">Client Love</div>
+            <h2 className="section-title">
+              What our{' '}
+              <span className="gradient-text">clients say.</span>
             </h2>
+            <p className="section-sub">
+              Don&apos;t take our word for it. Here&apos;s what business owners say after working with Growthkaro.
+            </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }} className="stagger">
+          <div className="testimonials-grid">
             {TESTIMONIALS.map((t, i) => (
-              <div key={t.name} className="reveal" style={{
-                background: 'var(--surface)', border: '1px solid var(--border)',
-                borderRadius: 20, padding: 28, transition: 'all 0.4s',
-                transitionDelay: `${i * 0.1}s`,
-              }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(108,71,255,0.3)'; e.currentTarget.style.transform = 'translateY(-6px)' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)' }}
+              <div
+                key={i}
+                className="testimonial-card scroll-reveal"
+                data-delay={i * 80}
               >
-                <div style={{ display: 'flex', gap: 3, marginBottom: 16 }}>
-                  {Array(t.rating).fill(0).map((_, j) => <span key={j} style={{ color: '#f59e0b' }}><Star /></span>)}
+                <div className="test-stars">
+                  {'★★★★★'.split('').join(' ')}
                 </div>
-                <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.925rem', lineHeight: 1.7, marginBottom: 20, fontStyle: 'italic' }}>&ldquo;{t.text}&rdquo;</p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div style={{
-                    width: 42, height: 42, borderRadius: '50%',
-                    background: `hsl(${i * 80 + 200}, 60%, 45%)`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontWeight: 700, fontSize: '0.95rem',
-                  }}>{t.name[0]}</div>
+                <div className="test-text">&ldquo;{t.text}&rdquo;</div>
+                <div className="test-author">
+                  <div className="test-avatar" style={{ background: t.color }}>
+                    {t.name[0]}
+                  </div>
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{t.name}</div>
-                    <div style={{ color: 'var(--muted)', fontSize: '0.78rem' }}>{t.role}</div>
+                    <div className="test-name">{t.name}</div>
+                    <div className="test-role">{t.role}</div>
                   </div>
                 </div>
               </div>
@@ -696,61 +672,53 @@ export default function Home() {
       </section>
 
       {/* ── PRICING ── */}
-      <section id="pricing" style={{ padding: '120px 5%', background: 'var(--bg2)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 72 }}>
-            <span className="tag reveal" style={{ marginBottom: 20, display: 'inline-flex' }}>Simple Pricing</span>
-            <h2 className="reveal" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginTop: 16 }}>
-              Flat Price. <span className="gradient-text">Zero Surprises.</span>
+      <section className="section" id="pricing" style={{ background: 'rgba(255,255,255,0.01)' }}>
+        <div className="container">
+          <div className="section-header">
+            <div className="section-label">Pricing</div>
+            <h2 className="section-title">
+              Simple pricing.{' '}
+              <span className="gradient-text">Powerful results.</span>
             </h2>
-            <p className="reveal" style={{ color: 'var(--muted)', fontSize: '1rem', marginTop: 12 }}>No hidden fees. No commission. 30-day free trial on all plans.</p>
+            <p className="section-sub">
+              No hidden fees, no surprises. Pick a plan and start growing. All plans include dedicated support.
+            </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, alignItems: 'start' }}>
+          <div className="pricing-grid">
             {PLANS.map((plan, i) => (
-              <div key={plan.name} className={`pricing-card reveal ${plan.featured ? 'featured' : ''}`} style={{
-                borderRadius: 24, padding: 36,
-                transitionDelay: `${i * 0.1}s`,
-                transform: plan.featured ? 'scale(1.03)' : undefined,
-              }}>
-                {plan.featured && (
-                  <div style={{
-                    position: 'absolute', top: -1, left: '50%', transform: 'translateX(-50%)',
-                    background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
-                    padding: '4px 20px', borderRadius: '0 0 12px 12px',
-                    fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em',
-                    whiteSpace: 'nowrap',
-                  }}>MOST POPULAR</div>
-                )}
+              <div
+                key={i}
+                className={`pricing-card${plan.featured ? ' featured' : ''} scroll-reveal`}
+                data-delay={i * 100}
+              >
+                {plan.featured && <div className="pricing-popular">MOST POPULAR</div>}
+                <div className="pricing-name">{plan.name}</div>
+                <div className="pricing-tagline">{plan.tagline}</div>
 
-                <div style={{ marginBottom: 8, marginTop: plan.featured ? 16 : 0 }}>
-                  <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '1.1rem' }}>{plan.name}</div>
-                  <div style={{ color: 'var(--muted)', fontSize: '0.85rem', marginTop: 4 }}>{plan.desc}</div>
+                <div className="pricing-price">
+                  {plan.price === 'Custom' ? (
+                    <span className="gradient-text">Custom</span>
+                  ) : (
+                    <>
+                      <span style={{ fontSize: 24, verticalAlign: 'super', letterSpacing: -1 }}>₹</span>
+                      {plan.price}
+                      <span className="period">/mo</span>
+                    </>
+                  )}
                 </div>
 
-                <div style={{ margin: '24px 0', display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                  {plan.price !== 'Custom' && <span style={{ color: 'var(--muted)', fontSize: '1.2rem' }}>₹</span>}
-                  <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '2.5rem', ...(plan.featured ? { backgroundImage: 'linear-gradient(135deg, #a78bfa, var(--accent2))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' } : {}) }}>
-                    {plan.price}
-                  </span>
-                  <span style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>{plan.period}</span>
-                </div>
+                <div className="pricing-divider"></div>
 
-                <div style={{ borderTop: '1px solid var(--border)', paddingTop: 24, marginBottom: 28 }}>
-                  {plan.features.map(f => (
-                    <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                      <span style={{ color: plan.featured ? 'var(--accent2)' : 'var(--accent)', flexShrink: 0 }}><Check /></span>
-                      <span style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.8)' }}>{f}</span>
-                    </div>
-                  ))}
-                </div>
+                {plan.features.map((f, j) => (
+                  <div key={j} className="pricing-item">
+                    <span className="pricing-check">✓</span>
+                    {f}
+                  </div>
+                ))}
 
-                <button
-                  className={plan.featured ? 'btn-primary' : 'btn-ghost'}
-                  style={{ width: '100%', padding: '14px', borderRadius: 100, fontSize: '0.95rem', justifyContent: 'center' }}
-                >
-                  <span>{plan.cta}</span>
-                  <ArrowRight />
+                <button className={`pricing-btn${plan.featured ? ' pricing-btn-featured' : ' pricing-btn-default'}`}>
+                  {plan.name === 'Enterprise' ? 'Talk to Us →' : 'Start Free Trial →'}
                 </button>
               </div>
             ))}
@@ -758,112 +726,129 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CTA SECTION ── */}
-      <section id="contact" style={{ padding: '120px 5%', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(108,71,255,0.15) 0%, transparent 70%)' }} />
-        <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-
-          {/* Rings */}
-          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', pointerEvents: 'none' }}>
-            {[300, 450, 600].map((size, i) => (
-              <div key={size} style={{
-                width: size, height: size,
-                border: `1px solid rgba(108,71,255,${0.12 - i * 0.03})`,
-                borderRadius: '50%',
-                position: 'absolute',
-                top: '50%', left: '50%',
-                transform: 'translate(-50%,-50%)',
-                animation: `spin-slow ${20 + i * 5}s linear infinite ${i % 2 === 1 ? 'reverse' : ''}`,
-              }} />
-            ))}
+      {/* ── FAQ ── */}
+      <section className="section" id="faq">
+        <div className="container">
+          <div className="section-header">
+            <div className="section-label">FAQ</div>
+            <h2 className="section-title">
+              Questions?{' '}
+              <span className="gradient-text">Answered.</span>
+            </h2>
+            <p className="section-sub">
+              Still have questions? WhatsApp us directly — we reply within 30 minutes.
+            </p>
           </div>
 
-          <span className="tag reveal" style={{ marginBottom: 24, display: 'inline-flex' }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block', boxShadow: '0 0 8px #22c55e' }} />
-            Abhi Slots Available
-          </span>
-
-          <h2 className="reveal" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', marginTop: 16, marginBottom: 24 }}>
-            Aapki Brand<br /><span className="animated-gradient">Live Honi Chahiye.</span><br />Aaj Raat.
-          </h2>
-
-          <p className="reveal" style={{ color: 'var(--muted)', fontSize: '1.1rem', lineHeight: 1.7, marginBottom: 40 }}>
-            Free 30-minute strategy call book karo. Koi sales pressure nahi, sirf honest advice — aur ek clear roadmap.
-          </p>
-
-          <div className="reveal" style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button className="btn-primary" style={{ padding: '18px 40px', borderRadius: 100, fontSize: '1.05rem' }}>
-              <span>🚀 Book Free Strategy Call</span>
-              <ArrowRight />
-            </button>
-            <button className="btn-ghost" style={{ padding: '18px 32px', borderRadius: 100, fontSize: '1rem' }}>
-              WhatsApp Us
-            </button>
-          </div>
-
-          <div className="reveal" style={{ marginTop: 40, display: 'flex', gap: 32, justifyContent: 'center', flexWrap: 'wrap' }}>
-            {['No credit card', 'No commitment', 'Response in 2 hours'].map(t => (
-              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--muted)', fontSize: '0.875rem' }}>
-                <span style={{ color: '#22c55e' }}><Check /></span> {t}
+          <div className="faq-list">
+            {FAQS.map((faq, i) => (
+              <div
+                key={i}
+                className={`faq-item${openFaq === i ? ' open' : ''} scroll-reveal`}
+                data-delay={i * 60}
+              >
+                <button className="faq-btn" onClick={() => toggleFaq(i)}>
+                  {faq.q}
+                  <span className="faq-arrow">+</span>
+                </button>
+                <div className="faq-body" style={openFaq === i ? { maxHeight: '200px' } : {}}>
+                  <div className="faq-body-inner">{faq.a}</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* ── CTA DARK ── */}
+      <section className="cta-dark">
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="cta-badge">Free Strategy Call · 30 Minutes</div>
+
+          <h2 className="cta-title">
+            Your competitors are already{' '}
+            <span className="gradient-text">investing in digital.</span>
+          </h2>
+
+          <p className="cta-sub">
+            Every day you wait is a day your competitors get ahead. Let&apos;s build your growth engine today.
+          </p>
+
+          <div className="cta-actions">
+            <a href="#pricing" className="btn-primary-cta">
+              Start Growing Today →
+            </a>
+            <a href="https://wa.me/919999999999" className="btn-outline-cta">
+              💬 Chat on WhatsApp
+            </a>
+          </div>
+
+          <div className="cta-note">
+            No credit card · No commitment · Results in 30 days or we keep working free
+          </div>
+        </div>
+      </section>
+
       {/* ── FOOTER ── */}
-      <footer style={{ background: '#030306', borderTop: '1px solid var(--border)', padding: '60px 5% 30px' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 48, marginBottom: 60 }}>
-            {/* Brand */}
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-inner">
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg, #6c47ff, #ff3cac)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900 }}>N</div>
-                <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '1.25rem' }}>NEXUS<span style={{ color: 'var(--accent)' }}>.</span></span>
+              <div className="footer-brand-name">Growth<span>karo</span></div>
+              <div className="footer-brand-desc">
+                India&apos;s most trusted digital marketing agency. We build growth systems that scale businesses.
               </div>
-              <p style={{ color: 'var(--muted)', fontSize: '0.875rem', lineHeight: 1.7, maxWidth: 260 }}>
-                India ki premium digital marketing agency. Zero to ₹1 crore — hum saath hain.
-              </p>
-              <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
-                {['📸','💼','🐦','📺'].map((icon, i) => (
-                  <div key={i} style={{
-                    width: 36, height: 36, borderRadius: 10,
-                    background: 'var(--surface)', border: '1px solid var(--border)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '1rem', cursor: 'pointer', transition: 'all 0.3s',
-                  }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(108,71,255,0.5)'; e.currentTarget.style.background = 'rgba(108,71,255,0.1)' }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.background = 'var(--surface)' }}
-                  >{icon}</div>
-                ))}
+              <div className="footer-social">
+                <button className="footer-social-btn" title="Instagram">📸</button>
+                <button className="footer-social-btn" title="Facebook">📘</button>
+                <button className="footer-social-btn" title="LinkedIn">💼</button>
+                <button className="footer-social-btn" title="YouTube">▶️</button>
               </div>
             </div>
 
-            {[
-              { title: 'Services', links: ['Web Design', 'SEO', 'Social Media', 'Paid Ads', 'Branding', 'Content'] },
-              { title: 'Company', links: ['About Us', 'Our Work', 'Case Studies', 'Blog', 'Careers'] },
-              { title: 'Contact', links: ['WhatsApp', 'Email Us', 'Book a Call', 'Mumbai Office', 'Delhi Office'] },
-            ].map(col => (
-              <div key={col.title}>
-                <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '0.875rem', letterSpacing: '0.05em', marginBottom: 16, textTransform: 'uppercase' }}>{col.title}</div>
-                {col.links.map(l => (
-                  <div key={l} style={{ marginBottom: 10 }}>
-                    <a href="#" style={{ color: 'var(--muted)', fontSize: '0.875rem', textDecoration: 'none', transition: 'color 0.2s' }}
-                      onMouseEnter={e => e.target.style.color = 'white'}
-                      onMouseLeave={e => e.target.style.color = 'var(--muted)'}
-                    >{l}</a>
-                  </div>
-                ))}
-              </div>
-            ))}
+            <div>
+              <div className="footer-col-title">Services</div>
+              <ul className="footer-links">
+                <li><a href="#services">Digital Marketing</a></li>
+                <li><a href="#services">Social Media</a></li>
+                <li><a href="#services">Branding</a></li>
+                <li><a href="#services">Website Dev</a></li>
+                <li><a href="#services">SEO</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <div className="footer-col-title">Company</div>
+              <ul className="footer-links">
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#process">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#">Blog</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <div className="footer-col-title">Contact</div>
+              <ul className="footer-links">
+                <li><a href="https://wa.me/919999999999">WhatsApp us</a></li>
+                <li><a href="mailto:hello@growthkaro.in">hello@growthkaro.in</a></li>
+                <li><a href="tel:+919999999999">+91 99999 99999</a></li>
+              </ul>
+            </div>
           </div>
 
-          <div style={{ borderTop: '1px solid var(--border)', paddingTop: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-            <div style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>© 2026 NEXUS. All rights reserved.</div>
-            <div style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>Built with ❤️ in India</div>
+          <div className="footer-bottom">
+            <div className="footer-copy">© 2026 Growthkaro. All rights reserved.</div>
+            <div className="footer-made">Made in India 🇮🇳 for growing businesses</div>
           </div>
         </div>
       </footer>
+
+      {/* ── WA FLOAT ── */}
+      <a href="https://wa.me/919999999999" className="wa-float" title="Chat on WhatsApp" target="_blank" rel="noopener">
+        💬
+      </a>
     </>
   )
 }
