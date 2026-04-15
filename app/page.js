@@ -2,6 +2,206 @@
 import { useEffect, useState, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import {
+  BadgePercent,
+  BriefcaseBusiness,
+  Camera,
+  Clapperboard,
+  Globe,
+  Image,
+  IndianRupee,
+  Mail,
+  MapPinned,
+  Megaphone,
+  MessageCircle,
+  MessageSquareQuote,
+  Palette,
+  PenTool,
+  Play,
+  Search,
+  Sparkles,
+  SquareKanban,
+  Target,
+  Gauge,
+  TrendingUp,
+  UserRound,
+} from 'lucide-react'
+
+function PremiumRocket() {
+  return (
+    <svg viewBox="0 0 200 380" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+      <defs>
+        <linearGradient id="bodyGrad" x1="100" y1="0" x2="100" y2="380" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#c4b5fd" />
+          <stop offset="18%" stopColor="#8b5cf6" />
+          <stop offset="45%" stopColor="#6366f1" />
+          <stop offset="72%" stopColor="#3b82f6" />
+          <stop offset="100%" stopColor="#2563eb" />
+        </linearGradient>
+        <linearGradient id="bodySheen" x1="80" y1="30" x2="120" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+          <stop offset="35%" stopColor="rgba(255,255,255,0.28)" />
+          <stop offset="55%" stopColor="rgba(255,255,255,0.12)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+        </linearGradient>
+        <linearGradient id="noseGrad" x1="100" y1="0" x2="100" y2="75" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#ddd6fe" />
+          <stop offset="40%" stopColor="#a78bfa" />
+          <stop offset="100%" stopColor="#7c3aed" />
+        </linearGradient>
+        <linearGradient id="noseShine" x1="100" y1="0" x2="100" y2="75" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.7)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+        </linearGradient>
+        <linearGradient id="finGradL" x1="55" y1="155" x2="55" y2="250" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#818cf8" />
+          <stop offset="100%" stopColor="#4338ca" />
+        </linearGradient>
+        <linearGradient id="finGradR" x1="145" y1="155" x2="145" y2="250" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#818cf8" />
+          <stop offset="100%" stopColor="#4338ca" />
+        </linearGradient>
+        <linearGradient id="finShine" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+          <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+          <stop offset="50%" stopColor="rgba(255,255,255,0.35)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+        </linearGradient>
+        <linearGradient id="windowOuter" x1="100" y1="72" x2="100" y2="120" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#1e3a8a" />
+          <stop offset="100%" stopColor="#0f172a" />
+        </linearGradient>
+        <linearGradient id="windowInner" x1="100" y1="72" x2="100" y2="120" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#1e40af" />
+          <stop offset="50%" stopColor="#1e3a8a" />
+          <stop offset="100%" stopColor="#0c1a3a" />
+        </linearGradient>
+        <linearGradient id="windowGlare" x1="88" y1="78" x2="108" y2="92" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.7)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+        </linearGradient>
+        <linearGradient id="engineGrad" x1="100" y1="235" x2="100" y2="268" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#6366f1" />
+          <stop offset="100%" stopColor="#1e1b4b" />
+        </linearGradient>
+        <linearGradient id="flameOuter" x1="100" y1="268" x2="100" y2="370" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#fde68a" stopOpacity="0.95" />
+          <stop offset="30%" stopColor="#fb923c" stopOpacity="0.9" />
+          <stop offset="65%" stopColor="#ef4444" stopOpacity="0.7" />
+          <stop offset="100%" stopColor="#dc2626" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id="flameMid" x1="100" y1="268" x2="100" y2="350" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#fef9c3" stopOpacity="0.98" />
+          <stop offset="35%" stopColor="#fbbf24" stopOpacity="0.88" />
+          <stop offset="70%" stopColor="#f97316" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="#ea580c" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id="flameCore" x1="100" y1="268" x2="100" y2="330" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+          <stop offset="40%" stopColor="#fef9c3" stopOpacity="0.95" />
+          <stop offset="75%" stopColor="#fcd34d" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+        </linearGradient>
+        <radialGradient id="ambientGlow" cx="50%" cy="45%" r="50%" fx="50%" fy="35%">
+          <stop offset="0%" stopColor="rgba(139,92,246,0.22)" />
+          <stop offset="60%" stopColor="rgba(59,130,246,0.1)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+        </radialGradient>
+        <radialGradient id="flameGlow" cx="50%" cy="0%" r="100%" fx="50%" fy="0%">
+          <stop offset="0%" stopColor="rgba(251,191,36,0.35)" />
+          <stop offset="100%" stopColor="rgba(251,191,36,0)" />
+        </radialGradient>
+        <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="8" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <filter id="bodyGlow" x="-20%" y="-10%" width="140%" height="130%">
+          <feGaussianBlur stdDeviation="6" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <filter id="flameBlur" x="-30%" y="-20%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="3" />
+        </filter>
+        <filter id="engineGlow" x="-60%" y="-30%" width="220%" height="180%">
+          <feGaussianBlur stdDeviation="5" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <clipPath id="bodyClip">
+          <path d="M64 82 C64 72 70 64 80 64 L120 64 C130 64 136 72 136 82 L136 228 C136 238 130 246 120 246 L80 246 C70 246 64 238 64 228 Z" />
+        </clipPath>
+      </defs>
+
+      <ellipse cx="100" cy="170" rx="88" ry="145" fill="url(#ambientGlow)" />
+
+      <g filter="url(#bodyGlow)">
+        <path d="M64 82 C64 72 70 64 80 64 L120 64 C130 64 136 72 136 82 L136 228 C136 238 130 246 120 246 L80 246 C70 246 64 238 64 228 Z" fill="url(#bodyGrad)" />
+
+        <path d="M64 82 C64 72 70 64 80 64 L120 64 C130 64 136 72 136 82 L136 228 C136 238 130 246 120 246 L80 246 C70 246 64 238 64 228 Z" fill="url(#bodySheen)" />
+
+        <rect x="68" y="70" width="20" height="190" rx="10" fill="rgba(255,255,255,0.12)" />
+
+        <line x1="68" y1="108" x2="132" y2="108" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" />
+        <line x1="68" y1="168" x2="132" y2="168" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+        <line x1="68" y1="198" x2="132" y2="198" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+
+        <rect x="82" y="104" width="36" height="3" rx="1.5" fill="rgba(255,255,255,0.22)" />
+        <rect x="82" y="164" width="36" height="2" rx="1" fill="rgba(255,255,255,0.14)" />
+      </g>
+
+      <path d="M72 82 C72 70 80 62 88 62 L112 62 C120 62 128 70 128 82 L124 155 C120 155 110 158 100 158 C90 158 80 155 76 155 Z" fill="url(#noseGrad)" />
+      <path d="M72 82 C72 70 80 62 88 62 L112 62 C120 62 128 70 128 82 L124 155 C120 155 110 158 100 158 C90 158 80 155 76 155 Z" fill="url(#noseShine)" opacity="0.6" />
+      <path d="M76 84 L82 72 C82 68 88 64 94 62 L100 60 L88 82 Z" fill="rgba(255,255,255,0.3)" />
+
+      <path d="M100 158 L100 62 C90 58 80 68 76 82 L68 155 C64 162 66 172 72 176 L64 235 C60 242 62 252 68 257 L78 252 L88 245 L88 178 C92 180 96 180 100 178 Z" fill="url(#finGradL)" />
+      <path d="M100 158 L100 62 C110 58 120 68 124 82 L132 155 C136 162 134 172 128 176 L136 235 C140 242 138 252 132 257 L122 252 L112 245 L112 178 C108 180 104 180 100 178 Z" fill="url(#finGradR)" />
+      <path d="M100 158 L100 62 C90 58 80 68 76 82 L68 155 C64 162 66 172 72 176 L64 235 C60 242 62 252 68 257 L78 252 L88 245 L88 178 C92 180 96 180 100 178 Z" fill="url(#finShine)" opacity="0.4" />
+      <path d="M100 158 L100 62 C110 58 120 68 124 82 L132 155 C136 162 134 172 128 176 L136 235 C140 242 138 252 132 257 L122 252 L112 245 L112 178 C108 180 104 180 100 178 Z" fill="url(#finShine)" opacity="0.4" />
+
+      <path d="M82 228 C82 236 88 244 100 244 C112 244 118 236 118 228 L118 240 C118 246 112 250 100 250 C88 250 82 246 82 240 Z" fill="url(#engineGrad)" />
+      <rect x="82" y="228" width="36" height="4" rx="2" fill="rgba(255,255,255,0.12)" />
+      <ellipse cx="100" cy="250" rx="18" ry="4" fill="rgba(139,92,246,0.4)" filter="url(#engineGlow)" />
+
+      <circle cx="100" cy="94" r="22" fill="url(#windowOuter)" />
+      <circle cx="100" cy="94" r="19" fill="url(#windowInner)" />
+      <circle cx="100" cy="94" r="16" fill="#0f172a" />
+      <ellipse cx="93" cy="88" rx="8" ry="5" fill="url(#windowGlare)" opacity="0.6" />
+      <circle cx="100" cy="94" r="16" fill="none" stroke="rgba(99,102,241,0.4)" strokeWidth="1.5" />
+      <circle cx="100" cy="94" r="22" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+
+      <circle cx="100" cy="148" r="12" fill="url(#windowOuter)" />
+      <circle cx="100" cy="148" r="10" fill="url(#windowInner)" />
+      <circle cx="100" cy="148" r="8" fill="#0f172a" />
+      <ellipse cx="96" cy="145" rx="4" ry="2.5" fill="url(#windowGlare)" opacity="0.5" />
+      <circle cx="100" cy="148" r="10" fill="none" stroke="rgba(99,102,241,0.3)" strokeWidth="1" />
+      <circle cx="100" cy="148" r="12" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+
+      <g filter="url(#flameBlur)" opacity="0.6">
+        <path d="M100 268 C60 310 55 340 60 368 C75 358 85 350 100 348 C115 350 125 358 140 368 C145 340 140 310 100 268Z" fill="url(#flameGlow)" />
+      </g>
+
+      <g className="rocket-flame">
+        <path d="M100 268 C56 312 50 344 56 370 C72 360 84 352 100 350 C116 352 128 360 144 370 C150 344 144 312 100 268Z" fill="url(#flameOuter)" filter="url(#softGlow)" />
+        <path d="M100 268 C68 308 64 338 70 360 C82 352 90 346 100 345 C110 346 118 352 130 360 C136 338 132 308 100 268Z" fill="url(#flameMid)" />
+        <path d="M100 268 C82 304 80 332 84 350 C91 344 96 340 100 339 C104 340 109 344 116 350 C120 332 118 304 100 268Z" fill="url(#flameCore)" />
+        <ellipse cx="100" cy="268" rx="22" ry="6" fill="rgba(255,255,255,0.7)" />
+        <ellipse cx="100" cy="268" rx="14" ry="4" fill="rgba(255,255,255,0.95)" />
+      </g>
+
+      <g className="rocket-flame-ambient" opacity="0">
+        <circle cx="100" cy="278" r="40" fill="rgba(251,191,36,0.08)" filter="url(#flameBlur)" />
+        <circle cx="100" cy="295" r="30" fill="rgba(249,115,22,0.06)" filter="url(#flameBlur)" />
+      </g>
+    </svg>
+  )
+}
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -26,6 +226,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '🎯',
     iconBg: 'linear-gradient(135deg, rgba(108,71,255,0.25), rgba(0,212,255,0.15))',
+    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80',
     title: 'Digital Marketing & Ads',
     desc: 'Facebook, Instagram, Google, YouTube — har platform pe targeted ads jo actual customers laayein.',
     tags: ['Facebook Ads', 'Google Ads', 'YouTube Ads', 'Lead Generation', 'Retargeting', 'Meta Ads'],
@@ -33,6 +234,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '📱',
     iconBg: 'linear-gradient(135deg, rgba(225,48,108,0.25), rgba(255,60,172,0.15))',
+    img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&q=80',
     title: 'Social Media Management',
     desc: 'Poora Instagram, Facebook, LinkedIn page handle karte hain. Content, reels, engagement — sab.',
     tags: ['Page Management', 'Reels & Posts', 'Follower Growth', 'Engagement', 'Community'],
@@ -40,6 +242,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '🎨',
     iconBg: 'linear-gradient(135deg, rgba(249,115,22,0.25), rgba(251,191,36,0.15))',
+    img: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&q=80',
     title: 'Branding & Identity',
     desc: 'Logo se lekar brand guide tak — aisi identity jo aapko market mein alag dikhaye.',
     tags: ['Logo Design', 'Brand Identity', 'Brochure', 'Business Card', 'Brand Guide'],
@@ -47,6 +250,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '🌐',
     iconBg: 'linear-gradient(135deg, rgba(0,212,255,0.25), rgba(6,182,212,0.15))',
+    img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80',
     title: 'Website & Online Presence',
     desc: 'Professional websites jo visitors ko customers mein convert karein. SEO ke saath.',
     tags: ['Website Dev', 'Landing Pages', 'SEO', 'Google Business', 'Domain Setup'],
@@ -54,6 +258,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '🎬',
     iconBg: 'linear-gradient(135deg, rgba(34,197,94,0.25), rgba(16,185,129,0.15))',
+    img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600&q=80',
     title: 'Content Creation',
     desc: 'Photo shoots, video production, ad creatives — visual content jo brand ko powerful banaye.',
     tags: ['Photo Shoot', 'Video Production', 'Ad Creatives', 'Promo Videos', 'Thumbnails'],
@@ -61,6 +266,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '📊',
     iconBg: 'linear-gradient(135deg, rgba(139,92,246,0.25), rgba(108,71,255,0.15))',
+    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
     title: 'Strategy & Consulting',
     desc: 'Market research, competitor analysis, aur growth planning jo business ko next level le jaaye.',
     tags: ['Market Research', 'Competitor Analysis', 'Growth Plan', 'Strategy', 'Consulting'],
@@ -68,22 +274,45 @@ const SERVICE_CATEGORIES = [
 ]
 
 const ALL_SERVICES = [
-  { icon: '📘', bg: 'rgba(24,119,242,0.18)', title: 'Facebook Ads', desc: 'Targeted campaigns jo leads aur sales dono laayein.' },
-  { icon: '📸', bg: 'rgba(225,48,108,0.18)', title: 'Instagram Marketing', desc: 'Reels, posts, stories — Instagram ko business growth machine banayein.' },
-  { icon: '🔍', bg: 'rgba(66,133,244,0.18)', title: 'Google Ads (PPC)', desc: 'Search pe top rank karo jahan customers dhundh rahe hain.' },
-  { icon: '▶️', bg: 'rgba(255,0,0,0.15)', title: 'YouTube Promotion', desc: 'Videos ko viral karo aur brand awareness badao.' },
-  { icon: '💰', bg: 'rgba(34,197,94,0.18)', title: 'Lead Generation', desc: 'Qualified leads jo seedha aapke sales funnel mein aayein.' },
-  { icon: '🌐', bg: 'rgba(108,71,255,0.18)', title: 'Website Development', desc: 'Business, e-commerce, portfolio, landing pages.' },
-  { icon: '📈', bg: 'rgba(0,212,255,0.18)', title: 'SEO & Ranking', desc: 'Google pe organically top rank karo — long-term results.' },
-  { icon: '🏪', bg: 'rgba(249,115,22,0.18)', title: 'Google Business', desc: 'Google Maps par appear karo jahan customers search karte hain.' },
-  { icon: '✏️', bg: 'rgba(139,92,246,0.18)', title: 'Logo Design', desc: 'Memorable logos jo brand ki pehchaan ban jaayein.' },
-  { icon: '📑', bg: 'rgba(16,185,129,0.18)', title: 'Brand Identity', desc: 'Color palette, typography, brand guide — full identity.' },
-  { icon: '🖼️', bg: 'rgba(249,115,22,0.18)', title: 'Poster & Banner', desc: 'Festival creatives, event banners, social media graphics.' },
-  { icon: '🎥', bg: 'rgba(34,197,94,0.18)', title: 'Video Editing', desc: 'YouTube, reels, ads — professional editing har platform ke liye.' },
-  { icon: '📞', bg: 'rgba(24,119,242,0.18)', title: 'WhatsApp Marketing', desc: 'Broadcast campaigns jo direct customers tak pohanchein.' },
-  { icon: '📧', bg: 'rgba(108,71,255,0.18)', title: 'Email Marketing', desc: 'Automated email sequences jo nurture aur convert karein.' },
-  { icon: '🏷️', bg: 'rgba(251,191,36,0.18)', title: 'Coupon & Offers', desc: 'Festive offers, discount codes, referral programs.' },
-  { icon: '👤', bg: 'rgba(139,92,246,0.18)', title: 'Personal Branding', desc: 'Politician, influencer, businessman — personal brand banao.' },
+  { icon: Megaphone, color: '#4f7cff', glow: 'rgba(79,124,255,0.18)', kicker: 'Paid Media', outcome: 'Meta campaigns tuned for sales', title: 'Facebook Ads', desc: 'Targeted campaigns jo leads aur sales dono laayein.' },
+  { icon: Camera, color: '#ff4aa2', glow: 'rgba(255,74,162,0.18)', kicker: 'Social Growth', outcome: 'Reels-first creative engine', title: 'Instagram Marketing', desc: 'Reels, posts, stories — Instagram ko business growth machine banayein.' },
+  { icon: Search, color: '#3ec7ff', glow: 'rgba(62,199,255,0.18)', kicker: 'Intent Capture', outcome: 'High-intent search traffic', title: 'Google Ads (PPC)', desc: 'Search pe top rank karo jahan customers dhundh rahe hain.' },
+  { icon: Play, color: '#ff6b57', glow: 'rgba(255,107,87,0.18)', kicker: 'Video Reach', outcome: 'Short-form + long-form growth', title: 'YouTube Promotion', desc: 'Videos ko viral karo aur brand awareness badao.' },
+  { icon: Target, color: '#42d392', glow: 'rgba(66,211,146,0.18)', kicker: 'Lead Engine', outcome: 'Funnels built for qualified enquiries', title: 'Lead Generation', desc: 'Qualified leads jo seedha aapke sales funnel mein aayein.' },
+  { icon: Globe, color: '#8f6bff', glow: 'rgba(143,107,255,0.18)', kicker: 'Web Presence', outcome: 'Conversion-first digital storefronts', title: 'Website Development', desc: 'Business, e-commerce, portfolio, landing pages.' },
+  { icon: TrendingUp, color: '#00d4ff', glow: 'rgba(0,212,255,0.18)', kicker: 'Organic Growth', outcome: 'Search visibility that compounds', title: 'SEO & Ranking', desc: 'Google pe organically top rank karo — long-term results.' },
+  { icon: MapPinned, color: '#ff9c42', glow: 'rgba(255,156,66,0.18)', kicker: 'Local Discovery', outcome: 'Maps visibility for nearby buyers', title: 'Google Business', desc: 'Google Maps par appear karo jahan customers search karte hain.' },
+  { icon: PenTool, color: '#b084ff', glow: 'rgba(176,132,255,0.18)', kicker: 'Visual Identity', outcome: 'Distinctive marks people remember', title: 'Logo Design', desc: 'Memorable logos jo brand ki pehchaan ban jaayein.' },
+  { icon: Palette, color: '#44d6b7', glow: 'rgba(68,214,183,0.18)', kicker: 'Brand System', outcome: 'Colors, voice, look, consistency', title: 'Brand Identity', desc: 'Color palette, typography, brand guide — full identity.' },
+  { icon: Image, color: '#ffb347', glow: 'rgba(255,179,71,0.18)', kicker: 'Campaign Creative', outcome: 'Launch-ready poster systems', title: 'Poster & Banner', desc: 'Festival creatives, event banners, social media graphics.' },
+  { icon: Clapperboard, color: '#52d273', glow: 'rgba(82,210,115,0.18)', kicker: 'Motion Studio', outcome: 'Edit stacks for every platform', title: 'Video Editing', desc: 'YouTube, reels, ads — professional editing har platform ke liye.' },
+  { icon: MessageCircle, color: '#5f8cff', glow: 'rgba(95,140,255,0.18)', kicker: 'Direct Outreach', outcome: 'Broadcasts that trigger replies', title: 'WhatsApp Marketing', desc: 'Broadcast campaigns jo direct customers tak pohanchein.' },
+  { icon: Mail, color: '#7b7fff', glow: 'rgba(123,127,255,0.18)', kicker: 'Retention Layer', outcome: 'Nurture sequences that convert', title: 'Email Marketing', desc: 'Automated email sequences jo nurture aur convert karein.' },
+  { icon: BadgePercent, color: '#ffc84a', glow: 'rgba(255,200,74,0.18)', kicker: 'Offer Systems', outcome: 'Discount journeys that increase AOV', title: 'Coupon & Offers', desc: 'Festive offers, discount codes, referral programs.' },
+  { icon: UserRound, color: '#c46bff', glow: 'rgba(196,107,255,0.18)', kicker: 'Authority Build', outcome: 'Presence that attracts trust', title: 'Personal Branding', desc: 'Politician, influencer, businessman — personal brand banao.' },
+]
+
+const SERVICE_SPOTLIGHT = [
+  {
+    icon: Sparkles,
+    title: 'Creative + Performance',
+    desc: 'Ads, reels, landing pages aur copy ek hi growth system mein stitched rehte hain.',
+  },
+  {
+    icon: SquareKanban,
+    title: 'Execution Stack',
+    desc: 'Strategy se launch tak design, media buying, content aur tracking same pipeline mein chalta hai.',
+  },
+  {
+    icon: BriefcaseBusiness,
+    title: 'One Agency, Zero Chaos',
+    desc: '16+ services ek jagah hone se freelancers wali fragmentation aur delay khatam hoti hai.',
+  },
+  {
+    icon: MessageSquareQuote,
+    title: 'Fast Iteration Loop',
+    desc: 'Reports, feedback aur optimisation cycles se campaigns week by week sharper bante hain.',
+  },
 ]
 
 const TIMELINE_STEPS = [
@@ -118,12 +347,12 @@ const TIMELINE_STEPS = [
 ]
 
 const PORTFOLIO = [
-  { emoji: '👗', bg: 'linear-gradient(135deg, #fce7f3, #fdf2f8)', cat: 'Fashion & E-commerce', title: 'LuxeFashion Store Launch', desc: 'Complete e-commerce website with Instagram integration aur targeted ads campaign.', stats: [{ val: '340%', lbl: 'Sales Up' }, { val: '200K', lbl: 'Reach' }, { val: '₹50L+', lbl: 'Revenue' }] },
-  { emoji: '🏨', bg: 'linear-gradient(135deg, #dbeafe, #eff6ff)', cat: 'Hospitality & Tourism', title: 'Resort Digital Presence', desc: 'Google Ads, SEO, social media aur drone photography se resort ki online visibility triple.', stats: [{ val: '3x', lbl: 'Bookings' }, { val: '#1', lbl: 'Google Rank' }, { val: '500+', lbl: 'Reviews' }] },
-  { emoji: '🎓', bg: 'linear-gradient(135deg, #ede9ff, #f5f3ff)', cat: 'Education & Coaching', title: 'Coaching Institute Growth', desc: 'Facebook + Google ads ke saath student enrollments double kiye aur brand authority banayi.', stats: [{ val: '2x', lbl: 'Enrollments' }, { val: '₹8L', lbl: 'Ad Spend ROI' }, { val: '180+', lbl: 'Leads/mo' }] },
-  { emoji: '🏗️', bg: 'linear-gradient(135deg, #fef3c7, #fffbeb)', cat: 'Real Estate', title: 'Property Lead Generation', desc: 'Multi-city real estate campaigns jo high-intent property buyers seedha aapke paas laaye.', stats: [{ val: '500+', lbl: 'Leads/mo' }, { val: '₹200', lbl: 'Cost/Lead' }, { val: '8%', lbl: 'Close Rate' }] },
-  { emoji: '💊', bg: 'linear-gradient(135deg, #dcfce7, #f0fdf4)', cat: 'Healthcare', title: 'Clinic Branding & Leads', desc: 'Local SEO, Google Ads aur social media se clinic mein patient flow 4x badhaya.', stats: [{ val: '4x', lbl: 'Patients' }, { val: '#1', lbl: 'Local Rank' }, { val: '60%', lbl: 'Less Cost' }] },
-  { emoji: '🎉', bg: 'linear-gradient(135deg, #fce7f3, #fff1f2)', cat: 'Events & Entertainment', title: 'Music Festival Promotion', desc: 'Full digital campaign — Instagram reels, influencer collabs, Google ads se 5000+ tickets sold.', stats: [{ val: '5000+', lbl: 'Tickets' }, { val: '20M+', lbl: 'Impressions' }, { val: '3x', lbl: 'ROAS' }] },
+  { img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80', bg: 'linear-gradient(135deg, rgba(225,48,108,0.4), rgba(108,71,255,0.3))', cat: 'Fashion & E-commerce', title: 'LuxeFashion Store Launch', desc: 'Complete e-commerce website with Instagram integration aur targeted ads campaign.', stats: [{ val: '340%', lbl: 'Sales Up' }, { val: '200K', lbl: 'Reach' }, { val: '₹50L+', lbl: 'Revenue' }] },
+  { img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80', bg: 'linear-gradient(135deg, rgba(0,212,255,0.4), rgba(6,182,212,0.3))', cat: 'Hospitality & Tourism', title: 'Resort Digital Presence', desc: 'Google Ads, SEO, social media aur drone photography se resort ki online visibility triple.', stats: [{ val: '3x', lbl: 'Bookings' }, { val: '#1', lbl: 'Google Rank' }, { val: '500+', lbl: 'Reviews' }] },
+  { img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80', bg: 'linear-gradient(135deg, rgba(139,92,246,0.4), rgba(108,71,255,0.3))', cat: 'Education & Coaching', title: 'Coaching Institute Growth', desc: 'Facebook + Google ads ke saath student enrollments double kiye aur brand authority banayi.', stats: [{ val: '2x', lbl: 'Enrollments' }, { val: '₹8L', lbl: 'Ad Spend ROI' }, { val: '180+', lbl: 'Leads/mo' }] },
+  { img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80', bg: 'linear-gradient(135deg, rgba(249,115,22,0.4), rgba(251,191,36,0.3))', cat: 'Real Estate', title: 'Property Lead Generation', desc: 'Multi-city real estate campaigns jo high-intent property buyers seedha aapke paas laaye.', stats: [{ val: '500+', lbl: 'Leads/mo' }, { val: '₹200', lbl: 'Cost/Lead' }, { val: '8%', lbl: 'Close Rate' }] },
+  { img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=600&q=80', bg: 'linear-gradient(135deg, rgba(34,197,94,0.4), rgba(16,185,129,0.3))', cat: 'Healthcare', title: 'Clinic Branding & Leads', desc: 'Local SEO, Google Ads aur social media se clinic mein patient flow 4x badhaya.', stats: [{ val: '4x', lbl: 'Patients' }, { val: '#1', lbl: 'Local Rank' }, { val: '60%', lbl: 'Less Cost' }] },
+  { img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80', bg: 'linear-gradient(135deg, rgba(255,60,172,0.4), rgba(225,48,108,0.3))', cat: 'Events & Entertainment', title: 'Music Festival Promotion', desc: 'Full digital campaign — Instagram reels, influencer collabs, Google ads se 5000+ tickets sold.', stats: [{ val: '5000+', lbl: 'Tickets' }, { val: '20M+', lbl: 'Impressions' }, { val: '3x', lbl: 'ROAS' }] },
 ]
 
 const TESTIMONIALS = [
@@ -143,7 +372,7 @@ const FAQS = [
 ]
 
 // ── GSAP ANIMATIONS HOOK ──
-function useGSAPAnimations() {
+function useGSAPAnimations(rocketRuntimeRef) {
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -176,19 +405,157 @@ function useGSAPAnimations() {
         { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 1.2 }
       )
 
-      gsap.fromTo('.hero-card',
+      gsap.fromTo('.rocket-stage',
         { opacity: 0, x: 60, scale: 0.9, rotateY: -5 },
         { opacity: 1, x: 0, scale: 1, rotateY: 0, duration: 1, ease: 'power3.out', delay: 0.6 }
       )
 
-      // Floating card animation
-      gsap.to('.hero-card', {
+      gsap.fromTo('.hero-trust-logos',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 1.0 }
+      )
+
+      gsap.to('.rocket-ship-idle', {
         y: -10,
-        duration: 2.5,
+        duration: 2.4,
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
       })
+
+      gsap.to('.rocket-charge-ring', {
+        scale: 1.04,
+        opacity: 0.45,
+        duration: 1.5,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+      })
+
+      const rocketProgress = { value: 0 }
+      const rocketTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
+
+      rocketTl
+        .to(rocketProgress, {
+          value: 1,
+          duration: 1,
+          ease: 'none',
+          onUpdate: () => {
+            rocketRuntimeRef.current.progress = rocketProgress.value
+          },
+        }, 0)
+        .to('.rocket-fuel-ring', {
+          opacity: 0.95,
+          scale: 1.18,
+          duration: 0.18,
+          ease: 'none',
+        }, 0.08)
+        .to('.rocket-stage-glow', {
+          opacity: 0.85,
+          scale: 1.14,
+          duration: 0.18,
+          ease: 'none',
+        }, 0.1)
+        .to('.rocket-flame-old', {
+          opacity: 1,
+          scaleY: 1,
+          duration: 0.16,
+          ease: 'none',
+        }, 0.22)
+        .to('.rocket-core-glow', {
+          opacity: 1,
+          scale: 1.3,
+          duration: 0.18,
+          ease: 'none',
+        }, 0.22)
+        .to('.rocket-flame-ambient', {
+          opacity: 1,
+          duration: 0.18,
+          ease: 'none',
+        }, 0.24)
+        .to('.rocket-smoke-haze', {
+          opacity: 0.75,
+          scaleX: 1.2,
+          duration: 0.16,
+          ease: 'none',
+        }, 0.24)
+        .to('.rocket-stat-leads', {
+          opacity: 1,
+          y: 0,
+          duration: 0.14,
+          ease: 'none',
+        }, 0.28)
+        .to('.rocket-parallax-grid', {
+          y: -32,
+          scale: 1.04,
+          duration: 0.28,
+          ease: 'none',
+        }, 0.34)
+        .to('.rocket-parallax-rings', {
+          y: -22,
+          rotate: -8,
+          duration: 0.28,
+          ease: 'none',
+        }, 0.34)
+        .to('.rocket-ship-wrap', {
+          y: -70,
+          duration: 0.28,
+          ease: 'none',
+        }, 0.36)
+        .to('.rocket-trail-beam', {
+          opacity: 0.68,
+          scaleY: 0.52,
+          duration: 0.28,
+          ease: 'none',
+        }, 0.36)
+        .to('.rocket-stat-revenue', {
+          opacity: 1,
+          y: 0,
+          duration: 0.14,
+          ease: 'none',
+        }, 0.52)
+        .to('.rocket-ship-wrap', {
+          y: -245,
+          x: 34,
+          rotation: -14,
+          duration: 0.34,
+          ease: 'none',
+        }, 0.64)
+        .to('.rocket-trail-beam', {
+          opacity: 1,
+          scaleY: 1.08,
+          duration: 0.34,
+          ease: 'none',
+        }, 0.64)
+        .to('.rocket-stat-roas', {
+          opacity: 1,
+          y: 0,
+          duration: 0.12,
+          ease: 'none',
+        }, 0.74)
+        .to('.rocket-stage-glow', {
+          opacity: 1.0,
+          scale: 1.4,
+          duration: 0.22,
+          ease: 'none',
+        }, 0.76)
+        .to('.rocket-svg-wrap svg', {
+          filter: 'brightness(1.12)',
+          duration: 0.3,
+          ease: 'none',
+        }, 0.4)
+        .to('.rocket-svg-wrap svg', {
+          filter: 'brightness(1.22)',
+          duration: 0.34,
+          ease: 'none',
+        }, 0.72)
 
       // ── SCROLL REVEAL - FADE UP ──
       gsap.utils.toArray('.gsap-fade-up').forEach((el) => {
@@ -604,7 +971,10 @@ function useGSAPAnimations() {
 }
 
 export default function Home() {
-  const containerRef = useGSAPAnimations()
+  const rocketStageRef = useRef(null)
+  const rocketCanvasRef = useRef(null)
+  const rocketRuntimeRef = useRef({ progress: 0 })
+  const containerRef = useGSAPAnimations(rocketRuntimeRef)
 
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -625,6 +995,228 @@ export default function Home() {
     const onResize = () => { if (window.innerWidth > 768) setMenuOpen(false) }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const stage = rocketStageRef.current
+    const canvas = rocketCanvasRef.current
+    if (!stage || !canvas) return
+
+    const ctx = canvas.getContext('2d', { alpha: true })
+    if (!ctx) return
+
+    const particles = []
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const runtime = rocketRuntimeRef.current
+    const maxParticles = prefersReducedMotion ? 28 : 96
+    const rocketShip = stage.querySelector('.rocket-ship')
+    const rocketCoreGlow = stage.querySelector('.rocket-core-glow')
+    const nozzle = stage.querySelector('.rocket-engine-nozzle')
+
+    let width = 0
+    let height = 0
+    let dpr = 1
+    let frameId = 0
+    let lastTime = performance.now()
+
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value))
+
+    const resizeCanvas = () => {
+      const rect = stage.getBoundingClientRect()
+      width = rect.width
+      height = rect.height
+      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width = Math.max(1, Math.round(width * dpr))
+      canvas.height = Math.max(1, Math.round(height * dpr))
+      canvas.style.width = `${width}px`
+      canvas.style.height = `${height}px`
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+
+    const spawnParticle = (type, x, y, progress) => {
+      if (particles.length >= maxParticles) particles.shift()
+
+      if (type === 'smoke') {
+        const life = 28 + Math.random() * 20
+        particles.push({
+          type,
+          x: x + (Math.random() - 0.5) * 20,
+          y: y + Math.random() * 8,
+          vx: (Math.random() - 0.5) * 0.8,
+          vy: 1.3 + Math.random() * 1.8 + progress * 1.4,
+          size: 16 + Math.random() * 16 + progress * 8,
+          life,
+          maxLife: life,
+          alpha: 0.32 + Math.random() * 0.18,
+        })
+        return
+      }
+
+      const life = 14 + Math.random() * 12
+      particles.push({
+        type,
+        x: x + (Math.random() - 0.5) * 10,
+        y: y + Math.random() * 6,
+        vx: (Math.random() - 0.5) * 1.6,
+        vy: 2.5 + Math.random() * 3.2 + progress * 2,
+        size: 3 + Math.random() * 4,
+        life,
+        maxLife: life,
+        alpha: 0.7 + Math.random() * 0.2,
+      })
+    }
+
+    const drawParticle = (particle) => {
+      const lifeRatio = particle.life / particle.maxLife
+      const alpha = lifeRatio * particle.alpha
+
+      if (particle.type === 'smoke') {
+        const gradient = ctx.createRadialGradient(
+          particle.x,
+          particle.y,
+          0,
+          particle.x,
+          particle.y,
+          particle.size
+        )
+        gradient.addColorStop(0, `rgba(198, 206, 255, ${alpha * 0.55})`)
+        gradient.addColorStop(0.55, `rgba(116, 123, 177, ${alpha * 0.3})`)
+        gradient.addColorStop(1, 'rgba(15, 12, 32, 0)')
+        ctx.fillStyle = gradient
+        ctx.beginPath()
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+        ctx.fill()
+        return
+      }
+
+      const gradient = ctx.createRadialGradient(
+        particle.x,
+        particle.y,
+        0,
+        particle.x,
+        particle.y,
+        particle.size * 2.6
+      )
+      gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`)
+      gradient.addColorStop(0.25, `rgba(255, 233, 154, ${alpha})`)
+      gradient.addColorStop(0.6, `rgba(255, 138, 61, ${alpha * 0.8})`)
+      gradient.addColorStop(1, 'rgba(255, 90, 40, 0)')
+      ctx.fillStyle = gradient
+      ctx.beginPath()
+      ctx.arc(particle.x, particle.y, particle.size * 2.4, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
+    const render = (time) => {
+      const dt = Math.min((time - lastTime) / 16.667, 2)
+      lastTime = time
+
+      ctx.clearRect(0, 0, width, height)
+
+      const progress = runtime.progress || 0
+      const stageRect = stage.getBoundingClientRect()
+      const nozzleRect = nozzle?.getBoundingClientRect()
+
+      let nozzleX = width * 0.55
+      let nozzleY = height * 0.72
+
+      if (nozzleRect) {
+        nozzleX = nozzleRect.left - stageRect.left + nozzleRect.width / 2
+        nozzleY = nozzleRect.top - stageRect.top + nozzleRect.height
+      }
+
+      const fuelPhase = clamp((progress - 0.06) / 0.16, 0, 1)
+      const ignitionPhase = clamp((progress - 0.2) / 0.14, 0, 1)
+      const liftPhase = clamp((progress - 0.36) / 0.28, 0, 1)
+      const ascentPhase = clamp((progress - 0.68) / 0.32, 0, 1)
+      const intensity = Math.max(fuelPhase * 0.35, ignitionPhase * 0.9, liftPhase, ascentPhase * 1.2)
+
+      if (progress > 0.08) {
+        const smokeBursts = prefersReducedMotion ? 1 : 1 + Math.round(intensity * 3)
+        for (let i = 0; i < smokeBursts; i += 1) {
+          if (Math.random() < 0.6 + intensity * 0.18) {
+            spawnParticle('smoke', nozzleX, nozzleY + 6, progress)
+          }
+        }
+      }
+
+      if (progress > 0.18) {
+        const emberBursts = prefersReducedMotion ? 1 : 2 + Math.round((ignitionPhase + liftPhase + ascentPhase) * 4)
+        for (let i = 0; i < emberBursts; i += 1) {
+          if (Math.random() < 0.5 + intensity * 0.2) {
+            spawnParticle('ember', nozzleX, nozzleY + 2, progress)
+          }
+        }
+      }
+
+      for (let i = particles.length - 1; i >= 0; i -= 1) {
+        const particle = particles[i]
+        particle.x += particle.vx * dt
+        particle.y += particle.vy * dt
+        particle.life -= dt
+
+        if (particle.type === 'smoke') {
+          particle.size += 0.22 * dt
+          particle.vx *= 0.985
+          particle.vy *= 0.995
+        } else {
+          particle.size *= 0.992
+          particle.vx *= 0.99
+        }
+
+        if (particle.life <= 0) {
+          particles.splice(i, 1)
+          continue
+        }
+
+        drawParticle(particle)
+      }
+
+      frameId = window.requestAnimationFrame(render)
+    }
+
+    resizeCanvas()
+
+    let resizeObserver
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(resizeCanvas)
+      resizeObserver.observe(stage)
+    }
+
+    const rotateXTo = rocketShip ? gsap.quickTo(rocketShip, 'rotateX', { duration: 0.22, ease: 'power3.out' }) : null
+    const rotateYTo = rocketShip ? gsap.quickTo(rocketShip, 'rotateY', { duration: 0.22, ease: 'power3.out' }) : null
+    const glowTo = rocketCoreGlow ? gsap.quickTo(rocketCoreGlow, 'opacity', { duration: 0.22, ease: 'power2.out' }) : null
+
+    const handlePointerMove = (event) => {
+      if (!rotateXTo || !rotateYTo) return
+      const rect = stage.getBoundingClientRect()
+      const px = ((event.clientX - rect.left) / rect.width - 0.5) * 2
+      const py = ((event.clientY - rect.top) / rect.height - 0.5) * 2
+      rotateYTo(px * 9)
+      rotateXTo(-py * 7)
+      glowTo?.(0.92)
+    }
+
+    const handlePointerLeave = () => {
+      rotateYTo?.(0)
+      rotateXTo?.(0)
+      glowTo?.(0.62)
+    }
+
+    stage.addEventListener('pointermove', handlePointerMove)
+    stage.addEventListener('pointerleave', handlePointerLeave)
+    window.addEventListener('resize', resizeCanvas, { passive: true })
+    frameId = window.requestAnimationFrame(render)
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      resizeObserver?.disconnect()
+      window.removeEventListener('resize', resizeCanvas)
+      stage.removeEventListener('pointermove', handlePointerMove)
+      stage.removeEventListener('pointerleave', handlePointerLeave)
+    }
   }, [])
 
   const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
@@ -707,6 +1299,16 @@ export default function Home() {
                 </a>
               </div>
 
+              <div className="hero-trust-logos">
+                <span className="trust-label">Trusted by brands across India</span>
+                <div className="trust-logos">
+                  <div className="trust-logo-pill">Startup India</div>
+                  <div className="trust-logo-pill">Google Partner</div>
+                  <div className="trust-logo-pill">Meta Business</div>
+                  <div className="trust-logo-pill">Shopify Expert</div>
+                </div>
+              </div>
+
               <div className="hero-proof">
                 <span className="proof-item">No credit card</span>
                 <span className="proof-item">3x ROI guaranteed</span>
@@ -714,58 +1316,63 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="hero-card">
-              <div className="hero-card-header">
-                <div className="hero-card-dots"><span></span><span></span><span></span></div>
-                <span className="hero-card-url">growthkaro.in/dashboard</span>
-                <span className="hero-card-live">Live</span>
+            <div className="rocket-stage" ref={rocketStageRef}>
+              <div className="rocket-stage-glow"></div>
+              <div className="rocket-parallax-grid"></div>
+              <div className="rocket-parallax-rings"></div>
+              <canvas ref={rocketCanvasRef} className="rocket-particles-canvas" aria-hidden="true"></canvas>
+
+              <div className="rocket-stat-card rocket-stat-leads">
+                <div className="rocket-stat-icon">
+                  <Target strokeWidth={2.1} />
+                </div>
+                <div>
+                  <div className="rocket-stat-value">+120 Leads</div>
+                  <div className="rocket-stat-label">high-intent pipeline</div>
+                </div>
               </div>
-              <div className="hero-card-body">
-                <div className="dash-metric-row">
-                  <div className="dash-metric">
-                    <div className="dash-metric-label">Revenue</div>
-                    <div className="dash-metric-value">₹4.8L</div>
-                    <div className="dash-metric-sub">↑ 34% this month</div>
-                  </div>
-                  <div className="dash-metric">
-                    <div className="dash-metric-label">Leads</div>
-                    <div className="dash-metric-value">847</div>
-                    <div className="dash-metric-sub">↑ 2.1x vs last</div>
-                  </div>
-                  <div className="dash-metric">
-                    <div className="dash-metric-label">ROAS</div>
-                    <div className="dash-metric-value">4.2x</div>
-                    <div className="dash-metric-sub">↑ From 2.1x</div>
-                  </div>
-                </div>
 
-                <div className="dash-chart">
-                  <div className="dash-chart-title">Weekly Performance Overview</div>
-                  <div className="dash-bars">
-                    <div className="dash-bar"></div>
-                    <div className="dash-bar"></div>
-                    <div className="dash-bar"></div>
-                    <div className="dash-bar"></div>
-                    <div className="dash-bar"></div>
-                    <div className="dash-bar active"></div>
-                    <div className="dash-bar"></div>
-                  </div>
+              <div className="rocket-stat-card rocket-stat-revenue">
+                <div className="rocket-stat-icon">
+                  <IndianRupee strokeWidth={2.1} />
                 </div>
-
-                <div className="dash-platforms">
-                  <div className="dash-platform ig">Instagram</div>
-                  <div className="dash-platform fb">Facebook</div>
-                  <div className="dash-platform gad">Google</div>
-                  <div className="dash-platform yt">YouTube</div>
+                <div>
+                  <div className="rocket-stat-value">₹3.2L Revenue</div>
+                  <div className="rocket-stat-label">month-on-month surge</div>
                 </div>
+              </div>
 
-                <div className="dash-lead-card">
-                  <div className="dash-lead-icon">🎯</div>
-                  <div>
-                    <div className="dash-lead-title">New lead from Google Ads</div>
-                    <div className="dash-lead-sub">Real Estate · Mumbai · ₹25L budget</div>
+              <div className="rocket-stat-card rocket-stat-roas">
+                <div className="rocket-stat-icon">
+                  <Gauge strokeWidth={2.1} />
+                </div>
+                <div>
+                  <div className="rocket-stat-value">4.2x ROAS</div>
+                  <div className="rocket-stat-label">scaling profitably</div>
+                </div>
+              </div>
+
+              <div className="rocket-launch-base">
+                <div className="rocket-launch-ring rocket-charge-ring"></div>
+                <div className="rocket-launch-ring rocket-fuel-ring"></div>
+                <div className="rocket-launch-pad"></div>
+                <div className="rocket-trail-beam"></div>
+              </div>
+
+              <div className="rocket-ship-wrap">
+                <div className="rocket-ship-idle">
+                  <div className="rocket-ship">
+                    <div className="rocket-core-glow"></div>
+                    <div className="rocket-svg-wrap">
+                      <PremiumRocket />
+                    </div>
+                    <div className="rocket-engine-nozzle"></div>
+                    <div className="rocket-flame-old">
+                      <div className="rocket-flame-outer-old"></div>
+                      <div className="rocket-flame-core-old"></div>
+                    </div>
+                    <div className="rocket-smoke-haze"></div>
                   </div>
-                  <span className="dash-lead-badge">Hot Lead ✓</span>
                 </div>
               </div>
             </div>
@@ -818,7 +1425,9 @@ export default function Home() {
           <div className="service-categories">
             {SERVICE_CATEGORIES.map((cat, i) => (
               <div key={i} className="service-category-card">
-                <div className="service-cat-icon" style={{ background: cat.iconBg }}>{cat.icon}</div>
+                <div className="service-cat-img-wrap" style={{ background: cat.iconBg }}>
+                  <img src={cat.img} alt={cat.title} className="service-cat-img" />
+                </div>
                 <div className="service-cat-title">{cat.title}</div>
                 <div className="service-cat-desc">{cat.desc}</div>
                 <div className="service-cat-items">
@@ -833,21 +1442,95 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="section-divider"></div>
+      <div className="section-divider">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="divider-svg">
+          <path d="M0 30C240 50 480 10 720 30C960 50 1200 10 1440 30V60H0V30Z" fill="url(#divGrad)" opacity="0.15"/>
+          <path d="M0 40C360 20 720 50 1080 30C1260 20 1380 40 1440 35" stroke="url(#divStrokeGrad)" strokeWidth="1.5" fill="none" opacity="0.3"/>
+          <circle cx="360" cy="25" r="3" fill="#6c47ff" opacity="0.4"/>
+          <circle cx="720" cy="30" r="4" fill="#00d4ff" opacity="0.4"/>
+          <circle cx="1080" cy="28" r="3" fill="#ff3cac" opacity="0.4"/>
+          <defs>
+            <linearGradient id="divGrad" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#6c47ff"/>
+              <stop offset="0.5" stopColor="#00d4ff"/>
+              <stop offset="1" stopColor="#ff3cac"/>
+            </linearGradient>
+            <linearGradient id="divStrokeGrad" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#6c47ff" stopOpacity="0"/>
+              <stop offset="0.3" stopColor="#6c47ff"/>
+              <stop offset="0.7" stopColor="#00d4ff"/>
+              <stop offset="1" stopColor="#ff3cac" stopOpacity="0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
 
       {/* ── ALL SERVICES GRID ── */}
-      <section className="section" style={{ paddingTop: '48px' }}>
+      <section className="section services-section" style={{ paddingTop: '48px' }}>
         <div className="container">
           <div className="section-header" style={{ marginBottom: '0' }}>
             <div className="section-label">Complete Service List</div>
             <h2 className="section-title"><span className="gradient-text">16+ Services</span> Under One Roof</h2>
+            <p className="section-sub services-sub">
+              Flat service menus nahi, ek connected growth stack. Har block creative, traffic, trust aur conversions ko support karta hai.
+            </p>
           </div>
+
+          <div className="services-spotlight gsap-scale">
+            <div className="services-spotlight-copy">
+              <div className="services-spotlight-kicker">Growth Stack</div>
+              <h3 className="services-spotlight-title">
+                First click se repeat customer tak,
+                <span className="gradient-text"> every layer is covered.</span>
+              </h3>
+              <p className="services-spotlight-desc">
+                Isliye yeh section sirf list nahi hai. Yeh dikhaata hai ki paid media, organic visibility, design systems aur retention channels saath mein kaise kaam karte hain.
+              </p>
+              <div className="services-spotlight-pills">
+                <span>Paid Media</span>
+                <span>Creative Studio</span>
+                <span>SEO + Local</span>
+                <span>Retention Flows</span>
+              </div>
+            </div>
+
+            <div className="services-spotlight-grid">
+              {SERVICE_SPOTLIGHT.map((item) => (
+                <div key={item.title} className="services-spotlight-card">
+                  <div className="services-spotlight-icon">
+                    <item.icon strokeWidth={2} />
+                  </div>
+                  <div className="services-spotlight-card-title">{item.title}</div>
+                  <div className="services-spotlight-card-desc">{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="services-grid">
             {ALL_SERVICES.map((s, i) => (
-              <div key={i} className="service-card">
-                <div className="service-icon" style={{ background: s.bg }}>{s.icon}</div>
-                <div className="service-title">{s.title}</div>
+              <div
+                key={i}
+                className="service-card"
+                style={{
+                  '--service-accent': s.color,
+                  '--service-glow': s.glow,
+                }}
+              >
+                <div className="service-card-top">
+                  <div className="service-icon-shell">
+                    <div className="service-icon">
+                      <s.icon strokeWidth={2.1} />
+                    </div>
+                  </div>
+                  <div className="service-kicker">{s.kicker}</div>
+                </div>
+                <div className="service-title-row">
+                  <div className="service-title">{s.title}</div>
+                  <div className="service-arrow">↗</div>
+                </div>
                 <div className="service-desc">{s.desc}</div>
+                <div className="service-outcome">{s.outcome}</div>
               </div>
             ))}
           </div>
@@ -922,7 +1605,12 @@ export default function Home() {
           <div className="portfolio-grid">
             {PORTFOLIO.map((p, i) => (
               <div key={i} className="portfolio-card">
-                <div className="portfolio-visual" style={{ background: p.bg }}>{p.emoji}</div>
+                <div className="portfolio-visual" style={{ background: p.bg }}>
+                  <img src={p.img} alt={p.title} className="portfolio-img" loading="lazy" />
+                  <div className="portfolio-img-overlay">
+                    <span className="portfolio-overlay-cat">{p.cat}</span>
+                  </div>
+                </div>
                 <div className="portfolio-info">
                   <div className="portfolio-cat">{p.cat}</div>
                   <div className="portfolio-title">{p.title}</div>
@@ -1001,7 +1689,7 @@ export default function Home() {
                 <div className="test-stars">{'★★★★★'.split('').join(' ')}</div>
                 <div className="test-text">&ldquo;{t.text}&rdquo;</div>
                 <div className="test-author">
-                  <div className="test-avatar" style={{ background: t.color }}>{t.name[0]}</div>
+                  <div className="test-avatar" style={{ background: t.color }}>{t.name.split(' ').map(n => n[0]).join('')}</div>
                   <div>
                     <div className="test-name">{t.name}</div>
                     <div className="test-role">{t.role}</div>
@@ -1076,6 +1764,10 @@ export default function Home() {
           <div className="footer-inner">
             <div>
               <div className="footer-brand-name">Growth<span>karo</span></div>
+              <div className="footer-brand-badge">
+                <span className="footer-badge-dot"></span>
+                India&apos;s Top Digital Agency 2026
+              </div>
               <div className="footer-brand-desc">
                 India&apos;s most trusted digital marketing agency. We build growth systems that scale businesses.
               </div>
