@@ -1,5 +1,9 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const WA_NUMBER = '917300628199'
 const WA_URL = `https://wa.me/${WA_NUMBER}`
@@ -82,50 +86,44 @@ const ALL_SERVICES = [
   { icon: '👤', bg: 'rgba(139,92,246,0.18)', title: 'Personal Branding', desc: 'Politician, influencer, businessman — personal brand banao.' },
 ]
 
-const PROCESS = [
-  { num: '01', title: 'Discovery Call', desc: 'Aapke business, goals, competitors aur target audience ko samjhte hain. Free 30-min strategy session.' },
-  { num: '02', title: 'Custom Strategy', desc: 'Aapke liye tailor-made digital marketing roadmap with clear timelines aur expected results.' },
-  { num: '03', title: 'Execution', desc: 'Design, content, ads, website — sab parallel chal raha hai. Dedicated account manager ke saath.' },
-  { num: '04', title: 'Scale & Optimize', desc: 'Weekly reports, A/B testing, continuous optimization. Results improve hote hain every week.' },
+const TIMELINE_STEPS = [
+  {
+    num: '01',
+    title: 'Discovery Call',
+    desc: 'Aapke business, goals, competitors aur target audience ko deeply samjhte hain. Free 30-min strategy session.',
+    icon: '📞',
+    color: '#6c47ff',
+  },
+  {
+    num: '02',
+    title: 'Custom Strategy',
+    desc: 'Aapke liye tailor-made digital marketing roadmap with clear timelines aur expected results.',
+    icon: '🎯',
+    color: '#00d4ff',
+  },
+  {
+    num: '03',
+    title: 'Execution',
+    desc: 'Design, content, ads, website — sab parallel chal raha hai. Dedicated account manager ke saath.',
+    icon: '⚡',
+    color: '#ff3cac',
+  },
+  {
+    num: '04',
+    title: 'Scale & Optimize',
+    desc: 'Weekly reports, A/B testing, continuous optimization. Results improve hote hain every single week.',
+    icon: '🚀',
+    color: '#f97316',
+  },
 ]
 
 const PORTFOLIO = [
-  {
-    emoji: '👗', bg: 'linear-gradient(135deg, #fce7f3, #fdf2f8)',
-    cat: 'Fashion & E-commerce', title: 'LuxeFashion Store Launch',
-    desc: 'Complete e-commerce website with Instagram integration aur targeted ads campaign.',
-    stats: [{ val: '340%', lbl: 'Sales Up' }, { val: '200K', lbl: 'Reach' }, { val: '₹50L+', lbl: 'Revenue' }],
-  },
-  {
-    emoji: '🏨', bg: 'linear-gradient(135deg, #dbeafe, #eff6ff)',
-    cat: 'Hospitality & Tourism', title: 'Resort Digital Presence',
-    desc: 'Google Ads, SEO, social media aur drone photography se resort ki online visibility triple.',
-    stats: [{ val: '3x', lbl: 'Bookings' }, { val: '#1', lbl: 'Google Rank' }, { val: '500+', lbl: 'Reviews' }],
-  },
-  {
-    emoji: '🎓', bg: 'linear-gradient(135deg, #ede9ff, #f5f3ff)',
-    cat: 'Education & Coaching', title: 'Coaching Institute Growth',
-    desc: 'Facebook + Google ads ke saath student enrollments double kiye aur brand authority banayi.',
-    stats: [{ val: '2x', lbl: 'Enrollments' }, { val: '₹8L', lbl: 'Ad Spend ROI' }, { val: '180+', lbl: 'Leads/mo' }],
-  },
-  {
-    emoji: '🏗️', bg: 'linear-gradient(135deg, #fef3c7, #fffbeb)',
-    cat: 'Real Estate', title: 'Property Lead Generation',
-    desc: 'Multi-city real estate campaigns jo high-intent property buyers seedha aapke paas laaye.',
-    stats: [{ val: '500+', lbl: 'Leads/mo' }, { val: '₹200', lbl: 'Cost/Lead' }, { val: '8%', lbl: 'Close Rate' }],
-  },
-  {
-    emoji: '💊', bg: 'linear-gradient(135deg, #dcfce7, #f0fdf4)',
-    cat: 'Healthcare', title: 'Clinic Branding & Leads',
-    desc: 'Local SEO, Google Ads aur social media se clinic mein patient flow 4x badhaya.',
-    stats: [{ val: '4x', lbl: 'Patients' }, { val: '#1', lbl: 'Local Rank' }, { val: '60%', lbl: 'Less Cost' }],
-  },
-  {
-    emoji: '🎉', bg: 'linear-gradient(135deg, #fce7f3, #fff1f2)',
-    cat: 'Events & Entertainment', title: 'Music Festival Promotion',
-    desc: 'Full digital campaign — Instagram reels, influencer collabs, Google ads se 5000+ tickets sold.',
-    stats: [{ val: '5000+', lbl: 'Tickets' }, { val: '20M+', lbl: 'Impressions' }, { val: '3x', lbl: 'ROAS' }],
-  },
+  { emoji: '👗', bg: 'linear-gradient(135deg, #fce7f3, #fdf2f8)', cat: 'Fashion & E-commerce', title: 'LuxeFashion Store Launch', desc: 'Complete e-commerce website with Instagram integration aur targeted ads campaign.', stats: [{ val: '340%', lbl: 'Sales Up' }, { val: '200K', lbl: 'Reach' }, { val: '₹50L+', lbl: 'Revenue' }] },
+  { emoji: '🏨', bg: 'linear-gradient(135deg, #dbeafe, #eff6ff)', cat: 'Hospitality & Tourism', title: 'Resort Digital Presence', desc: 'Google Ads, SEO, social media aur drone photography se resort ki online visibility triple.', stats: [{ val: '3x', lbl: 'Bookings' }, { val: '#1', lbl: 'Google Rank' }, { val: '500+', lbl: 'Reviews' }] },
+  { emoji: '🎓', bg: 'linear-gradient(135deg, #ede9ff, #f5f3ff)', cat: 'Education & Coaching', title: 'Coaching Institute Growth', desc: 'Facebook + Google ads ke saath student enrollments double kiye aur brand authority banayi.', stats: [{ val: '2x', lbl: 'Enrollments' }, { val: '₹8L', lbl: 'Ad Spend ROI' }, { val: '180+', lbl: 'Leads/mo' }] },
+  { emoji: '🏗️', bg: 'linear-gradient(135deg, #fef3c7, #fffbeb)', cat: 'Real Estate', title: 'Property Lead Generation', desc: 'Multi-city real estate campaigns jo high-intent property buyers seedha aapke paas laaye.', stats: [{ val: '500+', lbl: 'Leads/mo' }, { val: '₹200', lbl: 'Cost/Lead' }, { val: '8%', lbl: 'Close Rate' }] },
+  { emoji: '💊', bg: 'linear-gradient(135deg, #dcfce7, #f0fdf4)', cat: 'Healthcare', title: 'Clinic Branding & Leads', desc: 'Local SEO, Google Ads aur social media se clinic mein patient flow 4x badhaya.', stats: [{ val: '4x', lbl: 'Patients' }, { val: '#1', lbl: 'Local Rank' }, { val: '60%', lbl: 'Less Cost' }] },
+  { emoji: '🎉', bg: 'linear-gradient(135deg, #fce7f3, #fff1f2)', cat: 'Events & Entertainment', title: 'Music Festival Promotion', desc: 'Full digital campaign — Instagram reels, influencer collabs, Google ads se 5000+ tickets sold.', stats: [{ val: '5000+', lbl: 'Tickets' }, { val: '20M+', lbl: 'Impressions' }, { val: '3x', lbl: 'ROAS' }] },
 ]
 
 const TESTIMONIALS = [
@@ -144,59 +142,469 @@ const FAQS = [
   { q: 'Kya aap offline businesses ke liye bhi kaam karte ho?', a: 'Haan! Restaurents, clinics, salons, real estate, local shops — offline businesses ke liye hum Google Business optimization, local SEO, aur hyper-local targeting ads ke through excellent results dete hain.' },
 ]
 
-function useScrollReveal() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const delay = entry.target.dataset.delay || 0
-            setTimeout(() => entry.target.classList.add('visible'), Number(delay))
-          }
-        })
-      },
-      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-    )
-    const els = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-reveal-rotate')
-    els.forEach(el => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
-}
+// ── GSAP ANIMATIONS HOOK ──
+function useGSAPAnimations() {
+  const containerRef = useRef(null)
 
-function useCounterAnimation() {
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target
-            const target = parseInt(el.dataset.target)
-            const suffix = el.dataset.suffix || ''
-            const duration = 1800
-            const start = Date.now()
-            const tick = () => {
-              const elapsed = Date.now() - start
-              const progress = Math.min(elapsed / duration, 1)
-              const ease = 1 - Math.pow(1 - progress, 3)
-              const current = Math.round(target * ease)
-              el.textContent = current + suffix
-              if (progress < 1) requestAnimationFrame(tick)
-            }
-            requestAnimationFrame(tick)
-            observer.unobserve(el)
+    if (typeof window === 'undefined') return
+
+    const ctx = gsap.context(() => {
+      // ── HERO ANIMATIONS ──
+      gsap.fromTo('.hero-badge',
+        { opacity: 0, y: 30, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out', delay: 0.3 }
+      )
+
+      gsap.fromTo('.hero-title',
+        { opacity: 0, y: 50, skewY: 2 },
+        { opacity: 1, y: 0, skewY: 0, duration: 1, ease: 'power3.out', delay: 0.5 }
+      )
+
+      gsap.fromTo('.hero-desc',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.7 }
+      )
+
+      gsap.fromTo('.hero-cta > *',
+        { opacity: 0, y: 20, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15, ease: 'power3.out', delay: 0.9 }
+      )
+
+      gsap.fromTo('.hero-proof',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 1.2 }
+      )
+
+      gsap.fromTo('.hero-card',
+        { opacity: 0, x: 60, scale: 0.9, rotateY: -5 },
+        { opacity: 1, x: 0, scale: 1, rotateY: 0, duration: 1, ease: 'power3.out', delay: 0.6 }
+      )
+
+      // Floating card animation
+      gsap.to('.hero-card', {
+        y: -10,
+        duration: 2.5,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+      })
+
+      // ── SCROLL REVEAL - FADE UP ──
+      gsap.utils.toArray('.gsap-fade-up').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 60, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              end: 'bottom 20%',
+              toggleActions: 'play none none reverse',
+            },
           }
+        )
+      })
+
+      // ── SCROLL REVEAL - FADE LEFT ──
+      gsap.utils.toArray('.gsap-fade-left').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, x: -80, rotateZ: -2 },
+          {
+            opacity: 1,
+            x: 0,
+            rotateZ: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              end: 'bottom 20%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        )
+      })
+
+      // ── SCROLL REVEAL - FADE RIGHT ──
+      gsap.utils.toArray('.gsap-fade-right').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, x: 80, rotateZ: 2 },
+          {
+            opacity: 1,
+            x: 0,
+            rotateZ: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              end: 'bottom 20%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        )
+      })
+
+      // ── SCROLL REVEAL - SCALE ──
+      gsap.utils.toArray('.gsap-scale').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, scale: 0.85, rotateY: -3 },
+          {
+            opacity: 1,
+            scale: 1,
+            rotateY: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              end: 'bottom 20%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        )
+      })
+
+      // ── STAGGER - SERVICE CATEGORIES ──
+      gsap.fromTo('.service-category-card',
+        { opacity: 0, y: 50, scale: 0.9 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.service-categories',
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+      // ── STAGGER - SERVICE CARDS ──
+      gsap.fromTo('.service-card',
+        { opacity: 0, y: 40, scale: 0.88 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: { amount: 0.6, grid: 'auto', from: 'start' },
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.services-grid',
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+      // ── STAGGER - PORTFOLIO CARDS ──
+      gsap.fromTo('.portfolio-card',
+        { opacity: 0, y: 60, scale: 0.9, rotateY: -5 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotateY: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.portfolio-grid',
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+      // ── STAGGER - TESTIMONIALS ──
+      gsap.fromTo('.testimonial-card',
+        { opacity: 0, y: 40, scale: 0.92 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.7,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.testimonials-grid',
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+      // ── STAGGER - FAQ ITEMS ──
+      gsap.fromTo('.faq-item',
+        { opacity: 0, x: -30 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.faq-list',
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+      // ── COUNTER ANIMATION ──
+      gsap.utils.toArray('.gsap-counter').forEach((el) => {
+        const target = parseInt(el.dataset.target)
+        const suffix = el.dataset.suffix || ''
+        const obj = { value: 0 }
+
+        gsap.to(obj, {
+          value: target,
+          duration: 2,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+          onUpdate: () => {
+            el.textContent = Math.round(obj.value) + suffix
+          },
         })
-      },
-      { threshold: 0.5 }
-    )
-    document.querySelectorAll('[data-target]').forEach(el => observer.observe(el))
-    return () => observer.disconnect()
+      })
+
+      // ── PARALLAX - HERO ORBS ──
+      gsap.utils.toArray('.hero-orb').forEach((orb, i) => {
+        const direction = i % 2 === 0 ? 1 : -1
+        gsap.to(orb, {
+          y: -100 * direction,
+          x: 50 * direction,
+          scrollTrigger: {
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        })
+      })
+
+      // ── MARQUEE SECTION FADE IN ──
+      gsap.fromTo('.marquee-section',
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 1,
+          scrollTrigger: {
+            trigger: '.marquee-section',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+      // ── STATS BAR ANIMATION ──
+      gsap.fromTo('.stats-bar-inner',
+        { opacity: 0, y: 40, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.stats-bar-inner',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+      // ── SECTION HEADER ANIMATION ──
+      gsap.utils.toArray('.section-header').forEach((header) => {
+        gsap.fromTo(header.children,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: header,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        )
+      })
+
+      // ── TIMELINE LINE GROW ANIMATION ──
+      gsap.fromTo('.timeline-line-fill',
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          duration: 2,
+          ease: 'power2.inOut',
+          scrollTrigger: {
+            trigger: '.timeline-section',
+            start: 'top 70%',
+            end: 'bottom 30%',
+            scrub: 0.5,
+          },
+        }
+      )
+
+      // ── TIMELINE NODES ANIMATION ──
+      gsap.utils.toArray('.timeline-node').forEach((node, i) => {
+        gsap.fromTo(node,
+          {
+            opacity: 0,
+            scale: 0,
+            boxShadow: '0 0 0 0 var(--purple)',
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.5,
+            ease: 'back.out(2)',
+            scrollTrigger: {
+              trigger: '.timeline-section',
+              start: `${20 + i * 20}% 80%`,
+              end: `${40 + i * 20}% 60%`,
+              scrub: 1,
+            },
+            boxShadow: '0 0 30px 10px var(--purple)',
+          }
+        )
+
+        // Node glow pulse
+        gsap.to(node, {
+          boxShadow: '0 0 40px 15px var(--purple)',
+          duration: 1.5,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+          scrollTrigger: {
+            trigger: '.timeline-section',
+            start: `${30 + i * 20}% 80%`,
+            end: `${50 + i * 20}% 60%`,
+            scrub: 1,
+          },
+        })
+      })
+
+      // ── TIMELINE CONTENT SLIDE ──
+      gsap.utils.toArray('.timeline-content').forEach((content, i) => {
+        const direction = i % 2 === 0 ? -1 : 1
+        gsap.fromTo(content,
+          {
+            opacity: 0,
+            x: 60 * direction,
+            scale: 0.9,
+          },
+          {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            duration: 0.7,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: content,
+              start: 'top 85%',
+              end: 'bottom 20%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        )
+      })
+
+      // ── CTA SECTION ANIMATION ──
+      gsap.fromTo('.cta-badge',
+        { opacity: 0, scale: 0.8 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.6,
+          ease: 'back.out(2)',
+          scrollTrigger: {
+            trigger: '.cta-dark',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+      gsap.fromTo('.cta-title',
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.cta-dark',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+      gsap.fromTo('.cta-actions > *',
+        { opacity: 0, y: 30, scale: 0.9 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.cta-dark',
+            start: 'top 75%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+      // ── FOOTER ANIMATION ──
+      gsap.fromTo('.footer',
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.footer',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
+
+    }, containerRef)
+
+    return () => ctx.revert()
   }, [])
+
+  return containerRef
 }
 
 export default function Home() {
-  useScrollReveal()
-  useCounterAnimation()
+  useGSAPAnimations()
 
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -225,7 +633,7 @@ export default function Home() {
   const isDark = theme === 'dark'
 
   return (
-    <>
+    <div ref={useGSAPAnimations}>
       {/* ── NAVBAR ── */}
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         <a href="#" className="nav-brand" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
@@ -306,7 +714,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Dashboard Preview */}
             <div className="hero-card">
               <div className="hero-card-header">
                 <div className="hero-card-dots"><span></span><span></span><span></span></div>
@@ -370,9 +777,7 @@ export default function Home() {
       <div className="marquee-section">
         <div className="marquee-track">
           {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-            <span key={i} className="marquee-item">
-              {item}<span className="marquee-dot"></span>
-            </span>
+            <span key={i} className="marquee-item">{item}<span className="marquee-dot"></span></span>
           ))}
         </div>
       </div>
@@ -382,10 +787,10 @@ export default function Home() {
         <div className="container">
           <div className="stats-bar-inner">
             {STATS.map((s, i) => (
-              <div key={i} className="stats-bar-item scroll-reveal" data-delay={i * 80}>
+              <div key={i} className="stats-bar-item gsap-fade-up">
                 <div className="stats-bar-num">
                   <span className="gradient-text">
-                    <span data-target={s.value} data-suffix={s.suffix} className="counter-value">{s.value}{s.suffix}</span>
+                    <span data-target={s.value} data-suffix={s.suffix} className="gsap-counter counter-value">{s.value}{s.suffix}</span>
                   </span>
                 </div>
                 <div className="stats-bar-label">{s.label}</div>
@@ -412,7 +817,7 @@ export default function Home() {
 
           <div className="service-categories">
             {SERVICE_CATEGORIES.map((cat, i) => (
-              <div key={i} className="service-category-card scroll-reveal" data-delay={i * 80}>
+              <div key={i} className="service-category-card">
                 <div className="service-cat-icon" style={{ background: cat.iconBg }}>{cat.icon}</div>
                 <div className="service-cat-title">{cat.title}</div>
                 <div className="service-cat-desc">{cat.desc}</div>
@@ -439,7 +844,7 @@ export default function Home() {
           </div>
           <div className="services-grid">
             {ALL_SERVICES.map((s, i) => (
-              <div key={i} className="service-card scroll-reveal-scale" data-delay={i * 50}>
+              <div key={i} className="service-card">
                 <div className="service-icon" style={{ background: s.bg }}>{s.icon}</div>
                 <div className="service-title">{s.title}</div>
                 <div className="service-desc">{s.desc}</div>
@@ -461,7 +866,7 @@ export default function Home() {
           </div>
 
           <div className="before-after">
-            <div className="ba-card ba-card-bad scroll-reveal-left">
+            <div className="ba-card ba-card-bad gsap-fade-left">
               <div className="ba-card-title">😤 Without Growthkaro</div>
               {[
                 'Low brand visibility — customers can\'t find you online',
@@ -479,7 +884,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="ba-card ba-card-good scroll-reveal-right">
+            <div className="ba-card ba-card-good gsap-fade-right">
               <div className="ba-card-title">🚀 With Growthkaro</div>
               {[
                 'Top Google rankings — customers find you first',
@@ -516,7 +921,7 @@ export default function Home() {
 
           <div className="portfolio-grid">
             {PORTFOLIO.map((p, i) => (
-              <div key={i} className="portfolio-card scroll-reveal-scale" data-delay={i * 80}>
+              <div key={i} className="portfolio-card">
                 <div className="portfolio-visual" style={{ background: p.bg }}>{p.emoji}</div>
                 <div className="portfolio-info">
                   <div className="portfolio-cat">{p.cat}</div>
@@ -537,8 +942,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── PROCESS ── */}
-      <section className="section" id="process">
+      {/* ── TIMELINE (Process) ── */}
+      <section className="section timeline-section" id="process">
         <div className="container">
           <div className="section-header">
             <div className="section-label">How It Works</div>
@@ -551,12 +956,25 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="process-grid">
-            {PROCESS.map((p, i) => (
-              <div key={i} className="process-card scroll-reveal" data-delay={i * 100}>
-                <div className="process-num">{p.num}</div>
-                <div className="process-title">{p.title}</div>
-                <div className="process-desc">{p.desc}</div>
+          <div className="timeline-container">
+            <div className="timeline-line">
+              <div className="timeline-line-fill"></div>
+            </div>
+
+            {TIMELINE_STEPS.map((step, i) => (
+              <div key={i} className="timeline-item">
+                <div className="timeline-node" style={{ '--node-color': step.color }}>
+                  <span className="timeline-node-icon">{step.icon}</span>
+                  <span className="timeline-node-num">{step.num}</span>
+                </div>
+                <div className="timeline-content">
+                  <div className="timeline-content-inner">
+                    <div className="timeline-step-num">{step.num}</div>
+                    <div className="timeline-step-icon">{step.icon}</div>
+                    <div className="timeline-step-title">{step.title}</div>
+                    <div className="timeline-step-desc">{step.desc}</div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -579,7 +997,7 @@ export default function Home() {
 
           <div className="testimonials-grid">
             {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="testimonial-card scroll-reveal" data-delay={i * 80}>
+              <div key={i} className="testimonial-card">
                 <div className="test-stars">{'★★★★★'.split('').join(' ')}</div>
                 <div className="test-text">&ldquo;{t.text}&rdquo;</div>
                 <div className="test-author">
@@ -611,7 +1029,7 @@ export default function Home() {
 
           <div className="faq-list">
             {FAQS.map((faq, i) => (
-              <div key={i} className={`faq-item${openFaq === i ? ' open' : ''} scroll-reveal`} data-delay={i * 60}>
+              <div key={i} className={`faq-item${openFaq === i ? ' open' : ''}`}>
                 <button className="faq-btn" onClick={() => toggleFaq(i)}>
                   {faq.q}
                   <span className="faq-arrow">+</span>
@@ -711,6 +1129,6 @@ export default function Home() {
       <a href={WA_URL} target="_blank" rel="noopener" className="wa-float" title="Chat on WhatsApp">
         💬
       </a>
-    </>
+    </div>
   )
 }
