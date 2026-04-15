@@ -432,7 +432,141 @@ function useGSAPAnimations(rocketRuntimeRef) {
         repeat: -1,
       })
 
-      // Rocket scroll-direction animation is handled outside gsap.context below
+      // ── ROCKET LAUNCH ON SCROLL DOWN (scrub with hero) ──
+      // As user scrolls down past the hero, the rocket launches upward.
+      // Scroll back up = rocket returns smoothly.
+      const rocketProgress = { value: 0 }
+      const rocketTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          // end when hero bottom reaches 20% from top — gives a tight, fast launch window
+          end: '80% top',
+          scrub: 0.4, // fast & smooth scrub
+        },
+      })
+
+      rocketTl
+        // Phase 1 — Pre-ignition: fuel ring, glow, stat cards ready (0 → 0.15)
+        .to(rocketProgress, {
+          value: 1,
+          duration: 1,
+          ease: 'none',
+          onUpdate: () => {
+            rocketRuntimeRef.current.progress = rocketProgress.value
+          },
+        }, 0)
+        .to('.rocket-fuel-ring', {
+          opacity: 0.95,
+          scale: 1.18,
+          duration: 0.12,
+          ease: 'none',
+        }, 0)
+        .to('.rocket-stage-glow', {
+          opacity: 0.85,
+          scale: 1.14,
+          duration: 0.12,
+          ease: 'none',
+        }, 0.02)
+
+        // Phase 2 — Ignition: flames on, smoke, core glow (0.1 → 0.25)
+        .to('.rocket-flame-old', {
+          opacity: 1,
+          scaleY: 1,
+          duration: 0.12,
+          ease: 'none',
+        }, 0.1)
+        .to('.rocket-core-glow', {
+          opacity: 1,
+          scale: 1.3,
+          duration: 0.12,
+          ease: 'none',
+        }, 0.1)
+        .to('.rocket-flame-ambient', {
+          opacity: 1,
+          duration: 0.1,
+          ease: 'none',
+        }, 0.12)
+        .to('.rocket-smoke-haze', {
+          opacity: 0.75,
+          scaleX: 1.2,
+          duration: 0.1,
+          ease: 'none',
+        }, 0.12)
+        .to('.rocket-stat-leads', {
+          opacity: 1,
+          y: 0,
+          duration: 0.1,
+          ease: 'none',
+        }, 0.14)
+
+        // Phase 3 — Liftoff: rocket moves up, trail beam grows (0.2 → 0.55)
+        .to('.rocket-trail-beam', {
+          opacity: 0.7,
+          scaleY: 0.5,
+          duration: 0.15,
+          ease: 'none',
+        }, 0.2)
+        .to('.rocket-ship-wrap', {
+          y: -180,
+          duration: 0.3,
+          ease: 'none',
+        }, 0.2)
+        .to('.rocket-svg-wrap svg', {
+          filter: 'brightness(1.15)',
+          duration: 0.2,
+          ease: 'none',
+        }, 0.25)
+        .to('.rocket-stat-revenue', {
+          opacity: 1,
+          y: 0,
+          duration: 0.1,
+          ease: 'none',
+        }, 0.35)
+
+        // Phase 4 — Full ascent: rocket flies high with tilt and trail (0.5 → 1.0)
+        .to('.rocket-ship-wrap', {
+          y: -700,
+          x: 40,
+          rotation: -15,
+          duration: 0.5,
+          ease: 'none',
+        }, 0.5)
+        .to('.rocket-trail-beam', {
+          opacity: 1,
+          scaleY: 1.3,
+          duration: 0.4,
+          ease: 'none',
+        }, 0.5)
+        .to('.rocket-stage-glow', {
+          opacity: 1.0,
+          scale: 1.5,
+          duration: 0.3,
+          ease: 'none',
+        }, 0.55)
+        .to('.rocket-svg-wrap svg', {
+          filter: 'brightness(1.3)',
+          duration: 0.35,
+          ease: 'none',
+        }, 0.55)
+        .to('.rocket-stat-roas', {
+          opacity: 1,
+          y: 0,
+          duration: 0.1,
+          ease: 'none',
+        }, 0.6)
+        .to('.rocket-parallax-grid', {
+          y: -40,
+          scale: 1.06,
+          duration: 0.4,
+          ease: 'none',
+        }, 0.55)
+        .to('.rocket-parallax-rings', {
+          y: -28,
+          rotate: -10,
+          duration: 0.4,
+          ease: 'none',
+        }, 0.55)
 
       // ── SCROLL REVEAL - FADE UP ──
       gsap.utils.toArray('.gsap-fade-up').forEach((el) => {
@@ -841,69 +975,7 @@ function useGSAPAnimations(rocketRuntimeRef) {
 
     }, containerRef)
 
-    // ── ROCKET SCROLL DIRECTION FLY ANIMATION ──
-    // Scroll UP  → rocket launches upward
-    // Scroll DOWN → rocket returns to launchpad
-    let lastScrollY = window.scrollY
-    let rocketFlying = false
-    let flyTl = null
-
-    const onRocketScroll = () => {
-      const currentScrollY = window.scrollY
-      const delta = currentScrollY - lastScrollY
-      lastScrollY = currentScrollY
-
-      if (delta < -5 && !rocketFlying) {
-        // ── SCROLL UP: LAUNCH! ──
-        rocketFlying = true
-        flyTl?.kill()
-        flyTl = gsap.timeline()
-        flyTl
-          .to(rocketRuntimeRef.current, { progress: 1, duration: 0.7, ease: 'power2.in' }, 0)
-          .to('.rocket-fuel-ring', { opacity: 0.95, scale: 1.18, duration: 0.25, ease: 'power2.out' }, 0)
-          .to('.rocket-stage-glow', { opacity: 0.85, scale: 1.14, duration: 0.2 }, 0.05)
-          .to('.rocket-flame-old', { opacity: 1, scaleY: 1, duration: 0.22 }, 0.1)
-          .to('.rocket-core-glow', { opacity: 1, scale: 1.3, duration: 0.2 }, 0.1)
-          .to('.rocket-flame-ambient', { opacity: 1, duration: 0.2 }, 0.12)
-          .to('.rocket-smoke-haze', { opacity: 0.75, scaleX: 1.2, duration: 0.2 }, 0.12)
-          .to('.rocket-trail-beam', { opacity: 0.7, scaleY: 0.5, duration: 0.3 }, 0.15)
-          .to('.rocket-ship-wrap', { y: -320, x: 30, rotation: -12, duration: 0.95, ease: 'power3.out' }, 0.18)
-          .to('.rocket-trail-beam', { opacity: 1, scaleY: 1.15, duration: 0.5 }, 0.45)
-          .to('.rocket-stage-glow', { opacity: 1.0, scale: 1.5, duration: 0.3 }, 0.5)
-          .to('.rocket-svg-wrap svg', { filter: 'brightness(1.25)', duration: 0.4 }, 0.3)
-          .to('.rocket-stat-leads', { opacity: 1, y: 0, duration: 0.25 }, 0.3)
-          .to('.rocket-stat-revenue', { opacity: 1, y: 0, duration: 0.25 }, 0.52)
-          .to('.rocket-stat-roas', { opacity: 1, y: 0, duration: 0.25 }, 0.72)
-
-      } else if (delta > 5 && rocketFlying) {
-        // ── SCROLL DOWN: RETURN TO LAUNCHPAD ──
-        rocketFlying = false
-        flyTl?.kill()
-        flyTl = gsap.timeline()
-        flyTl
-          .to('.rocket-ship-wrap', { y: 0, x: 0, rotation: 0, duration: 0.95, ease: 'power3.inOut' }, 0)
-          .to('.rocket-trail-beam', { opacity: 0, scaleY: 0.02, duration: 0.5, ease: 'power2.in' }, 0)
-          .to('.rocket-flame-ambient', { opacity: 0, duration: 0.3 }, 0)
-          .to('.rocket-svg-wrap svg', { filter: 'brightness(1)', duration: 0.4 }, 0)
-          .to(rocketRuntimeRef.current, { progress: 0, duration: 0.6, ease: 'power2.out' }, 0)
-          .to('.rocket-stat-leads', { opacity: 0, y: 20, duration: 0.2 }, 0)
-          .to('.rocket-stat-revenue', { opacity: 0, y: 20, duration: 0.2 }, 0)
-          .to('.rocket-stat-roas', { opacity: 0, y: 20, duration: 0.2 }, 0)
-          .to('.rocket-flame-old', { opacity: 0, scaleY: 0.1, duration: 0.4 }, 0.15)
-          .to('.rocket-fuel-ring', { opacity: 0.08, scale: 1, duration: 0.5 }, 0.15)
-          .to('.rocket-stage-glow', { opacity: 0.45, scale: 1, duration: 0.6 }, 0.15)
-          .to('.rocket-smoke-haze', { opacity: 0, scaleX: 0.6, duration: 0.4 }, 0.15)
-          .to('.rocket-core-glow', { opacity: 0.7, scale: 1, duration: 0.4 }, 0.15)
-      }
-    }
-
-    window.addEventListener('scroll', onRocketScroll, { passive: true })
-
-    return () => {
-      ctx.revert()
-      window.removeEventListener('scroll', onRocketScroll)
-      flyTl?.kill()
-    }
+    return () => ctx.revert()
   }, [])
 
   return containerRef
