@@ -806,12 +806,16 @@ button { font-family: inherit; }
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 16px 36px rgba(0,0,0,0.24);
   backdrop-filter: blur(12px);
-  opacity: 0;
-  transform: translateY(16px);
+  opacity: 1;
+  animation: statFloat 3.5s ease-in-out infinite;
 }
-.rocket-stat-leads { top: 52px; left: 8px; }
-.rocket-stat-revenue { top: 182px; right: -6px; }
-.rocket-stat-roas { bottom: 126px; left: 24px; }
+@keyframes statFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.rocket-stat-leads { top: 52px; left: 8px; animation-delay: 0s; }
+.rocket-stat-revenue { top: 182px; right: -6px; animation-delay: 0.8s; }
+.rocket-stat-roas { bottom: 126px; left: 24px; animation-delay: 1.6s; }
 .rocket-stat-icon {
   width: 40px;
   height: 40px;

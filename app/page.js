@@ -583,7 +583,7 @@ function useGSAPAnimations(rocketRuntimeRef) {
       })
 
       rocketTl
-        // Phase 1 — Pre-ignition: fuel ring, glow, stat cards ready (0 → 0.15)
+        // Track scroll progress for canvas particles
         .to(rocketProgress, {
           value: 1,
           duration: 1,
@@ -592,6 +592,8 @@ function useGSAPAnimations(rocketRuntimeRef) {
             rocketRuntimeRef.current.progress = rocketProgress.value
           },
         }, 0)
+
+        // Phase 1 — Pre-ignition: fuel ring + glow (0 → 0.15)
         .to('.rocket-fuel-ring', {
           opacity: 0.95,
           scale: 1.18,
@@ -605,7 +607,7 @@ function useGSAPAnimations(rocketRuntimeRef) {
           ease: 'none',
         }, 0.02)
 
-        // Phase 2 — Ignition: flames on, smoke, core glow (0.1 → 0.25)
+        // Phase 2 — Ignition: flames on, smoke (0.1 → 0.25)
         .to('.rocket-flame-old', {
           opacity: 1,
           scaleY: 1,
@@ -629,12 +631,6 @@ function useGSAPAnimations(rocketRuntimeRef) {
           duration: 0.1,
           ease: 'none',
         }, 0.12)
-        .to('.rocket-stat-leads', {
-          opacity: 1,
-          y: 0,
-          duration: 0.1,
-          ease: 'none',
-        }, 0.14)
 
         // Phase 3 — Liftoff: rocket moves up, trail beam grows (0.2 → 0.55)
         .to('.rocket-trail-beam', {
@@ -648,17 +644,6 @@ function useGSAPAnimations(rocketRuntimeRef) {
           duration: 0.3,
           ease: 'none',
         }, 0.2)
-        .to('.rocket-svg-wrap svg', {
-          filter: 'brightness(1.15)',
-          duration: 0.2,
-          ease: 'none',
-        }, 0.25)
-        .to('.rocket-stat-revenue', {
-          opacity: 1,
-          y: 0,
-          duration: 0.1,
-          ease: 'none',
-        }, 0.35)
 
         // Phase 4 — Full ascent: rocket flies high with tilt and trail (0.5 → 1.0)
         .to('.rocket-ship-wrap', {
@@ -678,29 +663,6 @@ function useGSAPAnimations(rocketRuntimeRef) {
           opacity: 1.0,
           scale: 1.5,
           duration: 0.3,
-          ease: 'none',
-        }, 0.55)
-        .to('.rocket-svg-wrap svg', {
-          filter: 'brightness(1.3)',
-          duration: 0.35,
-          ease: 'none',
-        }, 0.55)
-        .to('.rocket-stat-roas', {
-          opacity: 1,
-          y: 0,
-          duration: 0.1,
-          ease: 'none',
-        }, 0.6)
-        .to('.rocket-parallax-grid', {
-          y: -40,
-          scale: 1.06,
-          duration: 0.4,
-          ease: 'none',
-        }, 0.55)
-        .to('.rocket-parallax-rings', {
-          y: -28,
-          rotate: -10,
-          duration: 0.4,
           ease: 'none',
         }, 0.55)
 
@@ -1157,7 +1119,7 @@ export default function Home() {
     const particles = []
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const runtime = rocketRuntimeRef.current
-    const maxParticles = prefersReducedMotion ? 28 : 96
+    const maxParticles = prefersReducedMotion ? 12 : 40
     const rocketShip = stage.querySelector('.rocket-ship')
     const rocketCoreGlow = stage.querySelector('.rocket-core-glow')
     const nozzle = stage.querySelector('.rocket-engine-nozzle')
