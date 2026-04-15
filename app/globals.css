@@ -720,7 +720,7 @@ button { font-family: inherit; }
 .rocket-engine-nozzle {
   position: absolute;
   left: 50%;
-  bottom: 12px;
+  bottom: 24px;
   width: 36px;
   height: 20px;
   transform: translateX(-50%);
@@ -752,7 +752,7 @@ button { font-family: inherit; }
 .rocket-flame-old {
   position: absolute;
   left: 50%;
-  bottom: -2px;
+  bottom: 10px;
   width: 80px;
   height: 100px;
   transform: translateX(-50%) scaleY(0.1);
@@ -782,7 +782,7 @@ button { font-family: inherit; }
 .rocket-smoke-haze {
   position: absolute;
   left: 50%;
-  bottom: 20px;
+  bottom: 30px;
   width: 140px;
   height: 60px;
   transform: translateX(-50%) scaleX(0.6);

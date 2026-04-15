@@ -31,173 +31,309 @@ function PremiumRocket() {
   return (
     <svg viewBox="0 0 200 380" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
       <defs>
-        <linearGradient id="bodyGrad" x1="100" y1="0" x2="100" y2="380" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#c4b5fd" />
-          <stop offset="18%" stopColor="#8b5cf6" />
-          <stop offset="45%" stopColor="#6366f1" />
-          <stop offset="72%" stopColor="#3b82f6" />
-          <stop offset="100%" stopColor="#2563eb" />
+        {/* Body gradient — rich violet to indigo to blue */}
+        <linearGradient id="bodyGrad" x1="100" y1="20" x2="100" y2="260" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#e0d4ff" />
+          <stop offset="12%" stopColor="#c4b5fd" />
+          <stop offset="30%" stopColor="#a78bfa" />
+          <stop offset="50%" stopColor="#7c3aed" />
+          <stop offset="72%" stopColor="#6366f1" />
+          <stop offset="100%" stopColor="#4338ca" />
         </linearGradient>
-        <linearGradient id="bodySheen" x1="80" y1="30" x2="120" y2="30" gradientUnits="userSpaceOnUse">
+        {/* Metallic left-highlight sheen */}
+        <linearGradient id="bodySheen" x1="72" y1="40" x2="128" y2="40" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-          <stop offset="35%" stopColor="rgba(255,255,255,0.28)" />
-          <stop offset="55%" stopColor="rgba(255,255,255,0.12)" />
+          <stop offset="20%" stopColor="rgba(255,255,255,0.05)" />
+          <stop offset="38%" stopColor="rgba(255,255,255,0.32)" />
+          <stop offset="52%" stopColor="rgba(255,255,255,0.10)" />
           <stop offset="100%" stopColor="rgba(255,255,255,0)" />
         </linearGradient>
-        <linearGradient id="noseGrad" x1="100" y1="0" x2="100" y2="75" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#ddd6fe" />
-          <stop offset="40%" stopColor="#a78bfa" />
+        {/* Nose cone gradient */}
+        <linearGradient id="noseGrad" x1="100" y1="12" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#f5f3ff" />
+          <stop offset="25%" stopColor="#ddd6fe" />
+          <stop offset="60%" stopColor="#a78bfa" />
           <stop offset="100%" stopColor="#7c3aed" />
         </linearGradient>
-        <linearGradient id="noseShine" x1="100" y1="0" x2="100" y2="75" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.7)" />
+        <linearGradient id="noseShine" x1="90" y1="12" x2="110" y2="60" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.85)" />
           <stop offset="100%" stopColor="rgba(255,255,255,0)" />
         </linearGradient>
-        <linearGradient id="finGradL" x1="55" y1="155" x2="55" y2="250" gradientUnits="userSpaceOnUse">
+        {/* Fin gradients */}
+        <linearGradient id="finGradL" x1="50" y1="180" x2="70" y2="265" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#818cf8" />
-          <stop offset="100%" stopColor="#4338ca" />
+          <stop offset="100%" stopColor="#3730a3" />
         </linearGradient>
-        <linearGradient id="finGradR" x1="145" y1="155" x2="145" y2="250" gradientUnits="userSpaceOnUse">
+        <linearGradient id="finGradR" x1="150" y1="180" x2="130" y2="265" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#818cf8" />
-          <stop offset="100%" stopColor="#4338ca" />
+          <stop offset="100%" stopColor="#3730a3" />
         </linearGradient>
-        <linearGradient id="finShine" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+        <linearGradient id="finShineL" x1="40" y1="200" x2="75" y2="200" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-          <stop offset="50%" stopColor="rgba(255,255,255,0.35)" />
+          <stop offset="60%" stopColor="rgba(255,255,255,0.25)" />
           <stop offset="100%" stopColor="rgba(255,255,255,0)" />
         </linearGradient>
-        <linearGradient id="windowOuter" x1="100" y1="72" x2="100" y2="120" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#1e3a8a" />
-          <stop offset="100%" stopColor="#0f172a" />
+        <linearGradient id="finShineR" x1="160" y1="200" x2="125" y2="200" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+          <stop offset="60%" stopColor="rgba(255,255,255,0.25)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
         </linearGradient>
-        <linearGradient id="windowInner" x1="100" y1="72" x2="100" y2="120" gradientUnits="userSpaceOnUse">
+        {/* Window gradients */}
+        <radialGradient id="windowGrad" cx="50%" cy="35%" r="50%">
           <stop offset="0%" stopColor="#1e40af" />
-          <stop offset="50%" stopColor="#1e3a8a" />
+          <stop offset="60%" stopColor="#1e3a8a" />
           <stop offset="100%" stopColor="#0c1a3a" />
-        </linearGradient>
-        <linearGradient id="windowGlare" x1="88" y1="78" x2="108" y2="92" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.7)" />
+        </radialGradient>
+        <linearGradient id="windowGlare" x1="88" y1="110" x2="106" y2="126" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.75)" />
           <stop offset="100%" stopColor="rgba(255,255,255,0)" />
         </linearGradient>
-        <linearGradient id="engineGrad" x1="100" y1="235" x2="100" y2="268" gradientUnits="userSpaceOnUse">
+        {/* Engine gradient */}
+        <linearGradient id="engineGrad" x1="100" y1="244" x2="100" y2="264" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#6366f1" />
+          <stop offset="50%" stopColor="#4338ca" />
           <stop offset="100%" stopColor="#1e1b4b" />
         </linearGradient>
-        <linearGradient id="flameOuter" x1="100" y1="268" x2="100" y2="370" gradientUnits="userSpaceOnUse">
+        {/* Flame gradients */}
+        <linearGradient id="flameOuter" x1="100" y1="264" x2="100" y2="368" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#fde68a" stopOpacity="0.95" />
-          <stop offset="30%" stopColor="#fb923c" stopOpacity="0.9" />
-          <stop offset="65%" stopColor="#ef4444" stopOpacity="0.7" />
+          <stop offset="25%" stopColor="#fb923c" stopOpacity="0.9" />
+          <stop offset="55%" stopColor="#ef4444" stopOpacity="0.7" />
           <stop offset="100%" stopColor="#dc2626" stopOpacity="0" />
         </linearGradient>
-        <linearGradient id="flameMid" x1="100" y1="268" x2="100" y2="350" gradientUnits="userSpaceOnUse">
+        <linearGradient id="flameMid" x1="100" y1="264" x2="100" y2="345" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#fef9c3" stopOpacity="0.98" />
-          <stop offset="35%" stopColor="#fbbf24" stopOpacity="0.88" />
-          <stop offset="70%" stopColor="#f97316" stopOpacity="0.5" />
+          <stop offset="30%" stopColor="#fbbf24" stopOpacity="0.88" />
+          <stop offset="65%" stopColor="#f97316" stopOpacity="0.5" />
           <stop offset="100%" stopColor="#ea580c" stopOpacity="0" />
         </linearGradient>
-        <linearGradient id="flameCore" x1="100" y1="268" x2="100" y2="330" gradientUnits="userSpaceOnUse">
+        <linearGradient id="flameCore" x1="100" y1="264" x2="100" y2="324" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
-          <stop offset="40%" stopColor="#fef9c3" stopOpacity="0.95" />
-          <stop offset="75%" stopColor="#fcd34d" stopOpacity="0.5" />
+          <stop offset="35%" stopColor="#fef9c3" stopOpacity="0.95" />
+          <stop offset="70%" stopColor="#fcd34d" stopOpacity="0.5" />
           <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
         </linearGradient>
-        <radialGradient id="ambientGlow" cx="50%" cy="45%" r="50%" fx="50%" fy="35%">
-          <stop offset="0%" stopColor="rgba(139,92,246,0.22)" />
-          <stop offset="60%" stopColor="rgba(59,130,246,0.1)" />
+        <radialGradient id="ambientGlow" cx="50%" cy="42%" r="50%" fx="50%" fy="35%">
+          <stop offset="0%" stopColor="rgba(139,92,246,0.25)" />
+          <stop offset="55%" stopColor="rgba(99,102,241,0.10)" />
           <stop offset="100%" stopColor="rgba(0,0,0,0)" />
         </radialGradient>
         <radialGradient id="flameGlow" cx="50%" cy="0%" r="100%" fx="50%" fy="0%">
-          <stop offset="0%" stopColor="rgba(251,191,36,0.35)" />
+          <stop offset="0%" stopColor="rgba(251,191,36,0.4)" />
           <stop offset="100%" stopColor="rgba(251,191,36,0)" />
         </radialGradient>
+        {/* Filters */}
         <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="8" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-        <filter id="bodyGlow" x="-20%" y="-10%" width="140%" height="130%">
           <feGaussianBlur stdDeviation="6" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <filter id="bodyGlow" x="-15%" y="-8%" width="130%" height="120%">
+          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
         <filter id="flameBlur" x="-30%" y="-20%" width="160%" height="160%">
           <feGaussianBlur stdDeviation="3" />
         </filter>
         <filter id="engineGlow" x="-60%" y="-30%" width="220%" height="180%">
           <feGaussianBlur stdDeviation="5" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
-        <clipPath id="bodyClip">
-          <path d="M64 82 C64 72 70 64 80 64 L120 64 C130 64 136 72 136 82 L136 228 C136 238 130 246 120 246 L80 246 C70 246 64 238 64 228 Z" />
-        </clipPath>
+        <filter id="noseGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
       </defs>
 
-      <ellipse cx="100" cy="170" rx="88" ry="145" fill="url(#ambientGlow)" />
+      {/* Ambient glow behind rocket */}
+      <ellipse cx="100" cy="165" rx="92" ry="150" fill="url(#ambientGlow)" />
 
+      {/* ═══ ROCKET BODY ═══ Tapered fuselage */}
       <g filter="url(#bodyGlow)">
-        <path d="M64 82 C64 72 70 64 80 64 L120 64 C130 64 136 72 136 82 L136 228 C136 238 130 246 120 246 L80 246 C70 246 64 238 64 228 Z" fill="url(#bodyGrad)" />
+        {/* Main body — tapered from wider top to narrower engine */}
+        <path d="
+          M100 28
+          C108 28 120 40 126 58
+          L132 90
+          L136 140
+          L136 200
+          C136 220 132 240 126 250
+          L118 260
+          L82 260
+          L74 250
+          C68 240 64 220 64 200
+          L64 140
+          L68 90
+          L74 58
+          C80 40 92 28 100 28 Z
+        " fill="url(#bodyGrad)" />
+        {/* Metallic sheen overlay */}
+        <path d="
+          M100 28
+          C108 28 120 40 126 58
+          L132 90
+          L136 140
+          L136 200
+          C136 220 132 240 126 250
+          L118 260
+          L82 260
+          L74 250
+          C68 240 64 220 64 200
+          L64 140
+          L68 90
+          L74 58
+          C80 40 92 28 100 28 Z
+        " fill="url(#bodySheen)" />
 
-        <path d="M64 82 C64 72 70 64 80 64 L120 64 C130 64 136 72 136 82 L136 228 C136 238 130 246 120 246 L80 246 C70 246 64 238 64 228 Z" fill="url(#bodySheen)" />
+        {/* Left highlight strip */}
+        <path d="M74 60 C72 80 69 120 69 160 C69 200 72 230 76 248 L72 244 C68 228 66 200 66 160 C66 120 68 80 72 58 Z" fill="rgba(255,255,255,0.14)" />
 
-        <rect x="68" y="70" width="20" height="190" rx="10" fill="rgba(255,255,255,0.12)" />
+        {/* Panel detail lines */}
+        <line x1="70" y1="100" x2="130" y2="100" stroke="rgba(255,255,255,0.12)" strokeWidth="0.8" />
+        <line x1="68" y1="160" x2="132" y2="160" stroke="rgba(255,255,255,0.08)" strokeWidth="0.6" />
+        <line x1="70" y1="200" x2="130" y2="200" stroke="rgba(255,255,255,0.06)" strokeWidth="0.6" />
 
-        <line x1="68" y1="108" x2="132" y2="108" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" />
-        <line x1="68" y1="168" x2="132" y2="168" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-        <line x1="68" y1="198" x2="132" y2="198" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
-
-        <rect x="82" y="104" width="36" height="3" rx="1.5" fill="rgba(255,255,255,0.22)" />
-        <rect x="82" y="164" width="36" height="2" rx="1" fill="rgba(255,255,255,0.14)" />
+        {/* Accent bands */}
+        <path d="M74 96 L126 96 L128 100 L72 100 Z" fill="rgba(255,255,255,0.08)" />
+        <path d="M68 156 L132 156 L132 162 L68 162 Z" fill="rgba(139,92,246,0.12)" />
       </g>
 
-      <path d="M72 82 C72 70 80 62 88 62 L112 62 C120 62 128 70 128 82 L124 155 C120 155 110 158 100 158 C90 158 80 155 76 155 Z" fill="url(#noseGrad)" />
-      <path d="M72 82 C72 70 80 62 88 62 L112 62 C120 62 128 70 128 82 L124 155 C120 155 110 158 100 158 C90 158 80 155 76 155 Z" fill="url(#noseShine)" opacity="0.6" />
-      <path d="M76 84 L82 72 C82 68 88 64 94 62 L100 60 L88 82 Z" fill="rgba(255,255,255,0.3)" />
+      {/* ═══ NOSE CONE ═══ Sharp pointed tip */}
+      <g filter="url(#noseGlow)">
+        <path d="
+          M100 12
+          C104 12 112 30 118 50
+          L126 58
+          C130 66 133 78 134 90
+          L68 90
+          C69 78 72 66 76 58
+          L82 50
+          C88 30 96 12 100 12 Z
+        " fill="url(#noseGrad)" />
+        {/* Nose shine */}
+        <path d="
+          M100 12
+          C104 12 112 30 118 50
+          L126 58
+          C130 66 133 78 134 90
+          L68 90
+          C69 78 72 66 76 58
+          L82 50
+          C88 30 96 12 100 12 Z
+        " fill="url(#noseShine)" opacity="0.5" />
+        {/* Tip highlight */}
+        <path d="M100 14 L96 34 L100 18 L104 34 Z" fill="rgba(255,255,255,0.5)" />
+      </g>
 
-      <path d="M100 158 L100 62 C90 58 80 68 76 82 L68 155 C64 162 66 172 72 176 L64 235 C60 242 62 252 68 257 L78 252 L88 245 L88 178 C92 180 96 180 100 178 Z" fill="url(#finGradL)" />
-      <path d="M100 158 L100 62 C110 58 120 68 124 82 L132 155 C136 162 134 172 128 176 L136 235 C140 242 138 252 132 257 L122 252 L112 245 L112 178 C108 180 104 180 100 178 Z" fill="url(#finGradR)" />
-      <path d="M100 158 L100 62 C90 58 80 68 76 82 L68 155 C64 162 66 172 72 176 L64 235 C60 242 62 252 68 257 L78 252 L88 245 L88 178 C92 180 96 180 100 178 Z" fill="url(#finShine)" opacity="0.4" />
-      <path d="M100 158 L100 62 C110 58 120 68 124 82 L132 155 C136 162 134 172 128 176 L136 235 C140 242 138 252 132 257 L122 252 L112 245 L112 178 C108 180 104 180 100 178 Z" fill="url(#finShine)" opacity="0.4" />
+      {/* ═══ SIDE FINS ═══ Swept-back aerodynamic */}
+      {/* Left fin */}
+      <path d="
+        M64 200
+        C60 210 48 230 38 252
+        L34 262
+        C32 268 36 272 40 270
+        L56 258
+        L66 248
+        C64 235 64 218 64 200 Z
+      " fill="url(#finGradL)" />
+      <path d="
+        M64 200
+        C60 210 48 230 38 252
+        L34 262
+        C32 268 36 272 40 270
+        L56 258
+        L66 248
+        C64 235 64 218 64 200 Z
+      " fill="url(#finShineL)" opacity="0.5" />
 
-      <path d="M82 228 C82 236 88 244 100 244 C112 244 118 236 118 228 L118 240 C118 246 112 250 100 250 C88 250 82 246 82 240 Z" fill="url(#engineGrad)" />
-      <rect x="82" y="228" width="36" height="4" rx="2" fill="rgba(255,255,255,0.12)" />
-      <ellipse cx="100" cy="250" rx="18" ry="4" fill="rgba(139,92,246,0.4)" filter="url(#engineGlow)" />
+      {/* Right fin */}
+      <path d="
+        M136 200
+        C140 210 152 230 162 252
+        L166 262
+        C168 268 164 272 160 270
+        L144 258
+        L134 248
+        C136 235 136 218 136 200 Z
+      " fill="url(#finGradR)" />
+      <path d="
+        M136 200
+        C140 210 152 230 162 252
+        L166 262
+        C168 268 164 272 160 270
+        L144 258
+        L134 248
+        C136 235 136 218 136 200 Z
+      " fill="url(#finShineR)" opacity="0.5" />
 
-      <circle cx="100" cy="94" r="22" fill="url(#windowOuter)" />
-      <circle cx="100" cy="94" r="19" fill="url(#windowInner)" />
-      <circle cx="100" cy="94" r="16" fill="#0f172a" />
-      <ellipse cx="93" cy="88" rx="8" ry="5" fill="url(#windowGlare)" opacity="0.6" />
-      <circle cx="100" cy="94" r="16" fill="none" stroke="rgba(99,102,241,0.4)" strokeWidth="1.5" />
-      <circle cx="100" cy="94" r="22" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+      {/* Center stabiliser fin */}
+      <path d="M96 252 L100 280 L104 252 Z" fill="#4338ca" opacity="0.6" />
 
-      <circle cx="100" cy="148" r="12" fill="url(#windowOuter)" />
-      <circle cx="100" cy="148" r="10" fill="url(#windowInner)" />
-      <circle cx="100" cy="148" r="8" fill="#0f172a" />
-      <ellipse cx="96" cy="145" rx="4" ry="2.5" fill="url(#windowGlare)" opacity="0.5" />
-      <circle cx="100" cy="148" r="10" fill="none" stroke="rgba(99,102,241,0.3)" strokeWidth="1" />
-      <circle cx="100" cy="148" r="12" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+      {/* ═══ ENGINE BELL ═══ */}
+      <path d="
+        M82 252
+        C82 256 86 262 92 264
+        L108 264
+        C114 262 118 256 118 252
+        L120 258
+        C120 264 114 270 108 270
+        L92 270
+        C86 270 80 264 80 258 Z
+      " fill="url(#engineGrad)" />
+      {/* Engine rim highlight */}
+      <path d="M86 253 L114 253 L116 255 L84 255 Z" fill="rgba(255,255,255,0.15)" />
+      {/* Engine glow ring */}
+      <ellipse cx="100" cy="268" rx="16" ry="4" fill="rgba(139,92,246,0.45)" filter="url(#engineGlow)" />
 
-      <g filter="url(#flameBlur)" opacity="0.6">
-        <path d="M100 268 C60 310 55 340 60 368 C75 358 85 350 100 348 C115 350 125 358 140 368 C145 340 140 310 100 268Z" fill="url(#flameGlow)" />
+      {/* ═══ COCKPIT WINDOW ═══ Main viewport */}
+      <ellipse cx="100" cy="122" rx="20" ry="22" fill="#1e3a8a" />
+      <ellipse cx="100" cy="122" rx="17" ry="19" fill="url(#windowGrad)" />
+      <ellipse cx="100" cy="122" rx="14" ry="16" fill="#0c1a3a" />
+      {/* Star reflection in glass */}
+      <circle cx="94" cy="116" r="2" fill="rgba(255,255,255,0.6)" />
+      <circle cx="90" cy="120" r="1" fill="rgba(255,255,255,0.3)" />
+      {/* Glass glare arc */}
+      <ellipse cx="94" cy="114" rx="9" ry="6" fill="url(#windowGlare)" opacity="0.5" />
+      {/* Window ring */}
+      <ellipse cx="100" cy="122" rx="14" ry="16" fill="none" stroke="rgba(99,102,241,0.35)" strokeWidth="1.5" />
+      <ellipse cx="100" cy="122" rx="20" ry="22" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+
+      {/* ═══ SECONDARY PORTHOLE ═══ */}
+      <circle cx="100" cy="172" r="9" fill="#1e3a8a" />
+      <circle cx="100" cy="172" r="7" fill="#0c1a3a" />
+      <circle cx="97" cy="170" r="1.5" fill="rgba(255,255,255,0.4)" />
+      <circle cx="100" cy="172" r="7" fill="none" stroke="rgba(99,102,241,0.25)" strokeWidth="1" />
+      <circle cx="100" cy="172" r="9" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+
+      {/* ═══ BODY RIVETS / ACCENT DOTS ═══ */}
+      <circle cx="76" cy="140" r="1.5" fill="rgba(255,255,255,0.12)" />
+      <circle cx="124" cy="140" r="1.5" fill="rgba(255,255,255,0.12)" />
+      <circle cx="76" cy="190" r="1.5" fill="rgba(255,255,255,0.08)" />
+      <circle cx="124" cy="190" r="1.5" fill="rgba(255,255,255,0.08)" />
+      <circle cx="76" cy="220" r="1.5" fill="rgba(255,255,255,0.06)" />
+      <circle cx="124" cy="220" r="1.5" fill="rgba(255,255,255,0.06)" />
+
+      {/* ═══ FLAME ═══ */}
+      {/* Outer glow haze */}
+      <g filter="url(#flameBlur)" opacity="0.55">
+        <path d="M100 266 C62 306 56 338 60 366 C76 356 86 348 100 346 C114 348 124 356 140 366 C144 338 138 306 100 266Z" fill="url(#flameGlow)" />
       </g>
 
       <g className="rocket-flame">
-        <path d="M100 268 C56 312 50 344 56 370 C72 360 84 352 100 350 C116 352 128 360 144 370 C150 344 144 312 100 268Z" fill="url(#flameOuter)" filter="url(#softGlow)" />
-        <path d="M100 268 C68 308 64 338 70 360 C82 352 90 346 100 345 C110 346 118 352 130 360 C136 338 132 308 100 268Z" fill="url(#flameMid)" />
-        <path d="M100 268 C82 304 80 332 84 350 C91 344 96 340 100 339 C104 340 109 344 116 350 C120 332 118 304 100 268Z" fill="url(#flameCore)" />
-        <ellipse cx="100" cy="268" rx="22" ry="6" fill="rgba(255,255,255,0.7)" />
-        <ellipse cx="100" cy="268" rx="14" ry="4" fill="rgba(255,255,255,0.95)" />
+        {/* Outer flame */}
+        <path d="M100 264 C58 308 52 342 58 368 C74 358 86 350 100 348 C114 350 126 358 142 368 C148 342 142 308 100 264Z" fill="url(#flameOuter)" filter="url(#softGlow)" />
+        {/* Mid flame */}
+        <path d="M100 264 C70 304 66 336 72 358 C84 350 92 344 100 343 C108 344 116 350 128 358 C134 336 130 304 100 264Z" fill="url(#flameMid)" />
+        {/* Core flame — hottest */}
+        <path d="M100 264 C84 300 82 328 86 348 C93 342 97 338 100 337 C103 338 107 342 114 348 C118 328 116 300 100 264Z" fill="url(#flameCore)" />
+        {/* Nozzle bright spot */}
+        <ellipse cx="100" cy="266" rx="18" ry="5" fill="rgba(255,255,255,0.75)" />
+        <ellipse cx="100" cy="266" rx="11" ry="3" fill="rgba(255,255,255,0.95)" />
       </g>
 
+      {/* Ambient flame glow (activated on scroll) */}
       <g className="rocket-flame-ambient" opacity="0">
-        <circle cx="100" cy="278" r="40" fill="rgba(251,191,36,0.08)" filter="url(#flameBlur)" />
-        <circle cx="100" cy="295" r="30" fill="rgba(249,115,22,0.06)" filter="url(#flameBlur)" />
+        <circle cx="100" cy="276" r="38" fill="rgba(251,191,36,0.10)" filter="url(#flameBlur)" />
+        <circle cx="100" cy="292" r="28" fill="rgba(249,115,22,0.07)" filter="url(#flameBlur)" />
       </g>
     </svg>
   )
