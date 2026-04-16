@@ -764,8 +764,6 @@ button { font-family: inherit; }
   border-radius: 999px;
   background: radial-gradient(circle at 50% 38%, rgba(251,146,60,0.35), rgba(249,115,22,0.2) 40%, rgba(108,71,255,0.15) 60%, transparent 75%);
   filter: blur(38px);
-  background: radial-gradient(circle at 50% 38%, rgba(139,92,246,0.3), rgba(59,130,246,0.15) 50%, transparent 75%);
->>>>>>> ef828af3e5f9f69474aeaf8d4aa1ddf5248e6c24
   opacity: 0.7;
   pointer-events: none;
   z-index: 0;
