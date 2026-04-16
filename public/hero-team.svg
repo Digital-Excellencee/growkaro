@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" fill="none">
+  <rect width="600" height="480" rx="20" fill="#13102a"/>
+  <rect width="600" height="480" rx="20" fill="url(#hg1)" opacity="0.6"/>
+  <defs>
+    <linearGradient id="hg1" x1="0" y1="0" x2="600" y2="480">
+      <stop offset="0%" stop-color="#6c47ff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="300" cy="380" rx="180" ry="60" fill="url(#hg2)" opacity="0.3"/>
+  <defs>
+    <radialGradient id="hg2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6c47ff"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+  <circle cx="150" cy="160" r="50" fill="#1a1535" stroke="#6c47ff" stroke-width="2"/>
+  <circle cx="150" cy="160" r="36" fill="#2d1f6e"/>
+  <circle cx="150" cy="148" r="14" fill="#6c47ff"/>
+  <ellipse cx="150" cy="175" rx="20" ry="12" fill="#6c47ff" opacity="0.8"/>
+  <rect x="110" y="210" width="80" height="8" rx="4" fill="#6c47ff" opacity="0.5"/>
+  <rect x="118" y="225" width="64" height="6" rx="3" fill="#00d4ff" opacity="0.4"/>
+
+  <circle cx="300" cy="130" r="65" fill="#1a1535" stroke="#00d4ff" stroke-width="3"/>
+  <circle cx="300" cy="130" r="48" fill="#0d3d4a"/>
+  <circle cx="300" cy="115" r="18" fill="#00d4ff"/>
+  <ellipse cx="300" cy="148" rx="26" ry="16" fill="#00d4ff" opacity="0.8"/>
+  <rect x="252" y="195" width="96" height="10" rx="5" fill="#00d4ff" opacity="0.5"/>
+  <rect x="262" y="212" width="76" height="7" rx="3.5" fill="#6c47ff" opacity="0.4"/>
+
+  <circle cx="450" cy="160" r="50" fill="#1a1535" stroke="#ff3cac" stroke-width="2"/>
+  <circle cx="450" cy="160" r="36" fill="#3d1a2e"/>
+  <circle cx="450" cy="148" r="14" fill="#ff3cac"/>
+  <ellipse cx="450" cy="175" rx="20" ry="12" fill="#ff3cac" opacity="0.8"/>
+  <rect x="410" y="210" width="80" height="8" rx="4" fill="#ff3cac" opacity="0.5"/>
+  <rect x="418" y="225" width="64" height="6" rx="3" fill="#f97316" opacity="0.4"/>
+
+  <rect x="80" y="300" width="440" height="120" rx="16" fill="#1a1535" stroke="rgba(108,71,255,0.3)" stroke-width="1"/>
+  <rect x="80" y="300" width="440" height="40" rx="16" fill="#2d1f6e" opacity="0.6"/>
+  <rect x="90" y="310" width="30" height="30" rx="8" fill="#6c47ff" opacity="0.3"/>
+  <rect x="130" y="314" width="80" height="6" rx="3" fill="#fff" opacity="0.3"/>
+  <rect x="130" y="326" width="50" height="4" rx="2" fill="#fff" opacity="0.15"/>
+  <rect x="400" y="314" width="60" height="8" rx="4" fill="#22c55e" opacity="0.6"/>
+  <rect x="470" y="314" width="40" height="8" rx="4" fill="#6c47ff" opacity="0.4"/>
+
+  <rect x="90" y="350" width="420" height="56" rx="10" fill="#0d0820"/>
+  <rect x="100" y="360" width="40" height="36" rx="6" fill="#6c47ff" opacity="0.2"/>
+  <rect x="108" y="368" width="12" height="12" rx="3" fill="#6c47ff" opacity="0.5"/>
+  <rect x="150" y="362" width="100" height="6" rx="3" fill="#fff" opacity="0.4"/>
+  <rect x="150" y="374" width="60" height="4" rx="2" fill="#fff" opacity="0.2"/>
+  <rect x="150" y="383" width="40" height="4" rx="2" fill="#00d4ff" opacity="0.3"/>
+
+  <rect x="400" y="356" width="100" height="36" rx="8" fill="#6c47ff" opacity="0.8"/>
+  <rect x="418" y="368" width="64" height="12" rx="4" fill="#fff" opacity="0.9"/>
+
+  <circle cx="50" cy="100" r="4" fill="#6c47ff" opacity="0.6"/>
+  <circle cx="550" cy="80" r="6" fill="#00d4ff" opacity="0.5"/>
+  <circle cx="520" cy="420" r="8" fill="#ff3cac" opacity="0.4"/>
+  <circle cx="80" cy="400" r="5" fill="#f97316" opacity="0.5"/>
+
+  <rect x="140" y="260" width="30" height="30" rx="15" fill="none" stroke="#6c47ff" stroke-width="2" opacity="0.3"/>
+  <rect x="430" y="240" width="25" height="25" rx="12" fill="none" stroke="#00d4ff" stroke-width="2" opacity="0.3"/>
+
+  <text x="300" y="460" font-family="Manrope, sans-serif" font-size="13" font-weight="700" fill="rgba(255,255,255,0.25)" text-anchor="middle">Growthkaro — Digital Marketing Team</text>
+</svg>
