@@ -1434,7 +1434,7 @@ export default function Home() {
   const isDark = theme === 'dark'
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} style={{ overflowX: 'hidden', width: '100%', position: 'relative' }}>
       {/* ── NAVBAR ── */}
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         <a href="#" className="nav-brand" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
