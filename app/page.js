@@ -94,25 +94,53 @@ function PremiumRocket() {
           <stop offset="50%" stopColor="#4338ca" />
           <stop offset="100%" stopColor="#1e1b4b" />
         </linearGradient>
-        {/* Flame gradients */}
-        <linearGradient id="flameOuter" x1="100" y1="264" x2="100" y2="368" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#fde68a" stopOpacity="0.95" />
-          <stop offset="25%" stopColor="#fb923c" stopOpacity="0.9" />
-          <stop offset="55%" stopColor="#ef4444" stopOpacity="0.7" />
+
+        {/* ─── REALISTIC FLAME GRADIENTS ─── */}
+        {/* Layer 1: Wide orange-red outer plume */}
+        <linearGradient id="flameLayer1" x1="100" y1="268" x2="100" y2="410" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#ff6b35" stopOpacity="0.85" />
+          <stop offset="20%" stopColor="#f97316" stopOpacity="0.7" />
+          <stop offset="45%" stopColor="#ef4444" stopOpacity="0.45" />
+          <stop offset="70%" stopColor="#dc2626" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="#7f1d1d" stopOpacity="0" />
+        </linearGradient>
+        {/* Layer 2: Mid flame orange-yellow */}
+        <linearGradient id="flameLayer2" x1="100" y1="268" x2="100" y2="370" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.95" />
+          <stop offset="25%" stopColor="#f97316" stopOpacity="0.82" />
+          <stop offset="55%" stopColor="#ea580c" stopOpacity="0.5" />
+          <stop offset="80%" stopColor="#dc2626" stopOpacity="0.15" />
           <stop offset="100%" stopColor="#dc2626" stopOpacity="0" />
         </linearGradient>
-        <linearGradient id="flameMid" x1="100" y1="264" x2="100" y2="345" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#fef9c3" stopOpacity="0.98" />
-          <stop offset="30%" stopColor="#fbbf24" stopOpacity="0.88" />
-          <stop offset="65%" stopColor="#f97316" stopOpacity="0.5" />
+        {/* Layer 3: Inner bright core yellow */}
+        <linearGradient id="flameLayer3" x1="100" y1="268" x2="100" y2="340" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#fef08a" stopOpacity="1" />
+          <stop offset="20%" stopColor="#fde047" stopOpacity="0.95" />
+          <stop offset="50%" stopColor="#fbbf24" stopOpacity="0.7" />
+          <stop offset="75%" stopColor="#f59e0b" stopOpacity="0.3" />
           <stop offset="100%" stopColor="#ea580c" stopOpacity="0" />
         </linearGradient>
-        <linearGradient id="flameCore" x1="100" y1="264" x2="100" y2="324" gradientUnits="userSpaceOnUse">
+        {/* Layer 4: White-hot inner core */}
+        <linearGradient id="flameLayer4" x1="100" y1="268" x2="100" y2="315" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
-          <stop offset="35%" stopColor="#fef9c3" stopOpacity="0.95" />
-          <stop offset="70%" stopColor="#fcd34d" stopOpacity="0.5" />
+          <stop offset="15%" stopColor="#fef9c3" stopOpacity="0.98" />
+          <stop offset="40%" stopColor="#fde047" stopOpacity="0.7" />
+          <stop offset="70%" stopColor="#fbbf24" stopOpacity="0.25" />
           <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
         </linearGradient>
+        {/* Ember spark gradient */}
+        <radialGradient id="emberGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#fef08a" />
+          <stop offset="50%" stopColor="#f97316" />
+          <stop offset="100%" stopColor="#dc2626" stopOpacity="0" />
+        </radialGradient>
+        {/* Heat distortion gradient */}
+        <radialGradient id="heatGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="rgba(251,146,60,0.35)" />
+          <stop offset="50%" stopColor="rgba(249,115,22,0.15)" />
+          <stop offset="100%" stopColor="rgba(220,38,38,0)" />
+        </radialGradient>
+
         <radialGradient id="ambientGlow" cx="50%" cy="42%" r="50%" fx="50%" fy="35%">
           <stop offset="0%" stopColor="rgba(139,92,246,0.25)" />
           <stop offset="55%" stopColor="rgba(99,102,241,0.10)" />
@@ -122,7 +150,30 @@ function PremiumRocket() {
           <stop offset="0%" stopColor="rgba(251,191,36,0.4)" />
           <stop offset="100%" stopColor="rgba(251,191,36,0)" />
         </radialGradient>
-        {/* Filters */}
+        {/* ─── FLAME FILTERS ─── */}
+        {/* Soft glow for flame layers */}
+        <filter id="flameGlowFilter" x="-60%" y="-20%" width="220%" height="160%">
+          <feGaussianBlur stdDeviation="8" result="blur1" />
+          <feGaussianBlur stdDeviation="3" in="SourceGraphic" result="blur2" />
+          <feMerge>
+            <feMergeNode in="blur1" />
+            <feMergeNode in="blur2" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        {/* Ember blur */}
+        <filter id="emberBlur" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="1.5" />
+        </filter>
+        {/* Heat distortion around nozzle */}
+        <filter id="heatDistort" x="-80%" y="-50%" width="260%" height="200%">
+          <feGaussianBlur stdDeviation="12" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+          </feMerge>
+        </filter>
+
+        {/* ─── BODY FILTERS ─── */}
         <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="6" result="blur" />
           <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
@@ -131,15 +182,12 @@ function PremiumRocket() {
           <feGaussianBlur stdDeviation="4" result="blur" />
           <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
-        <filter id="flameBlur" x="-30%" y="-20%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="3" />
+        <filter id="noseGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
         <filter id="engineGlow" x="-60%" y="-30%" width="220%" height="180%">
           <feGaussianBlur stdDeviation="5" result="blur" />
-          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-        </filter>
-        <filter id="noseGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="2" result="blur" />
           <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
       </defs>
@@ -281,8 +329,9 @@ function PremiumRocket() {
       " fill="url(#engineGrad)" />
       {/* Engine rim highlight */}
       <path d="M86 253 L114 253 L116 255 L84 255 Z" fill="rgba(255,255,255,0.15)" />
-      {/* Engine glow ring */}
-      <ellipse cx="100" cy="268" rx="16" ry="4" fill="rgba(139,92,246,0.45)" filter="url(#engineGlow)" />
+
+      {/* Nozzle anchor for thrust particles */}
+      <ellipse className="rocket-engine-nozzle" cx="100" cy="268" rx="12" ry="4" fill="rgba(255,255,255,0.001)" />
 
       {/* ═══ COCKPIT WINDOW ═══ Main viewport */}
       <ellipse cx="100" cy="122" rx="20" ry="22" fill="#1e3a8a" />
@@ -312,7 +361,7 @@ function PremiumRocket() {
       <circle cx="76" cy="220" r="1.5" fill="rgba(255,255,255,0.06)" />
       <circle cx="124" cy="220" r="1.5" fill="rgba(255,255,255,0.06)" />
 
-      {/* Flame is handled by CSS .rocket-flame-old div — no SVG flame needed */}
+      {/* Flame rendered via SVG layers below rocket body */}
     </svg>
   )
 }
@@ -556,7 +605,7 @@ function useGSAPAnimations(rocketRuntimeRef) {
           start: 'top top',
           // end when hero bottom reaches 20% from top — gives a tight, fast launch window
           end: '80% top',
-          scrub: 0.4, // fast & smooth scrub
+          scrub: 0.15, // low scrub for smooth performance
         },
       })
 
@@ -585,36 +634,70 @@ function useGSAPAnimations(rocketRuntimeRef) {
           ease: 'none',
         }, 0.02)
 
-        // Phase 2 — Ignition: flames on, smoke (0.1 → 0.25)
-        .to('.rocket-flame-old', {
+        // Phase 2 — Ignition: flame on, glow intensifies (0.1 → 0.25)
+        .to('.rocket-thrust', {
           opacity: 1,
-          scaleY: 1,
+          duration: 0.08,
+          ease: 'none',
+        }, 0.08)
+        .to('.thrust-nozzle-glow', {
+          opacity: 0.95,
+          scale: 1.1,
+          duration: 0.1,
+          ease: 'none',
+        }, 0.1)
+        .to('.thrust-flame-outer', {
+          opacity: 0.88,
+          scaleY: 0.82,
           duration: 0.12,
           ease: 'none',
         }, 0.1)
+        .to('.thrust-flame-inner', {
+          opacity: 0.96,
+          scaleY: 0.8,
+          duration: 0.12,
+          ease: 'none',
+        }, 0.12)
+        .to('.thrust-flame-core', {
+          opacity: 1,
+          scaleY: 0.78,
+          duration: 0.12,
+          ease: 'none',
+        }, 0.14)
         .to('.rocket-core-glow', {
           opacity: 1,
-          scale: 1.3,
+          scale: 1.4,
           duration: 0.12,
           ease: 'none',
         }, 0.1)
-        .to('.rocket-flame-ambient', {
-          opacity: 1,
-          duration: 0.1,
-          ease: 'none',
-        }, 0.12)
-        .to('.rocket-smoke-haze', {
-          opacity: 0.75,
-          scaleX: 1.2,
-          duration: 0.1,
-          ease: 'none',
-        }, 0.12)
 
-        // Phase 3 — Liftoff: rocket moves up, trail beam grows (0.2 → 0.55)
+        // Phase 3 — Liftoff: flame expands, rocket lifts (0.2 → 0.55)
         .to('.rocket-trail-beam', {
-          opacity: 0.7,
-          scaleY: 0.5,
+          opacity: 0.64,
+          scaleY: 0.48,
           duration: 0.15,
+          ease: 'none',
+        }, 0.2)
+        .to('.thrust-flame-outer', {
+          scaleY: 1.34,
+          opacity: 0.96,
+          duration: 0.3,
+          ease: 'none',
+        }, 0.2)
+        .to('.thrust-flame-inner', {
+          scaleY: 1.28,
+          duration: 0.3,
+          ease: 'none',
+        }, 0.2)
+        .to('.thrust-flame-core', {
+          scaleY: 1.22,
+          duration: 0.3,
+          ease: 'none',
+        }, 0.2)
+        .to('.thrust-nozzle-glow', {
+          scale: 1.24,
+          opacity: 0.92,
+          duration: 0.25,
           ease: 'none',
         }, 0.2)
         .to('.rocket-ship-wrap', {
@@ -623,7 +706,7 @@ function useGSAPAnimations(rocketRuntimeRef) {
           ease: 'none',
         }, 0.2)
 
-        // Phase 4 — Full ascent: rocket flies high with tilt and trail (0.5 → 1.0)
+        // Phase 4 — Full ascent: max flame, rocket flies (0.5 → 1.0)
         .to('.rocket-ship-wrap', {
           y: -700,
           x: 40,
@@ -631,9 +714,34 @@ function useGSAPAnimations(rocketRuntimeRef) {
           duration: 0.5,
           ease: 'none',
         }, 0.5)
-        .to('.rocket-trail-beam', {
+        .to('.thrust-flame-outer', {
+          scaleY: 1.8,
+          scaleX: 0.92,
+          opacity: 0.96,
+          duration: 0.5,
+          ease: 'none',
+        }, 0.5)
+        .to('.thrust-flame-inner', {
+          scaleY: 1.7,
+          opacity: 0.98,
+          duration: 0.5,
+          ease: 'none',
+        }, 0.5)
+        .to('.thrust-flame-core', {
+          scaleY: 1.58,
           opacity: 1,
-          scaleY: 1.3,
+          duration: 0.5,
+          ease: 'none',
+        }, 0.5)
+        .to('.thrust-nozzle-glow', {
+          scale: 1.44,
+          opacity: 0.94,
+          duration: 0.4,
+          ease: 'none',
+        }, 0.5)
+        .to('.rocket-trail-beam', {
+          opacity: 0.78,
+          scaleY: 1.08,
           duration: 0.4,
           ease: 'none',
         }, 0.5)
@@ -832,7 +940,7 @@ function useGSAPAnimations(rocketRuntimeRef) {
           scrollTrigger: {
             trigger: el,
             start: 'top 85%',
-            toggleActions: 'play none none none',
+            toggleActions: 'play none none reverse',
           },
           onUpdate: () => {
             el.textContent = Math.round(obj.value) + suffix
@@ -840,17 +948,17 @@ function useGSAPAnimations(rocketRuntimeRef) {
         })
       })
 
-      // ── PARALLAX - HERO ORBS ──
+      // ── PARALLAX - HERO ORBS ── (reduced scrub for performance)
       gsap.utils.toArray('.hero-orb').forEach((orb, i) => {
         const direction = i % 2 === 0 ? 1 : -1
         gsap.to(orb, {
-          y: -100 * direction,
-          x: 50 * direction,
+          y: -80 * direction,
+          x: 40 * direction,
           scrollTrigger: {
             trigger: '.hero',
             start: 'top top',
             end: 'bottom top',
-            scrub: 1,
+            scrub: 3,
           },
         })
       })
@@ -1052,6 +1160,7 @@ function useGSAPAnimations(rocketRuntimeRef) {
     }, containerRef)
 
     return () => ctx.revert()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return containerRef
@@ -1083,6 +1192,19 @@ export default function Home() {
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
+
+  useEffect(() => {
+    const root = document.documentElement
+    const body = document.body
+
+    root.classList.toggle('mobile-menu-open', menuOpen)
+    body.classList.toggle('mobile-menu-open', menuOpen)
+
+    return () => {
+      root.classList.remove('mobile-menu-open')
+      body.classList.remove('mobile-menu-open')
+    }
+  }, [menuOpen])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -1221,18 +1343,18 @@ export default function Home() {
       const intensity = Math.max(fuelPhase * 0.35, ignitionPhase * 0.9, liftPhase, ascentPhase * 1.2)
 
       if (progress > 0.08) {
-        const smokeBursts = prefersReducedMotion ? 1 : 1 + Math.round(intensity * 3)
+        const smokeBursts = prefersReducedMotion ? 1 : 2 + Math.round(intensity * 4)
         for (let i = 0; i < smokeBursts; i += 1) {
-          if (Math.random() < 0.6 + intensity * 0.18) {
+          if (Math.random() < 0.65 + intensity * 0.2) {
             spawnParticle('smoke', nozzleX, nozzleY + 6, progress)
           }
         }
       }
 
       if (progress > 0.18) {
-        const emberBursts = prefersReducedMotion ? 1 : 2 + Math.round((ignitionPhase + liftPhase + ascentPhase) * 4)
+        const emberBursts = prefersReducedMotion ? 1 : 3 + Math.round((ignitionPhase + liftPhase + ascentPhase) * 6)
         for (let i = 0; i < emberBursts; i += 1) {
-          if (Math.random() < 0.5 + intensity * 0.2) {
+          if (Math.random() < 0.58 + intensity * 0.22) {
             spawnParticle('ember', nozzleX, nozzleY + 2, progress)
           }
         }
@@ -1453,15 +1575,17 @@ export default function Home() {
                     <div className="rocket-svg-wrap">
                       <PremiumRocket />
                     </div>
-                    <div className="rocket-engine-nozzle"></div>
-                    <div className="rocket-flame-old">
-                      <div className="rocket-flame-outer-old"></div>
-                      <div className="rocket-flame-core-old"></div>
+                    <div className="rocket-thrust" aria-hidden="true">
+                      <div className="thrust-nozzle-glow"></div>
+                      <div className="thrust-flame-outer"></div>
+                      <div className="thrust-flame-inner"></div>
+                      <div className="thrust-flame-core"></div>
                     </div>
-                    <div className="rocket-smoke-haze"></div>
                   </div>
                 </div>
               </div>
+
+
             </div>
           </div>
         </div>
@@ -1802,19 +1926,31 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="faq-list">
-            {FAQS.map((faq, i) => (
-              <div key={i} className={`faq-item${openFaq === i ? ' open' : ''}`}>
-                <button className="faq-btn" onClick={() => toggleFaq(i)}>
-                  {faq.q}
-                  <span className="faq-arrow">+</span>
-                </button>
-                <div className="faq-body" style={openFaq === i ? { maxHeight: '200px' } : {}}>
-                  <div className="faq-body-inner">{faq.a}</div>
+            <div className="faq-list">
+              {FAQS.map((faq, i) => (
+                <div key={i} className={`faq-item${openFaq === i ? ' open' : ''}`}>
+                  <button 
+                    className="faq-btn" 
+                    onClick={() => toggleFaq(i)}
+                    aria-expanded={openFaq === i}
+                    aria-controls={`faq-answer-${i}`}
+                    id={`faq-question-${i}`}
+                  >
+                    {faq.q}
+                    <span className="faq-arrow" aria-hidden="true">+</span>
+                  </button>
+                  <div 
+                    className="faq-body" 
+                    id={`faq-answer-${i}`}
+                    role="region"
+                    aria-labelledby={`faq-question-${i}`}
+                    style={openFaq === i ? { maxHeight: '300px' } : {}}
+                  >
+                    <div className="faq-body-inner">{faq.a}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
         </div>
       </section>
 
@@ -1883,7 +2019,7 @@ export default function Home() {
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#process">How It Works</a></li>
                 <li><a href="#faq">FAQ</a></li>
-                <li><a href="#">Blog</a></li>
+                <li><a href={WA_URL} target="_blank" rel="noopener">Contact Us</a></li>
               </ul>
             </div>
 
