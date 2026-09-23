@@ -320,6 +320,10 @@ export default function PortfolioPage() {
                       className={`portfolio-img${item.isLogo ? ' is-logo' : ''}`}
                       loading="lazy"
                       decoding="async"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80&auto=format';
+                      }}
                     />
                     <div className="portfolio-img-overlay">
                       {item.featured && (
@@ -492,6 +496,10 @@ export default function PortfolioPage() {
                 alt={activeModalItem.name}
                 className={`portfolio-modal-img${activeModalItem.isLogo ? ' is-logo' : ''}`}
                 decoding="async"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80&auto=format';
+                }}
               />
             </div>
 

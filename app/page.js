@@ -2017,6 +2017,10 @@ export default function Home() {
                         className={`portfolio-img${item.isLogo ? ' is-logo' : ''}`}
                         loading="lazy"
                         decoding="async"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80&auto=format';
+                        }}
                       />
                       <div className="portfolio-img-overlay">
                         {item.featured && (
