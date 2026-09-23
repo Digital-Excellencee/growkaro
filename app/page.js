@@ -1525,9 +1525,13 @@ export default function Home() {
         </a>
 
         <div className="nav-links">
-          {navLinks.map(link => (
-            <a key={link} href={`#${link.toLowerCase()}`}>{link}</a>
-          ))}
+          <a href="#services">Services</a>
+          <a href="#portfolio">Featured</a>
+          <a href="/portfolio" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+            Portfolio <span style={{ fontSize: '10px', background: 'rgba(108,71,255,0.18)', color: 'var(--cyan)', border: '1px solid rgba(0,212,255,0.3)', borderRadius: '999px', padding: '1px 7px', fontWeight: 800 }}>100+</span>
+          </a>
+          <a href="#process">Process</a>
+          <a href="#faq">FAQ</a>
         </div>
 
         <div className="nav-actions">
@@ -1547,9 +1551,13 @@ export default function Home() {
 
       {/* ── MOBILE MENU ── */}
       <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
-        {navLinks.map(link => (
-          <a key={link} href={`#${link.toLowerCase()}`} onClick={() => setMenuOpen(false)}>{link}</a>
-        ))}
+        <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
+        <a href="#portfolio" onClick={() => setMenuOpen(false)}>Featured Clients</a>
+        <a href="/portfolio" onClick={() => setMenuOpen(false)} style={{ color: 'var(--cyan)', fontWeight: 800 }}>
+          ⚡ Complete 100+ Portfolio Page
+        </a>
+        <a href="#process" onClick={() => setMenuOpen(false)}>Process</a>
+        <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
         <a href={WA_URL} target="_blank" rel="noopener" onClick={() => setMenuOpen(false)}>WhatsApp us</a>
         <a href={WA_URL} target="_blank" rel="noopener" onClick={() => setMenuOpen(false)}>Get Started</a>
       </div>
@@ -1981,9 +1989,18 @@ export default function Home() {
                 return (
                   <div key={item.id} className="portfolio-card">
                     <div className="portfolio-visual">
-                      <img src={item.img} alt={item.name} className="portfolio-img" loading="lazy" />
+                      <img
+                        src={item.img}
+                        alt={item.name}
+                        className={`portfolio-img${item.isLogo ? ' is-logo' : ''}`}
+                        loading="lazy"
+                      />
                       <div className="portfolio-img-overlay">
-                        <span className="portfolio-badge-cat">{item.categoryName}</span>
+                        {item.featured && (
+                          <span className="portfolio-badge-pill">
+                            <Sparkles size={11} color="#fbbf24" /> Top Client
+                          </span>
+                        )}
                         <span className="portfolio-badge-loc">
                           <MapPin size={10} />
                           {item.location}
@@ -1992,6 +2009,7 @@ export default function Home() {
                     </div>
                     <div className="portfolio-info">
                       <div className="portfolio-kicker-row">
+                        <span className="portfolio-cat-pill">{item.categoryName}</span>
                         <span className="portfolio-role-badge">{item.badge}</span>
                       </div>
                       <div className="portfolio-title">{item.name}</div>
@@ -2071,6 +2089,31 @@ export default function Home() {
               )}
             </div>
           )}
+
+          {/* ── HIGH-CONVERTING BOTTOM SHOWCASE BANNER ── */}
+          <div className="portfolio-showcase-banner">
+            <div className="showcase-banner-inner">
+              <div className="showcase-banner-text">
+                <span className="showcase-banner-tag">
+                  <Sparkles size={12} /> Dedicated 100+ Client Archive
+                </span>
+                <h3 className="showcase-banner-title">
+                  Looking for our complete portfolio archive?
+                </h3>
+                <p className="showcase-banner-desc">
+                  Explore our dedicated showcase featuring all 29 political leaders & movements, 17 food & QSR brands, 19 retail chains, luxury hospitality resorts, aviation fleets, and premier institutes.
+                </p>
+              </div>
+              <div className="showcase-banner-actions">
+                <a href="/portfolio" className="btn-showcase-primary">
+                  Explore Dedicated Portfolio Page →
+                </a>
+                <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="btn-showcase-secondary">
+                  💬 Talk to Strategy Lead
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -2249,7 +2292,8 @@ export default function Home() {
             <div>
               <div className="footer-col-title">Company</div>
               <ul className="footer-links">
-                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#portfolio">Featured Work</a></li>
+                <li><a href="/portfolio" style={{ color: 'var(--cyan)', fontWeight: 700 }}>Complete Portfolio (100+)</a></li>
                 <li><a href="#process">How It Works</a></li>
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href={WA_URL} target="_blank" rel="noopener">Contact Us</a></li>

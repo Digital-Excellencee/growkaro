@@ -629,6 +629,7 @@ export const EXTENDED_PORTFOLIO = [
     badge: '10-Min Delivery Unicorn',
     impact: '200K+ First-Time App Users',
     img: '/portfolio/zepto.png',
+    isLogo: true,
     tags: ['Hyperlocal Installs', 'Dark Stores', 'Quick Commerce'],
     featured: true,
   },
@@ -720,6 +721,7 @@ export const EXTENDED_PORTFOLIO = [
     badge: 'Kids & Baby Retail Leader',
     impact: '3.9x Local Mom Network Engagements',
     img: '/portfolio/firstcry.png',
+    isLogo: true,
     tags: ['Mom Community', 'Baby Care Offers', 'Store Footfalls'],
   },
   {
@@ -1010,6 +1012,7 @@ export const EXTENDED_PORTFOLIO = [
     badge: '#1 Travel Platform',
     impact: 'Multi-City High Conversion Spends',
     img: '/portfolio/makemytrip.png',
+    isLogo: true,
     tags: ['Holiday Packages', 'Pilgrimage Tours', 'Hotel Bundles'],
     featured: true,
   },
