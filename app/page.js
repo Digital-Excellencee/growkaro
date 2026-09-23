@@ -12,6 +12,7 @@ import {
   IndianRupee,
   Mail,
   MapPinned,
+  MapPin,
   Megaphone,
   MessageCircle,
   MessageSquareQuote,
@@ -25,7 +26,13 @@ import {
   Gauge,
   TrendingUp,
   UserRound,
+  ChevronRight,
+  X,
+  Filter,
+  Award,
+  CheckCircle2,
 } from 'lucide-react'
+import { PORTFOLIO_CATEGORIES, EXTENDED_PORTFOLIO, TOP_CLIENT_NAMES } from './portfolio-data'
 
 function PremiumRocket() {
   return (
@@ -368,7 +375,7 @@ function PremiumRocket() {
 
 gsap.registerPlugin(ScrollTrigger)
 
-const WA_NUMBER = '917300628199'
+const WA_NUMBER = '918076517834'
 const WA_URL = `https://wa.me/${WA_NUMBER}`
 
 const MARQUEE_ITEMS = [
@@ -509,14 +516,7 @@ const TIMELINE_STEPS = [
   },
 ]
 
-const PORTFOLIO = [
-  { img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80', bg: 'linear-gradient(135deg, rgba(225,48,108,0.4), rgba(108,71,255,0.3))', cat: 'Fashion & E-commerce', title: 'LuxeFashion Store Launch', desc: 'Complete e-commerce website with Instagram integration aur targeted ads campaign.', stats: [{ val: '340%', lbl: 'Sales Up' }, { val: '200K', lbl: 'Reach' }, { val: '₹50L+', lbl: 'Revenue' }] },
-  { img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80', bg: 'linear-gradient(135deg, rgba(0,212,255,0.4), rgba(6,182,212,0.3))', cat: 'Hospitality & Tourism', title: 'Resort Digital Presence', desc: 'Google Ads, SEO, social media aur drone photography se resort ki online visibility triple.', stats: [{ val: '3x', lbl: 'Bookings' }, { val: '#1', lbl: 'Google Rank' }, { val: '500+', lbl: 'Reviews' }] },
-  { img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80', bg: 'linear-gradient(135deg, rgba(139,92,246,0.4), rgba(108,71,255,0.3))', cat: 'Education & Coaching', title: 'Coaching Institute Growth', desc: 'Facebook + Google ads ke saath student enrollments double kiye aur brand authority banayi.', stats: [{ val: '2x', lbl: 'Enrollments' }, { val: '₹8L', lbl: 'Ad Spend ROI' }, { val: '180+', lbl: 'Leads/mo' }] },
-  { img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80', bg: 'linear-gradient(135deg, rgba(249,115,22,0.4), rgba(251,191,36,0.3))', cat: 'Real Estate', title: 'Property Lead Generation', desc: 'Multi-city real estate campaigns jo high-intent property buyers seedha aapke paas laaye.', stats: [{ val: '500+', lbl: 'Leads/mo' }, { val: '₹200', lbl: 'Cost/Lead' }, { val: '8%', lbl: 'Close Rate' }] },
-  { img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=600&q=80', bg: 'linear-gradient(135deg, rgba(34,197,94,0.4), rgba(16,185,129,0.3))', cat: 'Healthcare', title: 'Clinic Branding & Leads', desc: 'Local SEO, Google Ads aur social media se clinic mein patient flow 4x badhaya.', stats: [{ val: '4x', lbl: 'Patients' }, { val: '#1', lbl: 'Local Rank' }, { val: '60%', lbl: 'Less Cost' }] },
-  { img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80', bg: 'linear-gradient(135deg, rgba(255,60,172,0.4), rgba(225,48,108,0.3))', cat: 'Events & Entertainment', title: 'Music Festival Promotion', desc: 'Full digital campaign — Instagram reels, influencer collabs, Google ads se 5000+ tickets sold.', stats: [{ val: '5000+', lbl: 'Tickets' }, { val: '20M+', lbl: 'Impressions' }, { val: '3x', lbl: 'ROAS' }] },
-]
+
 
 const TESTIMONIALS = [
   { name: 'Arjun Mehta', role: 'Founder, TechScale India', text: 'Growthkaro ne hamare digital presence ko completely transform kar diya. Facebook ads se 340% sales growth in 4 months — beyond expectations!', rating: 5, color: 'linear-gradient(135deg, var(--purple), var(--cyan))' },
@@ -542,6 +542,8 @@ function useGSAPAnimations(rocketRuntimeRef) {
     if (typeof window === 'undefined') return
 
     const ctx = gsap.context(() => {
+      const isMobileViewport = window.matchMedia('(max-width: 768px)').matches
+
       // ── HERO ANIMATIONS ──
       gsap.fromTo('.hero-badge',
         { opacity: 0, y: 30, scale: 0.9 },
@@ -641,26 +643,26 @@ function useGSAPAnimations(rocketRuntimeRef) {
           ease: 'none',
         }, 0.08)
         .to('.thrust-nozzle-glow', {
-          opacity: 0.95,
-          scale: 1.1,
+          opacity: 0.92,
+          scale: 1.06,
           duration: 0.1,
           ease: 'none',
         }, 0.1)
         .to('.thrust-flame-outer', {
-          opacity: 0.88,
-          scaleY: 0.82,
+          opacity: 0.72,
+          scaleY: 0.58,
           duration: 0.12,
           ease: 'none',
         }, 0.1)
         .to('.thrust-flame-inner', {
-          opacity: 0.96,
-          scaleY: 0.8,
+          opacity: 0.88,
+          scaleY: 0.68,
           duration: 0.12,
           ease: 'none',
         }, 0.12)
         .to('.thrust-flame-core', {
           opacity: 1,
-          scaleY: 0.78,
+          scaleY: 0.76,
           duration: 0.12,
           ease: 'none',
         }, 0.14)
@@ -673,30 +675,32 @@ function useGSAPAnimations(rocketRuntimeRef) {
 
         // Phase 3 — Liftoff: flame expands, rocket lifts (0.2 → 0.55)
         .to('.rocket-trail-beam', {
-          opacity: 0.64,
-          scaleY: 0.48,
+          opacity: 0.24,
+          scaleY: 0.36,
           duration: 0.15,
           ease: 'none',
         }, 0.2)
         .to('.thrust-flame-outer', {
-          scaleY: 1.34,
-          opacity: 0.96,
+          scaleY: 1.28,
+          scaleX: 1.04,
+          opacity: 0.84,
           duration: 0.3,
           ease: 'none',
         }, 0.2)
         .to('.thrust-flame-inner', {
-          scaleY: 1.28,
+          scaleY: 1.46,
+          scaleX: 1.03,
           duration: 0.3,
           ease: 'none',
         }, 0.2)
         .to('.thrust-flame-core', {
-          scaleY: 1.22,
+          scaleY: 1.62,
           duration: 0.3,
           ease: 'none',
         }, 0.2)
         .to('.thrust-nozzle-glow', {
-          scale: 1.24,
-          opacity: 0.92,
+          scale: 1.18,
+          opacity: 0.96,
           duration: 0.25,
           ease: 'none',
         }, 0.2)
@@ -715,33 +719,35 @@ function useGSAPAnimations(rocketRuntimeRef) {
           ease: 'none',
         }, 0.5)
         .to('.thrust-flame-outer', {
-          scaleY: 1.8,
-          scaleX: 0.92,
-          opacity: 0.96,
+          scaleY: 1.82,
+          scaleX: 1.1,
+          opacity: 0.88,
           duration: 0.5,
           ease: 'none',
         }, 0.5)
         .to('.thrust-flame-inner', {
-          scaleY: 1.7,
-          opacity: 0.98,
+          scaleY: 2.04,
+          scaleX: 1.06,
+          opacity: 0.94,
           duration: 0.5,
           ease: 'none',
         }, 0.5)
         .to('.thrust-flame-core', {
-          scaleY: 1.58,
+          scaleY: 2.2,
+          scaleX: 1.05,
           opacity: 1,
           duration: 0.5,
           ease: 'none',
         }, 0.5)
         .to('.thrust-nozzle-glow', {
-          scale: 1.44,
-          opacity: 0.94,
+          scale: 1.28,
+          opacity: 1,
           duration: 0.4,
           ease: 'none',
         }, 0.5)
         .to('.rocket-trail-beam', {
-          opacity: 0.78,
-          scaleY: 1.08,
+          opacity: 0.42,
+          scaleY: 0.74,
           duration: 0.4,
           ease: 'none',
         }, 0.5)
@@ -754,6 +760,11 @@ function useGSAPAnimations(rocketRuntimeRef) {
 
       // ── SCROLL REVEAL - FADE UP ──
       gsap.utils.toArray('.gsap-fade-up').forEach((el) => {
+        if (isMobileViewport && el.closest('.stats-bar')) {
+          gsap.set(el, { opacity: 1, y: 0, scale: 1, clearProps: 'transform' })
+          return
+        }
+
         gsap.fromTo(el,
           { opacity: 0, y: 60, scale: 0.95 },
           {
@@ -870,21 +881,18 @@ function useGSAPAnimations(rocketRuntimeRef) {
         }
       )
 
-      // ── STAGGER - PORTFOLIO CARDS ──
-      gsap.fromTo('.portfolio-card',
-        { opacity: 0, y: 60, scale: 0.9, rotateY: -5 },
+      // ── STAGGER - PORTFOLIO SECTION ──
+      gsap.fromTo('.portfolio-section-head, .portfolio-toolbar',
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          rotateY: 0,
           duration: 0.8,
-          stagger: 0.15,
+          stagger: 0.2,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.portfolio-grid',
+            trigger: '#portfolio',
             start: 'top 80%',
-            end: 'bottom 20%',
             toggleActions: 'play none none reverse',
           },
         }
@@ -931,6 +939,12 @@ function useGSAPAnimations(rocketRuntimeRef) {
       gsap.utils.toArray('.gsap-counter').forEach((el) => {
         const target = parseInt(el.dataset.target)
         const suffix = el.dataset.suffix || ''
+
+        if (isMobileViewport && el.closest('.stats-bar')) {
+          el.textContent = `${target}${suffix}`
+          return
+        }
+
         const obj = { value: 0 }
 
         gsap.to(obj, {
@@ -978,21 +992,25 @@ function useGSAPAnimations(rocketRuntimeRef) {
       )
 
       // ── STATS BAR ANIMATION ──
-      gsap.fromTo('.stats-bar-inner',
-        { opacity: 0, y: 40, scale: 0.95 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.stats-bar-inner',
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      )
+      if (isMobileViewport) {
+        gsap.set('.stats-bar-inner', { opacity: 1, y: 0, scale: 1, clearProps: 'transform' })
+      } else {
+        gsap.fromTo('.stats-bar-inner',
+          { opacity: 0, y: 40, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: '.stats-bar-inner',
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        )
+      }
 
       // ── SECTION HEADER ANIMATION ──
       gsap.utils.toArray('.section-header').forEach((header) => {
@@ -1176,6 +1194,51 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [openFaq, setOpenFaq] = useState(null)
   const [theme, setTheme] = useState('dark')
+
+  // Portfolio interactive state
+  const [portfolioCategory, setPortfolioCategory] = useState('featured')
+  const [portfolioSearch, setPortfolioSearch] = useState('')
+  const [portfolioLimit, setPortfolioLimit] = useState(9)
+
+  const handleCategoryChange = (catId) => {
+    setPortfolioCategory(catId)
+    setPortfolioLimit(9)
+  }
+
+  const handleSearchChange = (e) => {
+    setPortfolioSearch(e.target.value)
+    setPortfolioLimit(9)
+  }
+
+  const clearSearch = () => {
+    setPortfolioSearch('')
+    setPortfolioLimit(9)
+  }
+
+  const filteredPortfolio = EXTENDED_PORTFOLIO.filter(item => {
+    const matchesCategory =
+      portfolioCategory === 'all'
+        ? true
+        : portfolioCategory === 'featured'
+        ? item.featured
+        : item.category === portfolioCategory
+
+    if (!portfolioSearch.trim()) return matchesCategory
+
+    const q = portfolioSearch.toLowerCase().trim()
+    const matchesSearch =
+      item.name.toLowerCase().includes(q) ||
+      item.location.toLowerCase().includes(q) ||
+      item.categoryName.toLowerCase().includes(q) ||
+      item.badge.toLowerCase().includes(q) ||
+      item.role.toLowerCase().includes(q) ||
+      (item.tags && item.tags.some(t => t.toLowerCase().includes(q)))
+
+    return matchesCategory && matchesSearch
+  })
+
+  const displayedPortfolio = filteredPortfolio.slice(0, portfolioLimit)
+  const hasMorePortfolio = filteredPortfolio.length > portfolioLimit
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -1434,11 +1497,31 @@ export default function Home() {
   const isDark = theme === 'dark'
 
   return (
-    <div ref={containerRef} style={{ overflowX: 'hidden', width: '100%', position: 'relative' }}>
+    <div ref={containerRef} style={{ width: '100%', position: 'relative' }}>
       {/* ── NAVBAR ── */}
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         <a href="#" className="nav-brand" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
-          Growth<span>karo</span>
+          <span className="nav-brand-rocket" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="16" cy="13" rx="5.5" ry="5.5" fill="rgba(255,255,255,0.12)" />
+              <path d="M16 2C16 2 21.5 7 21.5 13.5C21.5 17.5 19 20.5 16 21.5V27.5C16 28.5 15 29.5 14 29.5C13 29.5 12 28.5 12 27.5V21.5C9 20.5 6.5 17.5 6.5 13.5C6.5 7 11 2 11 2H16Z" fill="url(#logoGrad2)" />
+              <path d="M9.5 17L6 23.5L11 20.5L9.5 17Z" fill="url(#logoGrad2)" opacity="0.95" />
+              <path d="M22.5 17L26 23.5L21 20.5L22.5 17Z" fill="url(#logoGrad2)" opacity="0.95" />
+              <path d="M16 22L13.5 27.5H18.5L16 22Z" fill="url(#logoGrad2)" opacity="0.8" />
+              <path d="M14 27.5C14 27.5 14.5 29.5 16 30.3C17.5 29.5 18 27.5 18 27.5H14Z" fill="rgba(255,148,72,1)" />
+              <path d="M14.8 29C14.8 29 15.2 29.8 16 30.2C16.8 29.8 17.2 29 17.2 29H14.8Z" fill="rgba(255,220,130,1)" />
+              <ellipse cx="16" cy="13.5" rx="4.5" ry="5" fill="rgba(255,255,255,0.18)" />
+              <path d="M14 21L16 29.5L18 21" fill="rgba(255,200,80,0.3)" style={{mixBlendMode:'screen'}} />
+              <defs>
+                <linearGradient id="logoGrad2" x1="6.5" y1="2" x2="25.5" y2="30.3" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#a855f7" />
+                  <stop offset="0.45" stopColor="#6c47ff" />
+                  <stop offset="1" stopColor="#00d4ff" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </span>
+          <span className="nav-brand-text">Growth<span className="nav-brand-karo">karo</span></span>
         </a>
 
         <div className="nav-links">
@@ -1483,45 +1566,49 @@ export default function Home() {
 
         <div className="container">
           <div className="hero-inner">
-            <div>
-              <div className="hero-badge">
-                <span className="hero-badge-dot"></span>
-                India&apos;s #1 Digital Marketing Agency
-              </div>
+            <div className="hero-copy">
+              <div className="hero-copy-main">
+                <div className="hero-badge">
+                  <span className="hero-badge-dot"></span>
+                  India&apos;s #1 Digital Marketing Agency
+                </div>
 
-              <h1 className="hero-title">
-                Your brand deserves to be{' '}
-                <span className="gradient-text">seen by millions.</span>
-              </h1>
+                <h1 className="hero-title">
+                  Your brand deserves to be{' '}
+                  <span className="gradient-text">seen by millions.</span>
+                </h1>
 
-              <p className="hero-desc">
-                Stop guessing what&apos;s working. We build complete digital marketing systems that bring
-                real customers, generate quality leads, and scale your revenue — month after month.
-              </p>
+                <p className="hero-desc">
+                  Stop guessing what&apos;s working. We build complete digital marketing systems that bring
+                  real customers, generate quality leads, and scale your revenue — month after month.
+                </p>
 
-              <div className="hero-cta">
-                <a href={WA_URL} target="_blank" rel="noopener" className="btn-primary-lg">
-                  Start Growing Today →
-                </a>
-                <a href="#process" className="btn-outline">
-                  See How It Works
-                </a>
-              </div>
-
-              <div className="hero-trust-logos">
-                <span className="trust-label">Trusted by brands across India</span>
-                <div className="trust-logos">
-                  <div className="trust-logo-pill">Startup India</div>
-                  <div className="trust-logo-pill">Google Partner</div>
-                  <div className="trust-logo-pill">Meta Business</div>
-                  <div className="trust-logo-pill">Shopify Expert</div>
+                <div className="hero-cta">
+                  <a href={WA_URL} target="_blank" rel="noopener" className="btn-primary-lg">
+                    Start Growing Today →
+                  </a>
+                  <a href="#process" className="btn-outline">
+                    See How It Works
+                  </a>
                 </div>
               </div>
 
-              <div className="hero-proof">
-                <span className="proof-item">No credit card</span>
-                <span className="proof-item">3x ROI guaranteed</span>
-                <span className="proof-item">Results in 30 days</span>
+              <div className="hero-copy-secondary">
+                <div className="hero-trust-logos">
+                  <span className="trust-label">Trusted by brands across India</span>
+                  <div className="trust-logos">
+                    <div className="trust-logo-pill">Startup India</div>
+                    <div className="trust-logo-pill">Google Partner</div>
+                    <div className="trust-logo-pill">Meta Business</div>
+                    <div className="trust-logo-pill">Shopify Expert</div>
+                  </div>
+                </div>
+
+                <div className="hero-proof">
+                  <span className="proof-item">No credit card</span>
+                  <span className="proof-item">3x ROI guaranteed</span>
+                  <span className="proof-item">Results in 30 days</span>
+                </div>
               </div>
             </div>
 
@@ -1802,42 +1889,188 @@ export default function Home() {
       {/* ── PORTFOLIO ── */}
       <section className="section" id="portfolio">
         <div className="container">
-          <div className="section-header">
-            <div className="section-label">Our Work</div>
+          <div className="section-header portfolio-section-head">
+            <div className="section-label">Proven Client Portfolio</div>
             <h2 className="section-title">
-              Real results for{' '}
-              <span className="gradient-text">real businesses.</span>
+              Powering India&apos;s Top Leaders,{' '}
+              <span className="gradient-text">Unicorns & Industry Titans.</span>
             </h2>
             <p className="section-sub">
-              Every industry, every size. See how we&apos;ve transformed these businesses with digital marketing.
+              From high-stakes political campaigns and statewide yatras to quick commerce unicorns, national dining legends, luxury resorts, and institutions — explore the work that scales businesses.
             </p>
           </div>
 
-          <div className="portfolio-grid">
-            {PORTFOLIO.map((p, i) => (
-              <div key={i} className="portfolio-card">
-                <div className="portfolio-visual" style={{ background: p.bg }}>
-                  <img src={p.img} alt={p.title} className="portfolio-img" loading="lazy" />
-                  <div className="portfolio-img-overlay">
-                    <span className="portfolio-overlay-cat">{p.cat}</span>
-                  </div>
-                </div>
-                <div className="portfolio-info">
-                  <div className="portfolio-cat">{p.cat}</div>
-                  <div className="portfolio-title">{p.title}</div>
-                  <div className="portfolio-desc">{p.desc}</div>
-                  <div className="portfolio-stats">
-                    {p.stats.map((s, j) => (
-                      <div key={j} className="portfolio-stat">
-                        <div className="portfolio-stat-val">{s.val}</div>
-                        <div className="portfolio-stat-label">{s.lbl}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
+          {/* ── RECOGNIZED CLIENTS TICKER ── */}
+          <div className="portfolio-ticker-wrap">
+            <div className="portfolio-ticker-track">
+              {TOP_CLIENT_NAMES.concat(TOP_CLIENT_NAMES).map((name, idx) => (
+                <span key={idx} className="portfolio-ticker-item">
+                  <span className="portfolio-ticker-dot"></span>
+                  {name}
+                </span>
+              ))}
+            </div>
           </div>
+
+          {/* ── PORTFOLIO HIGHLIGHTS BAR ── */}
+          <div className="portfolio-highlights-bar">
+            <div className="portfolio-highlight-item">
+              <div className="portfolio-highlight-val">100+</div>
+              <div className="portfolio-highlight-lbl">Esteemed Clients Served</div>
+            </div>
+            <div className="portfolio-highlight-item">
+              <div className="portfolio-highlight-val">29</div>
+              <div className="portfolio-highlight-lbl">Political & Yatra Mandates</div>
+            </div>
+            <div className="portfolio-highlight-item">
+              <div className="portfolio-highlight-val">15+</div>
+              <div className="portfolio-highlight-lbl">Metros, States & Global Hubs</div>
+            </div>
+            <div className="portfolio-highlight-item">
+              <div className="portfolio-highlight-val">50M+</div>
+              <div className="portfolio-highlight-lbl">Cumulative Audience Reach</div>
+            </div>
+          </div>
+
+          {/* ── TOOLBAR: SEARCH & CATEGORY PILLS ── */}
+          <div className="portfolio-toolbar">
+            <div className="portfolio-search-row">
+              <div className="portfolio-search-wrap">
+                <Search size={18} className="portfolio-search-icon" />
+                <input
+                  type="text"
+                  className="portfolio-search-input"
+                  placeholder="Search by leader, brand, city (e.g. Tejashwi, Domino's, Patna, Goa)..."
+                  value={portfolioSearch}
+                  onChange={handleSearchChange}
+                />
+                {portfolioSearch && (
+                  <button className="portfolio-search-clear" onClick={clearSearch} title="Clear search">
+                    <X size={16} />
+                  </button>
+                )}
+              </div>
+              <div className="portfolio-count-badge">
+                Showing <strong>{displayedPortfolio.length}</strong> of <strong>{filteredPortfolio.length}</strong> client projects
+              </div>
+            </div>
+
+            {/* Filter Pills */}
+            <div className="portfolio-filter-nav">
+              {PORTFOLIO_CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  className={`portfolio-filter-btn${portfolioCategory === cat.id ? ' active' : ''}`}
+                  onClick={() => handleCategoryChange(cat.id)}
+                >
+                  <span>{cat.label}</span>
+                  <span className="portfolio-filter-count">{cat.count}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* ── PORTFOLIO CARDS GRID ── */}
+          <div className="portfolio-grid">
+            {displayedPortfolio.length > 0 ? (
+              displayedPortfolio.map((item) => {
+                const waCustomUrl = `${WA_URL}?text=${encodeURIComponent(
+                  `Hi Growthkaro! I saw your work with ${item.name} (${item.badge}) and want to discuss similar growth marketing for my business.`
+                )}`
+
+                return (
+                  <div key={item.id} className="portfolio-card">
+                    <div className="portfolio-visual">
+                      <img src={item.img} alt={item.name} className="portfolio-img" loading="lazy" />
+                      <div className="portfolio-img-overlay">
+                        <span className="portfolio-badge-cat">{item.categoryName}</span>
+                        <span className="portfolio-badge-loc">
+                          <MapPin size={10} />
+                          {item.location}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="portfolio-info">
+                      <div className="portfolio-kicker-row">
+                        <span className="portfolio-role-badge">{item.badge}</span>
+                      </div>
+                      <div className="portfolio-title">{item.name}</div>
+                      <div className="portfolio-desc">{item.role}</div>
+
+                      {item.tags && (
+                        <div className="portfolio-tags">
+                          {item.tags.map((t, idx) => (
+                            <span key={idx} className="portfolio-tag">
+                              #{t}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="portfolio-impact-box">
+                        <span className="portfolio-impact-icon">⚡</span>
+                        <span className="portfolio-impact-text">{item.impact}</span>
+                      </div>
+
+                      <a
+                        href={waCustomUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="portfolio-cta-btn"
+                      >
+                        Inquire Similar Campaign
+                        <ChevronRight size={14} />
+                      </a>
+                    </div>
+                  </div>
+                )
+              })
+            ) : (
+              <div className="portfolio-empty">
+                <div className="portfolio-empty-icon">🔍</div>
+                <div className="portfolio-empty-title">No client campaigns found</div>
+                <div className="portfolio-empty-desc">
+                  No matching projects for &ldquo;{portfolioSearch}&rdquo;. Try another name or clear your search query.
+                </div>
+                <button className="portfolio-more-btn" onClick={clearSearch}>
+                  Clear Search & View All
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* ── BOTTOM ACTIONS: LOAD MORE / EXPAND ── */}
+          {filteredPortfolio.length > 9 && (
+            <div className="portfolio-bottom-actions">
+              {hasMorePortfolio ? (
+                <>
+                  <button
+                    className="portfolio-more-btn primary"
+                    onClick={() => setPortfolioLimit((prev) => prev + 9)}
+                  >
+                    View More Projects (+{Math.min(9, filteredPortfolio.length - portfolioLimit)} more)
+                  </button>
+                  <button
+                    className="portfolio-more-btn"
+                    onClick={() => setPortfolioLimit(filteredPortfolio.length)}
+                  >
+                    Show All {filteredPortfolio.length} Clients
+                  </button>
+                </>
+              ) : (
+                <button
+                  className="portfolio-more-btn"
+                  onClick={() => {
+                    setPortfolioLimit(9)
+                    const el = document.getElementById('portfolio')
+                    if (el) el.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                >
+                  Show Less (Collapse)
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
@@ -2028,7 +2261,7 @@ export default function Home() {
               <ul className="footer-links">
                 <li><a href={WA_URL} target="_blank" rel="noopener">WhatsApp us</a></li>
                 <li><a href="mailto:hello@growthkaro.in">hello@growthkaro.in</a></li>
-                <li><a href="tel:+917300628199">+91 73006 28199</a></li>
+                <li><a href="tel:+918076517834">+91 80765 17834</a></li>
               </ul>
             </div>
           </div>
