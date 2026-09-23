@@ -319,6 +319,7 @@ export default function PortfolioPage() {
                       alt={item.name}
                       className={`portfolio-img${item.isLogo ? ' is-logo' : ''}`}
                       loading="lazy"
+                      decoding="async"
                     />
                     <div className="portfolio-img-overlay">
                       {item.featured && (
@@ -490,6 +491,7 @@ export default function PortfolioPage() {
                 src={activeModalItem.img}
                 alt={activeModalItem.name}
                 className={`portfolio-modal-img${activeModalItem.isLogo ? ' is-logo' : ''}`}
+                decoding="async"
               />
             </div>
 

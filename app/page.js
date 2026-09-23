@@ -396,7 +396,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '🎯',
     iconBg: 'linear-gradient(135deg, rgba(108,71,255,0.25), rgba(0,212,255,0.15))',
-    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80',
+    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80&auto=format',
     title: 'Digital Marketing & Ads',
     desc: 'Facebook, Instagram, Google, YouTube — har platform pe targeted ads jo actual customers laayein.',
     tags: ['Facebook Ads', 'Google Ads', 'YouTube Ads', 'Lead Generation', 'Retargeting', 'Meta Ads'],
@@ -404,7 +404,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '📱',
     iconBg: 'linear-gradient(135deg, rgba(225,48,108,0.25), rgba(255,60,172,0.15))',
-    img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&q=80',
+    img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&q=80&auto=format',
     title: 'Social Media Management',
     desc: 'Poora Instagram, Facebook, LinkedIn page handle karte hain. Content, reels, engagement — sab.',
     tags: ['Page Management', 'Reels & Posts', 'Follower Growth', 'Engagement', 'Community'],
@@ -412,7 +412,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '🎨',
     iconBg: 'linear-gradient(135deg, rgba(249,115,22,0.25), rgba(251,191,36,0.15))',
-    img: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&q=80',
+    img: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&q=80&auto=format',
     title: 'Branding & Identity',
     desc: 'Logo se lekar brand guide tak — aisi identity jo aapko market mein alag dikhaye.',
     tags: ['Logo Design', 'Brand Identity', 'Brochure', 'Business Card', 'Brand Guide'],
@@ -420,7 +420,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '🌐',
     iconBg: 'linear-gradient(135deg, rgba(0,212,255,0.25), rgba(6,182,212,0.15))',
-    img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80',
+    img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80&auto=format',
     title: 'Website & Online Presence',
     desc: 'Professional websites jo visitors ko customers mein convert karein. SEO ke saath.',
     tags: ['Website Dev', 'Landing Pages', 'SEO', 'Google Business', 'Domain Setup'],
@@ -428,7 +428,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '🎬',
     iconBg: 'linear-gradient(135deg, rgba(34,197,94,0.25), rgba(16,185,129,0.15))',
-    img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600&q=80',
+    img: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600&q=80&auto=format',
     title: 'Content Creation',
     desc: 'Photo shoots, video production, ad creatives — visual content jo brand ko powerful banaye.',
     tags: ['Photo Shoot', 'Video Production', 'Ad Creatives', 'Promo Videos', 'Thumbnails'],
@@ -436,7 +436,7 @@ const SERVICE_CATEGORIES = [
   {
     icon: '📊',
     iconBg: 'linear-gradient(135deg, rgba(139,92,246,0.25), rgba(108,71,255,0.15))',
-    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
+    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80&auto=format',
     title: 'Strategy & Consulting',
     desc: 'Market research, competitor analysis, aur growth planning jo business ko next level le jaaye.',
     tags: ['Market Research', 'Competitor Analysis', 'Growth Plan', 'Strategy', 'Consulting'],
@@ -1381,7 +1381,10 @@ export default function Home() {
       ctx.fill()
     }
 
+    let isStageVisible = true
+
     const render = (time) => {
+      if (!isStageVisible) return
       const dt = Math.min((time - lastTime) / 16.667, 2)
       lastTime = time
 
@@ -1457,6 +1460,23 @@ export default function Home() {
       resizeObserver.observe(stage)
     }
 
+    let intersectionObserver
+    if (typeof IntersectionObserver !== 'undefined') {
+      intersectionObserver = new IntersectionObserver(([entry]) => {
+        const visible = Boolean(entry?.isIntersecting)
+        if (visible && !isStageVisible) {
+          isStageVisible = true
+          lastTime = performance.now()
+          window.cancelAnimationFrame(frameId)
+          frameId = window.requestAnimationFrame(render)
+        } else if (!visible && isStageVisible) {
+          isStageVisible = false
+          window.cancelAnimationFrame(frameId)
+        }
+      }, { threshold: 0.05 })
+      intersectionObserver.observe(stage)
+    }
+
     const rotateXTo = rocketShip ? gsap.quickTo(rocketShip, 'rotateX', { duration: 0.22, ease: 'power3.out' }) : null
     const rotateYTo = rocketShip ? gsap.quickTo(rocketShip, 'rotateY', { duration: 0.22, ease: 'power3.out' }) : null
     const glowTo = rocketCoreGlow ? gsap.quickTo(rocketCoreGlow, 'opacity', { duration: 0.22, ease: 'power2.out' }) : null
@@ -1483,7 +1503,9 @@ export default function Home() {
     frameId = window.requestAnimationFrame(render)
 
     return () => {
+      isStageVisible = false
       window.cancelAnimationFrame(frameId)
+      intersectionObserver?.disconnect()
       resizeObserver?.disconnect()
       window.removeEventListener('resize', resizeCanvas)
       stage.removeEventListener('pointermove', handlePointerMove)
@@ -1732,7 +1754,7 @@ export default function Home() {
             {SERVICE_CATEGORIES.map((cat, i) => (
               <div key={i} className="service-category-card">
                 <div className="service-cat-img-wrap" style={{ background: cat.iconBg }}>
-                  <img src={cat.img} alt={cat.title} className="service-cat-img" />
+                  <img src={cat.img} alt={cat.title} className="service-cat-img" loading="lazy" decoding="async" />
                 </div>
                 <div className="service-cat-title">{cat.title}</div>
                 <div className="service-cat-desc">{cat.desc}</div>
@@ -1994,6 +2016,7 @@ export default function Home() {
                         alt={item.name}
                         className={`portfolio-img${item.isLogo ? ' is-logo' : ''}`}
                         loading="lazy"
+                        decoding="async"
                       />
                       <div className="portfolio-img-overlay">
                         {item.featured && (
